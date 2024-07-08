@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caabb63ef8422459396a15f08d84c459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverMaterial: {fileID: 2100000, guid: 2e0057cf205d84cf4912029b87a170f3, type: 2}
+  highlightTile: {fileID: 3173166052741747074, guid: 4ebf831dc1e914ea4a247e9fbe81dfda, type: 3}
 --- !u!64 &8232903704214608546
 MeshCollider:
   m_ObjectHideFlags: 0

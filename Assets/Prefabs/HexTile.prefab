@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoverMaterial: {fileID: 2100000, guid: 2e0057cf205d84cf4912029b87a170f3, type: 2}
+  highlightTile: {fileID: 3173166052741747074, guid: 4ebf831dc1e914ea4a247e9fbe81dfda, type: 3}
 --- !u!64 &2196934161054271966
 MeshCollider:
   m_ObjectHideFlags: 0

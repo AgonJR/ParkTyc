@@ -3704,7 +3704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16f30c64ae3cf43ce995fd285d787477, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 649215178482974188, guid: 2886888886f1a4c9aa17f54443eef737, type: 3}
+  tilePrefab: {fileID: 3760563204290690687, guid: be85c79e87215ff4f8dc3c4b7acaced9, type: 3}
   gridSize: 9
   regenerateGrid: 1
 --- !u!1001 &2084213120
