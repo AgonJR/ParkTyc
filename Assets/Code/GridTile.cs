@@ -16,7 +16,6 @@ public class GridTile : MonoBehaviour
 
     void OnMouseEnter()
     {
-        Debug.Log("MOUSE OVER " + gameObject.name);
         if (hoverMaterial != null)
         {
             _rendererRef.material = hoverMaterial;
