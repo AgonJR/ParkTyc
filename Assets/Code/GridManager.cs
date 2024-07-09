@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class GridGenerator : MonoBehaviour
+public class GridManager : MonoBehaviour
 {
+    public static GridManager instance;
+
     [Header("Data")]
     public GameObject tilePrefab;
 
@@ -11,6 +13,10 @@ public class GridGenerator : MonoBehaviour
 
     private GameObject[,] _grid;
 
+    private void Awake()
+    {
+        GridManager.instance = this;
+    }
 
     private void Update()
     {
