@@ -51,6 +51,11 @@ public class GridTile : MonoBehaviour
     {
         _highlightTileObject.SetActive(true);
         _highlightTileObject.transform.position = _highlightPos;
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            OnMouseDown();
+        }
     }
 
     void OnMouseExit()
