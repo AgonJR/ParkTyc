@@ -46,9 +46,9 @@ public class GridManager : MonoBehaviour
                 Vector3 position = CalculateTilePosition(q, r);
 
                 GameObject tile = Instantiate(tilePrefab, position, tilePrefab.transform.rotation);
-                tile.transform.parent = this.transform;
 
-                tile.name = "HexTile (" + q + " ," + r + ")";
+                tile.transform.parent = this.transform;
+                tile.GetComponent<GridTile>().Initialize(q, r);
 
                 _grid[q,r] = tile;
             }

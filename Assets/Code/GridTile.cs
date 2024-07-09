@@ -4,7 +4,7 @@ public class GridTile : MonoBehaviour
 {
     public GameObject highlightTile;
 
-    private Renderer _rendererRef;
+    private Vector2 _coordinates;
     private Vector3 _highlightPos;
 
     private static GameObject _highlightTileObject;
@@ -20,8 +20,13 @@ public class GridTile : MonoBehaviour
 
     void Start()
     {
-        _rendererRef = gameObject.GetComponent<MeshRenderer>();
         _highlightPos = new Vector3(gameObject.transform.position.x, 0.3f, gameObject.transform.position.z);
+    }
+
+    public void Initialize(int q, int r)
+    {
+        gameObject.name = "HexTile (" + q + " ," + r + ")";
+        _coordinates = new Vector2(q, r);
     }
 
     void OnMouseEnter()
