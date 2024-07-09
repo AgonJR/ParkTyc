@@ -4,6 +4,24 @@ public class GridTile : MonoBehaviour
 {
     public GameObject highlightTile;
 
+    [Header("Tile Variations")]
+    public GameObject tileBase ;
+    public GameObject tileGrass;
+    public GameObject tileDirt ;
+    public GameObject tileTree ;
+
+    public enum TileState
+    {
+        Base,
+        Grass,
+        Dirt,
+        Tree
+    }
+
+    [Header("Tile Status")]
+    public TileState state = TileState.Base;
+
+
     private Vector2 _coordinates;
     private Vector3 _highlightPos;
 
@@ -38,5 +56,33 @@ public class GridTile : MonoBehaviour
     void OnMouseExit()
     {
         _highlightTileObject.SetActive(false);
+    }
+
+    private void OnMouseDown()
+    {
+        // Temporary - Toggle Between States (Until we have a more specific way)
+
+        TileState newState = TileState.Base;
+
+        switch (state)
+        {
+            case TileState.Base:  newState = TileState.Dirt;  break;
+            case TileState.Dirt:  newState = TileState.Grass; break;
+            case TileState.Grass: newState = TileState.Tree;  break;
+            case TileState.Tree:  newState = TileState.Base;  break;
+
+        }
+
+        SwapTile(newState);
+    }
+
+    public void SwapTile(GridTile.TileState targetState)
+    {
+        state = targetState;
+
+        if (tileBase  != null)  tileBase.SetActive(TileState.Base  == state);
+        if (tileGrass != null) tileGrass.SetActive(TileState.Grass == state);
+        if (tileDirt  != null)  tileDirt.SetActive(TileState.Dirt  == state);
+        if (tileTree  != null)  tileTree.SetActive(TileState.Tree  == state);
     }
 }
