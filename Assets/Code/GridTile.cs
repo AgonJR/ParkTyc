@@ -70,8 +70,12 @@ public class GridTile : MonoBehaviour
             case TileState.Dirt:  newState = TileState.Grass; break;
             case TileState.Grass: newState = TileState.Tree;  break;
             case TileState.Tree:  newState = TileState.Base;  break;
-
         }
+
+        if (Input.GetKey(KeyCode.Alpha1)) newState = TileState.Dirt ;
+        if (Input.GetKey(KeyCode.Alpha2)) newState = TileState.Grass;
+        if (Input.GetKey(KeyCode.Alpha3)) newState = TileState.Tree ;
+        if (Input.GetKey(KeyCode.Alpha0)) newState = TileState.Base ;
 
         SwapTile(newState);
     }
