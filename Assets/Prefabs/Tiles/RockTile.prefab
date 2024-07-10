@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2191178261345823421}
   - component: {fileID: 5421474129000544351}
   - component: {fileID: 6464875052836390546}
-  - component: {fileID: 2091546371871717224}
-  - component: {fileID: 1853180840396454421}
+  - component: {fileID: 6055269936246452149}
+  - component: {fileID: 7824209450579699501}
   m_Layer: 0
   m_Name: RockTile
   m_TagString: Untagged
@@ -95,7 +95,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2091546371871717224
+--- !u!114 &6055269936246452149
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -104,32 +104,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 2882869677065132526}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: caabb63ef8422459396a15f08d84c459, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b3905b08c22b4ae29823247da822504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightTile: {fileID: 3173166052741747074, guid: 4ebf831dc1e914ea4a247e9fbe81dfda, type: 3}
---- !u!64 &1853180840396454421
-MeshCollider:
+  tileOrnaments:
+  - {fileID: 2929322141969213489}
+  - {fileID: 5233077612970790608}
+  - {fileID: 6695761855243656894}
+  - {fileID: 4122344216472552832}
+  - {fileID: 3482551482187151837}
+  - {fileID: 8461598809205447528}
+  - {fileID: 5001801634535007865}
+  Minimum: 0
+  Maximum: 6
+--- !u!114 &7824209450579699501
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2882869677065132526}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2041144969986664275, guid: 356fbf2300f6b8540914103d877f1c0f, type: 3}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b3905b08c22b4ae29823247da822504, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileOrnaments:
+  - {fileID: 3558577507730330429}
+  - {fileID: 4798234594740470337}
+  - {fileID: 3608286817180375080}
+  Minimum: 2
+  Maximum: 3
 --- !u!1 &2929322141969213489
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,7 +313,7 @@ GameObject:
   - component: {fileID: 3096542030360981771}
   - component: {fileID: 474667712963447266}
   m_Layer: 0
-  m_Name: Rock
+  m_Name: Rock (0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -723,7 +728,7 @@ GameObject:
   - component: {fileID: 453100813558626333}
   - component: {fileID: 3453329394163535417}
   m_Layer: 0
-  m_Name: grass01
+  m_Name: grass01 (0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
