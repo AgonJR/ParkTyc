@@ -49,21 +49,29 @@ public class GridTile : MonoBehaviour
 
     void OnMouseEnter()
     {
+        if (Input.GetMouseButton(0))
+        {
+            ToggleTileState();
+        }
+
         _highlightTileObject.SetActive(true);
         _highlightTileObject.transform.position = _highlightPos;
-
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            OnMouseDown();
-        }
     }
 
     void OnMouseExit()
     {
-        _highlightTileObject.SetActive(false);
+        if (Input.GetMouseButton(0) == false)
+        {
+            _highlightTileObject.SetActive(false);
+        }
     }
 
     private void OnMouseDown()
+    {
+        ToggleTileState();
+    }
+
+    private void ToggleTileState()
     {
         // Temporary - Toggle Between States (Until we have a more specific way)
 
