@@ -11,7 +11,17 @@ public class GridManager : MonoBehaviour
     public int gridSize = 3; //Assuming Square Grid
     public bool regenerateGrid = true;
 
-    private GameObject[,] _grid;
+    private GameObject[,] _gridGOs;
+    private GridTile[,] _gridTiles;
+
+    public enum Direction
+    {
+        North,
+        South,
+        East,
+        West,
+        Any
+    }
 
     private void Awake()
     {
@@ -31,9 +41,10 @@ public class GridManager : MonoBehaviour
     {
         regenerateGrid = false;
 
-        if ( _grid != null ) { foreach (GameObject tile in _grid) { Destroy(tile); } }
+        if ( _gridGOs != null ) { foreach (GameObject tile in _gridGOs) { Destroy(tile); } }
 
-        _grid = new GameObject[gridSize, gridSize];
+        _gridGOs = new GameObject[gridSize, gridSize];
+        _gridTiles = new GridTile[gridSize, gridSize];
     }
 
     private void GenerateGrid()
@@ -45,12 +56,14 @@ public class GridManager : MonoBehaviour
             {
                 Vector3 position = CalculateTilePosition(q, r);
 
-                GameObject tile = Instantiate(tilePrefab, position, tilePrefab.transform.rotation);
+                GameObject tileGO = Instantiate(tilePrefab, position, tilePrefab.transform.rotation);
+                GridTile   tile   = tileGO.GetComponent<GridTile>();
 
-                tile.transform.parent = this.transform;
-                tile.GetComponent<GridTile>().Initialize(q, r);
+                tile.Initialize(q, r);
+                tileGO.transform.parent = this.transform;
 
-                _grid[q,r] = tile;
+                _gridGOs[q,r] = tileGO;
+                _gridTiles[q,r] = tile;
             }
         }
     }
@@ -70,5 +83,48 @@ public class GridManager : MonoBehaviour
         z += q % 2 == 0.0f ? 0.0f : oddOffset;
 
         return new Vector3(x, 0.0f, z);
+    }
+
+    // Finds and returns an edge tile of a specific type
+    public GameObject ScanEdgeTiles(GridTile.TileState tileType, Direction direction = Direction.Any)
+    {
+        if (_gridGOs != null)
+        {
+            for (int q = 0; q < gridSize; q++) //column
+            {
+                for (int r = 0; r < gridSize; r++) //row
+                {
+                    if (direction == Direction.Any)
+                    {
+                        if (q == 0 || q == gridSize - 1 || r == 0 || r == gridSize - 1)
+                        {
+                            if (_gridTiles[q, r].state == tileType)
+                            {
+                                return _gridGOs[q, r];
+                            }
+                        }
+                    }
+                    else if (direction == Direction.West && q == 0)
+                    {
+                        if (_gridTiles[q, r].state == tileType) { return _gridGOs[q, r]; }
+                    }
+                    else if (direction == Direction.East && q == gridSize - 1)
+                    {
+                        if (_gridTiles[q, r].state == tileType) { return _gridGOs[q, r]; }
+                    }
+                    else if (direction == Direction.North && r == 0)
+                    {
+                        if (_gridTiles[q, r].state == tileType) { return _gridGOs[q, r]; }
+                    }
+                    else if (direction == Direction.South && r == gridSize - 1)
+                    {
+                        if (_gridTiles[q, r].state == tileType) { return _gridGOs[q, r]; }
+                    }
+                }
+            }
+        }
+    
+
+        return null;
     }
 }
