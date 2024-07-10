@@ -9,13 +9,17 @@ public class GridTile : MonoBehaviour
     public GameObject tileGrass;
     public GameObject tileDirt ;
     public GameObject tileTree ;
+    public GameObject tileBush ;
+    public GameObject tileRock ;
 
     public enum TileState
     {
         Base,
         Grass,
         Dirt,
-        Tree
+        Tree,
+        Bush,
+        Rock,
     }
 
     [Header("Tile Status")]
@@ -83,13 +87,17 @@ public class GridTile : MonoBehaviour
         {
             case TileState.Base:  newState = TileState.Dirt;  break;
             case TileState.Dirt:  newState = TileState.Grass; break;
-            case TileState.Grass: newState = TileState.Tree;  break;
+            case TileState.Grass: newState = TileState.Bush;  break;
+            case TileState.Bush:  newState = TileState.Rock;  break;
+            case TileState.Rock:  newState = TileState.Tree;  break;
             case TileState.Tree:  newState = TileState.Base;  break;
         }
 
         if (Input.GetKey(KeyCode.Alpha1)) newState = TileState.Dirt ;
         if (Input.GetKey(KeyCode.Alpha2)) newState = TileState.Grass;
         if (Input.GetKey(KeyCode.Alpha3)) newState = TileState.Tree ;
+        if (Input.GetKey(KeyCode.Alpha4)) newState = TileState.Bush ;
+        if (Input.GetKey(KeyCode.Alpha5)) newState = TileState.Rock ;
         if (Input.GetKey(KeyCode.Alpha0)) newState = TileState.Base ;
 
         SwapTile(newState);
@@ -103,5 +111,7 @@ public class GridTile : MonoBehaviour
         if (tileGrass != null) tileGrass.SetActive(TileState.Grass == state);
         if (tileDirt  != null)  tileDirt.SetActive(TileState.Dirt  == state);
         if (tileTree  != null)  tileTree.SetActive(TileState.Tree  == state);
+        if (tileBush  != null)  tileBush.SetActive(TileState.Bush  == state);
+        if (tileRock  != null)  tileRock.SetActive(TileState.Rock  == state);
     }
 }
