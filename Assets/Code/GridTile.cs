@@ -32,6 +32,7 @@ public class GridTile : MonoBehaviour
         if (GridTile._highlightTileObject == null)
         {
             _highlightTileObject = Instantiate(highlightTile, Vector3.zero, highlightTile.transform.rotation);
+            _highlightTileObject.name = "Highlight Tile";
             _highlightTileObject.SetActive(false);
         }
     }
@@ -56,6 +57,7 @@ public class GridTile : MonoBehaviour
 
         _highlightTileObject.SetActive(true);
         _highlightTileObject.transform.position = _highlightPos;
+        _highlightTileObject.name = "Highlight Tile (" + _coordinates.x + " ," + _coordinates.y + ")";
     }
 
     void OnMouseExit()
