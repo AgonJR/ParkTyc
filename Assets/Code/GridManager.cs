@@ -49,7 +49,6 @@ public class GridManager : MonoBehaviour
 
     private void GenerateGrid()
     {
-
         for (int q = 0; q < gridSize; q++) //column
         {
             for (int r = 0; r < gridSize; r++) //row
@@ -60,6 +59,7 @@ public class GridManager : MonoBehaviour
                 GridTile   tile   = tileGO.GetComponent<GridTile>();
 
                 tile.Initialize(q, r);
+                tile.SwapTile(GridTile.TileState.Grass);
                 tileGO.transform.parent = this.transform;
 
                 _gridGOs[q,r] = tileGO;

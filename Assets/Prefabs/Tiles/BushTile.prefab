@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 1209956080895783874}
   - component: {fileID: 3072250113815795505}
   - component: {fileID: 3652031139160881292}
-  - component: {fileID: 8817502986085518618}
-  - component: {fileID: 7894211801466619883}
+  - component: {fileID: 4752722523557808588}
   m_Layer: 0
   m_Name: BushTile
   m_TagString: Untagged
@@ -92,7 +91,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8817502986085518618
+--- !u!114 &4752722523557808588
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,32 +100,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 3144451175480277644}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: caabb63ef8422459396a15f08d84c459, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b3905b08c22b4ae29823247da822504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightTile: {fileID: 3173166052741747074, guid: 4ebf831dc1e914ea4a247e9fbe81dfda, type: 3}
---- !u!64 &7894211801466619883
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3144451175480277644}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2041144969986664275, guid: 356fbf2300f6b8540914103d877f1c0f, type: 3}
+  tileOrnaments:
+  - {fileID: 5536883832204085229}
+  - {fileID: 9002743352476207599}
+  - {fileID: 6076365806458393461}
+  - {fileID: 5965414527525346935}
+  - {fileID: 8769817449326112387}
+  - {fileID: 7039973767100101105}
+  Minimum: 0
+  Maximum: 6
 --- !u!1 &5536883832204085229
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,7 +124,7 @@ GameObject:
   - component: {fileID: 6882257455450295043}
   - component: {fileID: 5465560710752571967}
   m_Layer: 0
-  m_Name: grass01
+  m_Name: grass01 (0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
