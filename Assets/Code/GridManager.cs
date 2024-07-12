@@ -49,7 +49,7 @@ public class GridManager : MonoBehaviour
         _gridTiles = new GridTile[gridSize, gridSize];
     }
 
-    private void GenerateGrid()
+    public void GenerateGrid()
     {
         for (int q = 0; q < gridSize; q++) //column
         {
@@ -70,6 +70,17 @@ public class GridManager : MonoBehaviour
         }
 
         mCam.FrameGrid(_gridGOs[0, 0].transform, _gridGOs[gridSize - 1, gridSize - 1].transform);
+    }
+
+    // For String Input From Debug Panel
+    public void SetGridSize(string newSize)
+    {
+        gridSize = int.Parse(newSize);
+    }
+
+    public void ExternalRegenerate()
+    {
+        regenerateGrid = true;
     }
 
     private Vector3 CalculateTilePosition(int q, int r)

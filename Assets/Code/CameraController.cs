@@ -6,13 +6,18 @@ public class CameraController : MonoBehaviour
    [Space]
     public float zoomSpeed = 3.0f ;
     public float maxZoom   = 31.0f;      
-    public float minZoom   = 11.0f;       
+    public float minZoom   = 11.0f;
+
+    [Header("Debugging")]
+    public GameObject debugUIPanel;
+    public GameObject screenBlockr;
 
 
     void Update()
     {
         processWASD();
         processScroll();
+        processDebug();
     }
 
     private void processWASD()
@@ -33,6 +38,15 @@ public class CameraController : MonoBehaviour
         newYPosition = Mathf.Clamp(newYPosition, minZoom, maxZoom);
 
         transform.position = new Vector3(transform.position.x, newYPosition, transform.position.z);
+    }
+
+    private void processDebug()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            screenBlockr.SetActive(!screenBlockr.activeInHierarchy);
+            debugUIPanel.SetActive(!debugUIPanel.activeInHierarchy);
+        }
     }
 
     public void FrameGrid(Transform topLeftTile, Transform botRightTile)
