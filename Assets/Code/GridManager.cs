@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GridManager : MonoBehaviour
 {
@@ -6,6 +7,7 @@ public class GridManager : MonoBehaviour
 
     [Header("Data")]
     public GameObject tilePrefab;
+    public CameraController mCam;
 
     [Header("Dev Tools")]
     public int gridSize = 3; //Assuming Square Grid
@@ -66,6 +68,8 @@ public class GridManager : MonoBehaviour
                 _gridTiles[q,r] = tile;
             }
         }
+
+        mCam.FrameGrid(_gridGOs[0, 0].transform, _gridGOs[gridSize - 1, gridSize - 1].transform);
     }
 
     private Vector3 CalculateTilePosition(int q, int r)
@@ -86,45 +90,49 @@ public class GridManager : MonoBehaviour
     }
 
     // Finds and returns an edge tile of a specific type
-    public GameObject ScanEdgeTiles(GridTile.TileState tileType, Direction direction = Direction.Any)
+    public List<GameObject> ScanEdgeTiles(GridTile.TileState tileType, Direction direction = Direction.Any)
     {
+        List<GameObject> edgeTiles = new();
+
         if (_gridGOs != null)
         {
-            for (int q = 0; q < gridSize; q++) //column
+            int s = (int) Mathf.Sqrt(_gridGOs.Length);
+
+            for (int q = 0; q < s; q++) //column
             {
-                for (int r = 0; r < gridSize; r++) //row
+                for (int r = 0; r < s; r++) //row
                 {
                     if (direction == Direction.Any)
                     {
-                        if (q == 0 || q == gridSize - 1 || r == 0 || r == gridSize - 1)
+                        if (q == 0 || q == s - 1 || r == 0 || r == s - 1)
                         {
                             if (_gridTiles[q, r].state == tileType)
                             {
-                                return _gridGOs[q, r];
+                                edgeTiles.Add(_gridGOs[q, r]);
                             }
                         }
                     }
                     else if (direction == Direction.West && q == 0)
                     {
-                        if (_gridTiles[q, r].state == tileType) { return _gridGOs[q, r]; }
+                        if (_gridTiles[q, r].state == tileType) { edgeTiles.Add(_gridGOs[q, r]); }
                     }
-                    else if (direction == Direction.East && q == gridSize - 1)
+                    else if (direction == Direction.East && q == s - 1)
                     {
-                        if (_gridTiles[q, r].state == tileType) { return _gridGOs[q, r]; }
+                        if (_gridTiles[q, r].state == tileType) { edgeTiles.Add(_gridGOs[q, r]); }
                     }
                     else if (direction == Direction.North && r == 0)
                     {
-                        if (_gridTiles[q, r].state == tileType) { return _gridGOs[q, r]; }
+                        if (_gridTiles[q, r].state == tileType) { edgeTiles.Add(_gridGOs[q, r]); }
                     }
-                    else if (direction == Direction.South && r == gridSize - 1)
+                    else if (direction == Direction.South && r == s - 1)
                     {
-                        if (_gridTiles[q, r].state == tileType) { return _gridGOs[q, r]; }
+                        if (_gridTiles[q, r].state == tileType) { edgeTiles.Add(_gridGOs[q, r]); }
                     }
                 }
             }
         }
     
 
-        return null;
+        return edgeTiles;
     }
 }

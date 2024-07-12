@@ -2928,9 +2928,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1965732900fae4e5582a4b8c98f09bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NPCPrefab: {fileID: 7844687039791577156, guid: 2665fd90d5aad49d2ad3fb7057765131, type: 3}
-  spwnTile: {fileID: 0}
-  exitTile: {fileID: 0}
+  npcPrefab: {fileID: 7844687039791577156, guid: 2665fd90d5aad49d2ad3fb7057765131, type: 3}
+  npcSpeed: 7
+  spawnWait: 5
+  spwnTiles: []
+  exitTiles: []
 --- !u!4 &1641841350
 Transform:
   m_ObjectHideFlags: 0
@@ -3837,7 +3839,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 3760563204290690687, guid: c8dae984e33ab4aafb79083ac812cffb, type: 3}
-  gridSize: 21
+  mCam: {fileID: 963194229}
+  gridSize: 7
   regenerateGrid: 1
 --- !u!1001 &2084213120
 PrefabInstance:

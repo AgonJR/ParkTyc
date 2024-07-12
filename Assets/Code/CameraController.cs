@@ -34,4 +34,15 @@ public class CameraController : MonoBehaviour
 
         transform.position = new Vector3(transform.position.x, newYPosition, transform.position.z);
     }
+
+    public void FrameGrid(Transform topLeftTile, Transform botRightTile)
+    {
+        if (topLeftTile != null && botRightTile != null)
+        {
+            Bounds bounds = new Bounds(topLeftTile.position, Vector3.zero);
+            bounds.Encapsulate(botRightTile.position);
+
+            Camera.main.transform.position = bounds.center - Vector3.forward * 21.0f;
+        }
+    }
 }

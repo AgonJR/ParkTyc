@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7344405676994767098}
   - component: {fileID: 294584246105975569}
   - component: {fileID: 2337150315173290075}
+  - component: {fileID: -5180743805520029324}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -83,3 +84,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-5180743805520029324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7844687039791577156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cdce4e6e52fb406bbb624539dff911d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetExit: {fileID: 0}
+  minExitDistance: 3
