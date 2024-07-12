@@ -37,6 +37,7 @@ Transform:
   - {fileID: 2147696294297286461}
   - {fileID: 1538878350419215610}
   - {fileID: 1996015799563478152}
+  - {fileID: 3731600576461999642}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!114 &5202157811434392987
@@ -58,6 +59,7 @@ MonoBehaviour:
   tileTree: {fileID: 7235173320899761942}
   tileBush: {fileID: 3328939398909955508}
   tileRock: {fileID: 3303925229740971995}
+  tileWater: {fileID: 4044329163615658898}
   state: 0
 --- !u!64 &-681877845930211764
 MeshCollider:
@@ -81,6 +83,77 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2041144969986664275, guid: 356fbf2300f6b8540914103d877f1c0f, type: 3}
+--- !u!1001 &387204149764669706
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7310847337773381802}
+    m_Modifications:
+    - target: {fileID: 3933594019685125904, guid: a0c698494a93491489c537b1ee5b7f0e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3933594019685125904, guid: a0c698494a93491489c537b1ee5b7f0e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3933594019685125904, guid: a0c698494a93491489c537b1ee5b7f0e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3933594019685125904, guid: a0c698494a93491489c537b1ee5b7f0e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3933594019685125904, guid: a0c698494a93491489c537b1ee5b7f0e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3933594019685125904, guid: a0c698494a93491489c537b1ee5b7f0e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3933594019685125904, guid: a0c698494a93491489c537b1ee5b7f0e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3933594019685125904, guid: a0c698494a93491489c537b1ee5b7f0e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3933594019685125904, guid: a0c698494a93491489c537b1ee5b7f0e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3933594019685125904, guid: a0c698494a93491489c537b1ee5b7f0e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4431533156613989016, guid: a0c698494a93491489c537b1ee5b7f0e, type: 3}
+      propertyPath: m_Name
+      value: WaterTile
+      objectReference: {fileID: 0}
+    - target: {fileID: 4431533156613989016, guid: a0c698494a93491489c537b1ee5b7f0e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a0c698494a93491489c537b1ee5b7f0e, type: 3}
+--- !u!4 &3731600576461999642 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3933594019685125904, guid: a0c698494a93491489c537b1ee5b7f0e, type: 3}
+  m_PrefabInstance: {fileID: 387204149764669706}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4044329163615658898 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4431533156613989016, guid: a0c698494a93491489c537b1ee5b7f0e, type: 3}
+  m_PrefabInstance: {fileID: 387204149764669706}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &401261347483629368
 PrefabInstance:
   m_ObjectHideFlags: 0

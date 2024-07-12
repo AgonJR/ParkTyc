@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 5984247885893937512}
   - component: {fileID: 5459516192703254564}
   - component: {fileID: 2171365868029184773}
-  - component: {fileID: 4768998990274549761}
-  - component: {fileID: 8232903704214608546}
   - component: {fileID: 1488575384698258567}
   m_Layer: 0
   m_Name: GrassTile
@@ -93,46 +91,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4768998990274549761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1164927692380908131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: caabb63ef8422459396a15f08d84c459, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  highlightTile: {fileID: 3173166052741747074, guid: 4ebf831dc1e914ea4a247e9fbe81dfda, type: 3}
-  tileBase: {fileID: 0}
-  tileGrass: {fileID: 0}
-  tileDirt: {fileID: 0}
-  tileTree: {fileID: 0}
-  state: 0
---- !u!64 &8232903704214608546
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1164927692380908131}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2041144969986664275, guid: 356fbf2300f6b8540914103d877f1c0f, type: 3}
 --- !u!114 &1488575384698258567
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ public class GridTile : MonoBehaviour
     public GameObject tileTree ;
     public GameObject tileBush ;
     public GameObject tileRock ;
+    public GameObject tileWater;
 
     public enum TileState
     {
@@ -20,6 +21,7 @@ public class GridTile : MonoBehaviour
         Tree,
         Bush,
         Rock,
+        Water
     }
 
     [Header("Tile Status")]
@@ -89,7 +91,8 @@ public class GridTile : MonoBehaviour
             case TileState.Dirt:  newState = TileState.Grass; break;
             case TileState.Grass: newState = TileState.Bush;  break;
             case TileState.Bush:  newState = TileState.Rock;  break;
-            case TileState.Rock:  newState = TileState.Tree;  break;
+            case TileState.Rock:  newState = TileState.Water;  break;
+            case TileState.Water: newState = TileState.Tree;  break;
             case TileState.Tree:  newState = TileState.Base;  break;
         }
 
@@ -98,6 +101,7 @@ public class GridTile : MonoBehaviour
         if (Input.GetKey(KeyCode.Alpha3)) newState = TileState.Tree ;
         if (Input.GetKey(KeyCode.Alpha4)) newState = TileState.Bush ;
         if (Input.GetKey(KeyCode.Alpha5)) newState = TileState.Rock ;
+        if (Input.GetKey(KeyCode.Alpha6)) newState = TileState.Water;
         if (Input.GetKey(KeyCode.Alpha0)) newState = TileState.Base ;
 
         SwapTile(newState);
@@ -113,5 +117,6 @@ public class GridTile : MonoBehaviour
         if (tileTree  != null)  tileTree.SetActive(TileState.Tree  == state);
         if (tileBush  != null)  tileBush.SetActive(TileState.Bush  == state);
         if (tileRock  != null)  tileRock.SetActive(TileState.Rock  == state);
+        if (tileWater != null) tileWater.SetActive(TileState.Water == state);
     }
 }
