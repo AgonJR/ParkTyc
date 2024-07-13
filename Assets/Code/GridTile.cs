@@ -81,23 +81,9 @@ public class GridTile : MonoBehaviour
 
     private void ToggleTileState()
     {
-        // Temporary - Toggle Between States (Until we have a more specific way)
-
-        // TileState newState = TileState.Base;
-
         TileState newState = HUDManager.selectedType;
 
-        // switch (state)
-        // {
-        //     case TileState.Base:  newState = TileState.Dirt;  break;
-        //     case TileState.Dirt:  newState = TileState.Grass; break;
-        //     case TileState.Grass: newState = TileState.Bush;  break;
-        //     case TileState.Bush:  newState = TileState.Rock;  break;
-        //     case TileState.Rock:  newState = TileState.Water;  break;
-        //     case TileState.Water: newState = TileState.Tree;  break;
-        //     case TileState.Tree:  newState = TileState.Base;  break;
-        // }
-
+        // Override UI Selectrion By Holding Down Keyboard Numbers
         if (Input.GetKey(KeyCode.Alpha1)) newState = TileState.Dirt ;
         if (Input.GetKey(KeyCode.Alpha2)) newState = TileState.Grass;
         if (Input.GetKey(KeyCode.Alpha3)) newState = TileState.Tree ;
