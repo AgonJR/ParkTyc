@@ -11,6 +11,7 @@ public class CameraController : MonoBehaviour
     [Header("Debugging")]
     public GameObject debugUIPanel;
     public GameObject screenBlockr;
+    public GameObject gameplayHUD;
 
 
     void Update()
@@ -46,6 +47,8 @@ public class CameraController : MonoBehaviour
         {
             screenBlockr.SetActive(!screenBlockr.activeInHierarchy);
             debugUIPanel.SetActive(!debugUIPanel.activeInHierarchy);
+
+            gameplayHUD.SetActive(!debugUIPanel.activeInHierarchy);
         }
     }
 
