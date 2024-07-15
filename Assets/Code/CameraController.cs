@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour
     public float zoomSpeed = 3.0f ;
     public float maxZoom   = 31.0f;      
     public float minZoom   = 11.0f;
+    public bool invrseZoom = false;
 
     [Header("Debugging")]
     public GameObject debugUIPanel;
@@ -33,7 +34,7 @@ public class CameraController : MonoBehaviour
 
     private void processScroll()
     {
-        float scrollInput  = Input.GetAxis("Mouse ScrollWheel");
+        float scrollInput  = Input.GetAxis("Mouse ScrollWheel") * (invrseZoom ? 1.0f : -1.0f);
         float newYPosition = transform.position.y + scrollInput * zoomSpeed;
 
         newYPosition = Mathf.Clamp(newYPosition, minZoom, maxZoom);
@@ -61,5 +62,10 @@ public class CameraController : MonoBehaviour
 
             Camera.main.transform.position = bounds.center - Vector3.forward * 21.0f;
         }
+    }
+
+    public void ToggleZoomInverse()
+    {
+        invrseZoom = !invrseZoom;
     }
 }
