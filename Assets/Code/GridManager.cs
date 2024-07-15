@@ -16,6 +16,8 @@ public class GridManager : MonoBehaviour
     private GameObject[,] _gridGOs;
     private GridTile[,] _gridTiles;
 
+    private static Stack<TileStateHistory> undoStack;
+
     public enum Direction
     {
         North,
@@ -37,6 +39,8 @@ public class GridManager : MonoBehaviour
             ClearGrid();
             GenerateGrid();
         }
+
+        CheckInputForUndo();
     }
 
     private void ClearGrid()
@@ -45,8 +49,9 @@ public class GridManager : MonoBehaviour
 
         if ( _gridGOs != null ) { foreach (GameObject tile in _gridGOs) { Destroy(tile); } }
 
-        _gridGOs = new GameObject[gridSize, gridSize];
+        _gridGOs   = new GameObject[gridSize, gridSize];
         _gridTiles = new GridTile[gridSize, gridSize];
+        undoStack  = new Stack<TileStateHistory>();
     }
 
     public void GenerateGrid()
@@ -61,8 +66,8 @@ public class GridManager : MonoBehaviour
                 GridTile   tile   = tileGO.GetComponent<GridTile>();
 
                 tile.Initialize(q, r);
-                tile.SwapTile(GridTile.TileState.Grass);
                 tileGO.transform.parent = this.transform;
+                tile.SwapTile(GridTile.TileState.Grass, addToUndo: false);
 
                 _gridGOs[q,r] = tileGO;
                 _gridTiles[q,r] = tile;
@@ -145,5 +150,36 @@ public class GridManager : MonoBehaviour
     
 
         return edgeTiles;
+    }
+
+    public static void AddToUndoHistory(TileStateHistory latestTileSwap)
+    {
+        GridManager.undoStack.Push(latestTileSwap);
+    }
+
+    public void CheckInputForUndo()
+    {
+        if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.LeftCommand))
+        {
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                DoUndo();
+            }
+        }
+    }
+
+    public void DoUndo()
+    {
+        if (GridManager.undoStack.Count == 0)
+        {
+            return;
+        }
+
+        TileStateHistory latestTileSwapData = GridManager.undoStack.Pop();
+
+        int q = (int) latestTileSwapData.coordinates.x;
+        int r = (int) latestTileSwapData.coordinates.y;
+
+        _gridTiles[q, r].SwapTile(latestTileSwapData.startState, addToUndo:false);
     }
 }
