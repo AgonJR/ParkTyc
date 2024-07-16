@@ -11,10 +11,10 @@ public class NPCManager : MonoBehaviour
     [Space]
 
     [Header("Dev Tools")]
-    [SerializeField] private List<GameObject> spwnTiles;
-    [SerializeField] private List<GameObject> exitTiles;
-    [SerializeField] private List<GameObject> spawnedNPCs;
-                     private List<NPCBrain> spndNPCBrains;
+    [SerializeField] private List<GameObject> _spwnTiles;
+    [SerializeField] private List<GameObject> _exitTiles;
+    [SerializeField] private List<GameObject> _spawnedNPCs;
+                     private List<NPCBrain> _spndNPCBrains;
 
     private float spawnDelay = 0;
 
@@ -31,8 +31,11 @@ public class NPCManager : MonoBehaviour
 
     void ScanTiles()
     {
-        spwnTiles = GridManager.instance.ScanEdgeTiles(GridTile.TileState.Dirt, GridManager.Direction.West);
-        exitTiles = GridManager.instance.ScanEdgeTiles(GridTile.TileState.Dirt, GridManager.Direction.East);
+        _spwnTiles = GridManager.instance.ScanEdgeTiles(GridTile.TileState.Dirt, GridManager.Direction.West);
+
+        _exitTiles.AddRange(GridManager.instance.ScanEdgeTiles(GridTile.TileState.Dirt, GridManager.Direction.East ));
+        _exitTiles.AddRange(GridManager.instance.ScanEdgeTiles(GridTile.TileState.Dirt, GridManager.Direction.North));
+        _exitTiles.AddRange(GridManager.instance.ScanEdgeTiles(GridTile.TileState.Dirt, GridManager.Direction.South));
     }
 
     private void Update()
@@ -42,16 +45,16 @@ public class NPCManager : MonoBehaviour
 
     public void ClearNPCs()
     {
-        if (spawnedNPCs != null)
+        if (_spawnedNPCs != null)
         {
-            foreach (GameObject npcGO in spawnedNPCs)
+            foreach (GameObject npcGO in _spawnedNPCs)
             {
                 ClearNPC(npcGO);
             }
         }
 
-        spawnedNPCs = new List<GameObject>();
-        spndNPCBrains = new List<NPCBrain>();
+        _spawnedNPCs = new List<GameObject>();
+        _spndNPCBrains = new List<NPCBrain>();
 
         spawnDelay = spawnWait;
     }
@@ -60,20 +63,25 @@ public class NPCManager : MonoBehaviour
     {
         Destroy(NPC);
 
-        for (int i = 0; i < spawnedNPCs.Count; i++)
+        for (int i = 0; i < _spawnedNPCs.Count; i++)
         {
-            if (spawnedNPCs[i] == null)
+            if (_spawnedNPCs[i] == null)
             {
-                spawnedNPCs.RemoveAt(i);
-                spndNPCBrains.RemoveAt(i);
+                _spawnedNPCs.RemoveAt(i);
+                _spndNPCBrains.RemoveAt(i);
                 i--;
             }
         }
     }
 
+    public static List<GameObject> RequestExitTiles()
+    {
+        return instance._exitTiles;
+    }
+
     private void SpawnCheck()
     {
-        if (spawnedNPCs.Count < maxSpawns && npcPrefab != null && spwnTiles.Count > 0)
+        if (_spawnedNPCs.Count < maxSpawns && npcPrefab != null && _spwnTiles.Count > 0)
         {
             if ( spawnDelay > 0 )
             {
@@ -81,7 +89,7 @@ public class NPCManager : MonoBehaviour
                 return;
             }
 
-            GameObject spawn = spwnTiles[(int)Random.Range(0, spwnTiles.Count)];
+            GameObject spawn = _spwnTiles[(int)Random.Range(0, _spwnTiles.Count)];
 
             Vector3 spawnPos = new Vector3(spawn.transform.position.x, 2.0f, spawn.transform.position.z);
 
@@ -94,10 +102,10 @@ public class NPCManager : MonoBehaviour
             int r = spawnTile.GetRow();
 
             newBrain.Init(q, r);
-            newBrain.SelectExitTarget(exitTiles);
+            newBrain.SelectExitTarget(_exitTiles);
 
-            spawnedNPCs.Add(newNPC);
-            spndNPCBrains.Add(newBrain);
+            _spawnedNPCs.Add(newNPC);
+            _spndNPCBrains.Add(newBrain);
 
             spawnDelay = spawnWait;
         }

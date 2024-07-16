@@ -43,6 +43,11 @@ public class NPCBrain : MonoBehaviour
 
     private void ProcessMovement()
     {
+        if (_exitTarget == null)
+        {
+            SelectExitTarget(NPCManager.RequestExitTiles());
+        }
+
         if (nextTarget == null)
         {
             SelectNextTargetTile();
