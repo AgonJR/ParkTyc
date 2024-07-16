@@ -18,9 +18,13 @@ public class NPCManager : MonoBehaviour
 
     private float spawnDelay = 0;
 
+    public static NPCManager instance;
+
 
     void Start()
     {
+        instance = this;
+
         ClearNPCs();
         InvokeRepeating("ScanTiles", 0.0f, 1.0f);
     }
@@ -42,7 +46,7 @@ public class NPCManager : MonoBehaviour
         {
             foreach (GameObject npcGO in spawnedNPCs)
             {
-                Destroy(npcGO);
+                ClearNPC(npcGO);
             }
         }
 
@@ -50,6 +54,21 @@ public class NPCManager : MonoBehaviour
         spndNPCBrains = new List<NPCBrain>();
 
         spawnDelay = spawnWait;
+    }
+
+    public void ClearNPC(GameObject NPC)
+    {
+        Destroy(NPC);
+
+        for (int i = 0; i < spawnedNPCs.Count; i++)
+        {
+            if (spawnedNPCs[i] == null)
+            {
+                spawnedNPCs.RemoveAt(i);
+                spndNPCBrains.RemoveAt(i);
+                i--;
+            }
+        }
     }
 
     private void SpawnCheck()

@@ -4581,6 +4581,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1641841349}
+        m_TargetAssemblyTypeName: NPCManager, Assembly-CSharp
+        m_MethodName: ClearNPCs
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1423541154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5964,7 +5976,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcPrefab: {fileID: 7844687039791577156, guid: 2665fd90d5aad49d2ad3fb7057765131, type: 3}
   npcSpeed: 7
-  spawnWait: 3
+  spawnWait: 1.5
   maxSpawns: 3
   spwnTiles: []
   exitTiles: []

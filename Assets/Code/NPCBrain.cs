@@ -66,7 +66,7 @@ public class NPCBrain : MonoBehaviour
                 if (_exitCoordinates == _coordinates)
                 {
                     Debug.Log(" --- ! N P C ! Exit ! +5 Points !");
-                    Destroy(gameObject);
+                    NPCManager.instance.ClearNPC(gameObject);
                 }
 
                 _gridVisited[q, r]++;
