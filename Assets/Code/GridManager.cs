@@ -18,6 +18,7 @@ public class GridManager : MonoBehaviour
 
     private GameObject[,] _gridGOs;
     private GridTile[,] _gridTiles;
+    private GameObject  gridParent;
 
     private GameObject[] _bordrGOs;
     private GameObject bordrParent;
@@ -65,6 +66,12 @@ public class GridManager : MonoBehaviour
 
     public void GenerateGrid()
     {
+        if (gridParent == null)
+        {
+            gridParent = new GameObject("Grid Tiles");
+            gridParent.transform.parent = this.transform;
+        }
+
         for (int q = 0; q < gridSize; q++) //column
         {
             for (int r = 0; r < gridSize; r++) //row
@@ -75,7 +82,7 @@ public class GridManager : MonoBehaviour
                 GridTile   tile   = tileGO.GetComponent<GridTile>();
 
                 tile.Initialize(q, r);
-                tileGO.transform.parent = this.transform;
+                tileGO.transform.parent = gridParent.transform;
                 tile.SwapTile(GridTile.TileState.Grass, addToUndo: false);
 
                 _gridGOs[q,r] = tileGO;
