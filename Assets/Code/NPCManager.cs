@@ -73,6 +73,8 @@ public class NPCManager : MonoBehaviour
                 i--;
 
                 Destroy(NPC);
+
+                GameManager.instance.hudManagerRef.DisplayVisitorCount();
             }
         }
     }
@@ -111,6 +113,13 @@ public class NPCManager : MonoBehaviour
             _spndNPCBrains.Add(newBrain);
 
             spawnDelay = spawnWait;
+
+            GameManager.instance.hudManagerRef.DisplayVisitorCount();
         }
+    }
+
+    public static int GetNPCCount()
+    {
+        return instance._spawnedNPCs.Count;
     }
 }

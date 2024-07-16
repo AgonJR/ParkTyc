@@ -1,14 +1,24 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class HUDManager : MonoBehaviour
 {
     static public GridTile.TileState selectedType;
 
+    [Header("Tile Buttons")]
     public Color defaultColour;
     public Color selectdColour;
     [Space]
     public Button[] tileButts;
+
+    [Header("Labels")]
+    public TMP_Text ScoreText;
+    public TMP_Text DeltaText;
+    public Animator ScoreAnimator;
+    [Space]
+    public TMP_Text VisitorText;
+
 
 
     void Start()
@@ -42,5 +52,24 @@ public class HUDManager : MonoBehaviour
             colors.normalColor = i + 1 == (int)selectedType ? selectdColour : defaultColour;
             tileButts[i].colors = colors;
         }
+    }
+
+    public void DisplayScoreChange(int amount)
+    {
+        string sign = amount >= 0 ? "+" : "-";
+
+        string deltaString = sign + amount + "!";
+        string scoreString = "Score: " + GameManager.Score.ToString("000");
+
+        ScoreText.text = scoreString;
+        DeltaText.text = deltaString;
+
+        ScoreAnimator.Play("UI_ScoreIncreaseAnim");
+    }
+
+    public void DisplayVisitorCount()
+    {
+        string visitorString = "Visitors: " + NPCManager.GetNPCCount();
+        VisitorText.text = visitorString;
     }
 }
