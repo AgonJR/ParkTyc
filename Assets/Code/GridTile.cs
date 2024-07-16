@@ -36,6 +36,17 @@ public class GridTile : MonoBehaviour
         { TileState.Water,-1 }
     };
 
+    public static readonly Dictionary<TileState, int> stateUnlockCost = new()
+    {
+        { TileState.Base,  0  },
+        { TileState.Grass, 0  },
+        { TileState.Dirt,  0  },
+        { TileState.Tree,  5  },
+        { TileState.Bush,  0  },
+        { TileState.Rock,  20 },
+        { TileState.Water, 35 }
+    };
+
     [Header("Tile Status")]
     public TileState state = TileState.Base;
 

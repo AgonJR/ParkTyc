@@ -24,6 +24,8 @@ public class HUDManager : MonoBehaviour
     void Start()
     {
         SelectTileType(GridTile.TileState.Bush);
+
+        ReviewUnlockedButtons();
     }
 
     private void Update()
@@ -44,13 +46,26 @@ public class HUDManager : MonoBehaviour
 
     public void SelectTileType(int tile)
     {
-        selectedType = (GridTile.TileState) tile;
+        int index = (int)tile - 1;
 
+        if (tileButts[index].interactable)
+        {
+            selectedType = (GridTile.TileState)tile;
+
+            for (int i = 0; i < tileButts.Length; i++)
+            {
+                var colors = tileButts[i].colors;
+                colors.normalColor = i + 1 == (int)selectedType ? selectdColour : defaultColour;
+                tileButts[i].colors = colors;
+            }
+        }
+    }
+
+    private void ReviewUnlockedButtons()
+    {
         for (int i = 0; i < tileButts.Length; i++)
         {
-            var colors = tileButts[i].colors;
-            colors.normalColor = i + 1 == (int)selectedType ? selectdColour : defaultColour;
-            tileButts[i].colors = colors;
+            tileButts[i].interactable = GridTile.stateUnlockCost[(GridTile.TileState)(i + 1)] <= GameManager.Score;
         }
     }
 
@@ -61,6 +76,8 @@ public class HUDManager : MonoBehaviour
 
         ScoreText.text = scoreString;
         DeltaText.text = deltaString;
+
+        ReviewUnlockedButtons();
 
         ScoreAnimator.Play("UI_ScoreIncreaseAnim");
     }
