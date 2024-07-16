@@ -1,0 +1,16 @@
+{
+  "name": "com.fronkongames.artistic.oilpaint",
+  "version": "1.1.2",
+  "displayName": "Artistic: Oil Paint",
+  "description": "Video games are art too!",
+  "unity": "2021.3",
+  "unityRelease": "26f1",
+  "dependencies":  {  },
+  "keywords": [ "unity", "fps", "vr", "oil", "paint", "oil paint", "kuwahara", "paint", "frame", "art", "nrp" ],
+  "author":
+  {
+    "name": "Fronkon Games",
+    "email": "fronkongames@gmail.com",
+    "url": "https://fronkongames.github.io/store/artistic/"
+  }
+}
