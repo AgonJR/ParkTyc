@@ -7,17 +7,25 @@ public class NPCBrain : MonoBehaviour
     [Space]
     public GameObject nextTarget;
     public float minTrgtDistance;
+    [Space]
+    public MeshRenderer spwnMesh;
+    public MeshRenderer mainMesh;
+    public GameObject   entryVFX;
 
-    [SerializeField] private int[,] _gridVisited;
-    [SerializeField] private float[,] _exitHeurstx;
+    private int[,] _gridVisited;
+    private float[,] _exitHeurstx;
+    private GameObject _exitTarget;
 
     private Vector2 _coordinates;
-    [SerializeField] private GameObject _exitTarget;
     private Vector2 _exitCoordinates;
+    private Vector2 _entryCoordinates;
+
 
     public void Init(int spawnQ, int spawnR)
     {
         gameObject.name = "N P C  (" + spawnQ + " , " + spawnR + ")";
+
+        _entryCoordinates = new Vector2(spawnQ, spawnR);
 
         int gridSize = GridManager.instance.gridSize;
 
@@ -35,7 +43,6 @@ public class NPCBrain : MonoBehaviour
                 _exitHeurstx[q, r] = 1;
             }
         }
-
 
         _gridVisited[spawnQ, spawnR] = 1;
     }
@@ -71,6 +78,14 @@ public class NPCBrain : MonoBehaviour
                 gameObject.name = "N P C  (" + q + " , " + r + ")";
 
                 _coordinates = new Vector2(q, r);
+
+
+                if (_entryCoordinates == _coordinates)
+                {
+                    spwnMesh.enabled = false;
+                    mainMesh.enabled = true;
+                    entryVFX.SetActive(true);
+                }
 
                 if (_exitCoordinates == _coordinates)
                 {
@@ -143,9 +158,12 @@ public class NPCBrain : MonoBehaviour
             _exitTarget = exitTiles[(int)Random.Range(0, exitTiles.Count)];
         }
 
-        _exitCoordinates = _exitTarget.GetComponent<GridTile>().GetCoordinates();
+        if (_exitTarget != null)
+        {
+            _exitCoordinates = _exitTarget.GetComponent<GridTile>().GetCoordinates();
 
-        GenerateExitHeuristics();
+            GenerateExitHeuristics();
+        }
     }
 
     private void GenerateExitHeuristics()

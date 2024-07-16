@@ -174,7 +174,7 @@ public class GridManager : MonoBehaviour
         return distance;
     }
 
-    private Vector3 CalculateTilePosition(int q, int r)
+    public Vector3 CalculateTilePosition(int q, int r)
     {
         //Hardcoded values match placeholder grid tile
 

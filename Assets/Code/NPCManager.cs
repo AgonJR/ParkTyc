@@ -48,7 +48,7 @@ public class NPCManager : MonoBehaviour
 
     public void ClearNPCs()
     {
-        if (_spawnedNPCs != null)
+        if (_spawnedNPCs != null && _spawnedNPCs.Count > 0)
         {
             foreach (GameObject npcGO in _spawnedNPCs)
             {
@@ -70,6 +70,7 @@ public class NPCManager : MonoBehaviour
             {
                 _spawnedNPCs.RemoveAt(i);
                 _spndNPCBrains.RemoveAt(i);
+
                 i--;
 
                 Destroy(NPC);
@@ -94,26 +95,30 @@ public class NPCManager : MonoBehaviour
                 return;
             }
 
-            GameObject spawn = _spwnTiles[(int)Random.Range(0, _spwnTiles.Count)];
+            // Select Spawn Position
+            GameObject entryTileGO = _spwnTiles[(int)Random.Range(0, _spwnTiles.Count)];
+            GridTile spawnTile = entryTileGO.GetComponent<GridTile>();
 
-            Vector3 spawnPos = new Vector3(spawn.transform.position.x, 2.0f, spawn.transform.position.z);
+            // Assuming Left Column Only for Spawn !
+            Vector3 spawnTilePos = GridManager.instance.CalculateTilePosition(spawnTile.GetColumn() - 1, spawnTile.GetRow());
+            Vector3 spawnPos = new Vector3(spawnTilePos.x, 2.0f, spawnTilePos.z);
 
-            GameObject newNPC = GameObject.Instantiate(npcPrefab, spawnPos, npcPrefab.transform.rotation);
+            // Spawn Objects
+            GameObject newNPC  = GameObject.Instantiate(npcPrefab, spawnPos, npcPrefab.transform.rotation);
+            NPCBrain newBrain  = newNPC.GetComponent<NPCBrain>();
 
-            NPCBrain newBrain = newNPC.GetComponent<NPCBrain>();
-
-            GridTile spawnTile = spawn.GetComponent<GridTile>();
-            int q = spawnTile.GetColumn();
-            int r = spawnTile.GetRow();
-
-            newBrain.Init(q, r);
+            // Initialize Brain
+            newBrain.Init(spawnTile.GetColumn(), spawnTile.GetRow());
             newBrain.SelectExitTarget(_exitTiles);
+            newBrain.nextTarget = entryTileGO;
 
+            // Store References
             _spawnedNPCs.Add(newNPC);
             _spndNPCBrains.Add(newBrain);
 
             spawnDelay = spawnWait;
 
+            // Update U.I.
             GameManager.instance.hudManagerRef.DisplayVisitorCount();
         }
     }

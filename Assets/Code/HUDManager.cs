@@ -56,9 +56,7 @@ public class HUDManager : MonoBehaviour
 
     public void DisplayScoreChange(int amount)
     {
-        string sign = amount >= 0 ? "+" : "-";
-
-        string deltaString = sign + amount + "!";
+        string deltaString = (amount >= 0 ? "+" : "-") + amount;
         string scoreString = "Score: " + GameManager.Score.ToString("000");
 
         ScoreText.text = scoreString;
