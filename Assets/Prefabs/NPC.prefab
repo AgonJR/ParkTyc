@@ -96,6 +96,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cdce4e6e52fb406bbb624539dff911d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcSpeed: 7
+  npcSpeed: 11
   nextTarget: {fileID: 0}
   minTrgtDistance: 3

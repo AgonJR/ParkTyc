@@ -121,6 +121,11 @@ public class NPCBrain : MonoBehaviour
 
     public void SelectExitTarget(List<GameObject> exitTiles)
     {
+        if (exitTiles.Count == 0)
+        {
+            return;
+        }
+
         if (_exitTarget == null)
         {
             _exitTarget = exitTiles[(int)Random.Range(0, exitTiles.Count)];

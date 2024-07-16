@@ -110,15 +110,16 @@ public class GridTile : MonoBehaviour
         if (tileRock  != null)  tileRock.SetActive(TileState.Rock  == state);
         if (tileWater != null) tileWater.SetActive(TileState.Water == state);
 
-        if (targetState == TileState.Bush)
-        {
-            List<GameObject> neighbourGOs = GridManager.instance.GetNeighbouringTiles((int)_coordinates.x, (int)_coordinates.y);
-            for (int i = 0; i < neighbourGOs.Count; i++)
-            {
-                GridTile nextNTile = neighbourGOs[i].GetComponent<GridTile>();
-                nextNTile.SwapTile(TileState.Dirt, false);
-            }
-        }
+        //// Debug - Testing GetNeighboringTiles()
+        //if (targetState == TileState.Bush)
+        //{
+        //    List<GameObject> neighbourGOs = GridManager.instance.GetNeighbouringTiles((int)_coordinates.x, (int)_coordinates.y);
+        //    for (int i = 0; i < neighbourGOs.Count; i++)
+        //    {
+        //        GridTile nextNTile = neighbourGOs[i].GetComponent<GridTile>();
+        //        nextNTile.SwapTile(TileState.Dirt, false);
+        //    }
+        //}
     }
 
     public int GetColumn()
