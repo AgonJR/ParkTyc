@@ -8,9 +8,11 @@ public class NPCBrain : MonoBehaviour
     public GameObject nextTarget;
     public float minTrgtDistance;
 
-    private int[,] _gridVisited;
+    [SerializeField] private int[,] _gridVisited;
+    [SerializeField] private float[,] _exitHeurstx;
+
     private Vector2 _coordinates;
-    private GameObject _exitTarget;
+    [SerializeField] private GameObject _exitTarget;
     private Vector2 _exitCoordinates;
 
     public void Init(int spawnQ, int spawnR)
@@ -22,6 +24,7 @@ public class NPCBrain : MonoBehaviour
         _coordinates = new Vector2(spawnQ, spawnR);
 
         _gridVisited = new int[gridSize, gridSize];
+        _exitHeurstx = new float[gridSize, gridSize];
 
 
         for (int q = 0; q < gridSize; q++) //column
@@ -29,6 +32,7 @@ public class NPCBrain : MonoBehaviour
             for (int r = 0; r < gridSize; r++) //row
             {
                 _gridVisited[q, r] = 0;
+                _exitHeurstx[q, r] = 1;
             }
         }
 
@@ -95,7 +99,7 @@ public class NPCBrain : MonoBehaviour
         List<GameObject> neighbourGOs = GridManager.instance.GetNeighbouringTiles((int)_coordinates.x, (int)_coordinates.y);
         List<GridTile> neighbourTiles = new List<GridTile>();
 
-        int[] nWeights = new int[neighbourGOs.Count];
+        float[] nWeights = new float[neighbourGOs.Count];
 
         for ( int i = 0; i < neighbourGOs.Count; i++ )
         {
@@ -104,9 +108,12 @@ public class NPCBrain : MonoBehaviour
 
             nWeights[i] = 1 + _gridVisited[nextNTile.GetColumn(), nextNTile.GetRow()];
             nWeights[i] *= GridTile.stateWalkScores[nextNTile.state];
+
+            if (_exitTarget != null)
+            nWeights[i] *= _exitHeurstx[nextNTile.GetColumn(), nextNTile.GetRow()];
         }
 
-        int minWeight = int.MaxValue;
+        float minWeight = float.MaxValue;
 
 
         for (int i = 0; i < neighbourGOs.Count; i++)
@@ -137,5 +144,26 @@ public class NPCBrain : MonoBehaviour
         }
 
         _exitCoordinates = _exitTarget.GetComponent<GridTile>().GetCoordinates();
+
+        GenerateExitHeuristics();
+    }
+
+    private void GenerateExitHeuristics()
+    {
+
+        int gridSize = GridManager.instance.gridSize;
+
+        int eQ = (int) _exitCoordinates.x;
+        int eR = (int) _exitCoordinates.y;
+
+        for (int q = 0; q < gridSize; q++) //column
+        {
+            for (int r = 0; r < gridSize; r++) //row
+            {
+                float distanceToExit = GridManager.CalculateDistance(q, r, eQ, eR);
+
+                _exitHeurstx[q, r] = distanceToExit;
+            }
+        }
     }
 }

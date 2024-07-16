@@ -161,6 +161,19 @@ public class GridManager : MonoBehaviour
         regenerateGrid = true;
     }
 
+    public static float CalculateDistance(int q1, int r1, int q2, int r2)
+    {
+        float distance;
+
+        GameObject tile1 = instance._gridGOs[q1, r1];
+        GameObject tile2 = instance._gridGOs[q2, r2];
+
+        //TO DO - Implement pathfinding to account for obstacles!
+        distance = Vector3.Distance(tile1.transform.position, tile2.transform.position);
+
+        return distance;
+    }
+
     private Vector3 CalculateTilePosition(int q, int r)
     {
         //Hardcoded values match placeholder grid tile
