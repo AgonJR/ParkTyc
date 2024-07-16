@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GridTile : MonoBehaviour
 {
@@ -23,6 +24,17 @@ public class GridTile : MonoBehaviour
         Rock,
         Water
     }
+
+    public static readonly Dictionary<TileState, int> stateWalkScores = new()
+    {
+        { TileState.Base,  9 },
+        { TileState.Grass, 5 },
+        { TileState.Dirt,  1 },
+        { TileState.Tree, -1 },
+        { TileState.Bush, -1 },
+        { TileState.Rock, -1 },
+        { TileState.Water,-1 }
+    };
 
     [Header("Tile Status")]
     public TileState state = TileState.Base;
@@ -97,7 +109,33 @@ public class GridTile : MonoBehaviour
         if (tileBush  != null)  tileBush.SetActive(TileState.Bush  == state);
         if (tileRock  != null)  tileRock.SetActive(TileState.Rock  == state);
         if (tileWater != null) tileWater.SetActive(TileState.Water == state);
+
+        if (targetState == TileState.Bush)
+        {
+            List<GameObject> neighbourGOs = GridManager.instance.GetNeighbouringTiles((int)_coordinates.x, (int)_coordinates.y);
+            for (int i = 0; i < neighbourGOs.Count; i++)
+            {
+                GridTile nextNTile = neighbourGOs[i].GetComponent<GridTile>();
+                nextNTile.SwapTile(TileState.Dirt, false);
+            }
+        }
     }
+
+    public int GetColumn()
+    {
+        return (int) _coordinates.x;
+    }
+
+    public int GetRow()
+    {
+        return (int)_coordinates.y;
+    }
+
+    public Vector2 GetCoordinates()
+    {
+        return _coordinates;
+    }
+
 }
 
 

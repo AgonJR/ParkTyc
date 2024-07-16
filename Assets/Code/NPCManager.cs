@@ -32,7 +32,6 @@ public class NPCManager : MonoBehaviour
     private void Update()
     {
         SpawnCheck();
-        MoveNPCs();
     }
 
     private void SpawnCheck()
@@ -53,29 +52,14 @@ public class NPCManager : MonoBehaviour
 
             spndNPCBrain = spawnedNPC.GetComponent<NPCBrain>();
 
-            spawnedNPC.name = "N P C";
+            GridTile spawnTile = spawn.GetComponent<GridTile>();
+            int q = spawnTile.GetColumn();
+            int r = spawnTile.GetRow();
+
+            spndNPCBrain.Init(q, r);
+            spndNPCBrain.SelectExitTarget(exitTiles);
 
             spawnDelay = spawnWait;
         }
     }
-
-    private void MoveNPCs()
-    {
-
-        if (spawnedNPC != null)
-        {
-            if (exitTiles.Count > 0)
-            {
-                GameObject exit = spndNPCBrain.GetTargetExitTile(exitTiles);
-
-                Vector3 direction = exit.transform.position - spawnedNPC.transform.position;
-
-                direction.y = 0.0f; 
-
-                spawnedNPC.transform.position += direction.normalized * npcSpeed * Time.deltaTime;
-            }
-        }
-    }
-
-
 }
