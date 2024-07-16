@@ -178,6 +178,32 @@ public class GridManager : MonoBehaviour
         return new Vector3(x, 0.0f, z);
     }
 
+    public List<GameObject> GetNeighbouringTiles(GridTile tile)
+    {
+        return GetNeighbouringTiles(tile.GetColumn(), tile.GetRow());
+    }
+
+    public List<GameObject> GetNeighbouringTiles(int q, int r)
+    {
+        List<GameObject> neighbours = new List<GameObject>();
+
+        if (IsValidHexCoordinate(q + 0, r + 1)) { neighbours.Add(_gridGOs[q + 0, r + 1]); } // North
+        if (IsValidHexCoordinate(q + 0, r - 1)) { neighbours.Add(_gridGOs[q + 0, r - 1]); } // South
+        if (IsValidHexCoordinate(q + 1, r + (q % 2 == 0 ? 0 : 1))) { neighbours.Add(_gridGOs[q + 1, r + (q % 2 == 0 ? 0 : 1)]); } // North East
+        if (IsValidHexCoordinate(q - 1, r + (q % 2 == 0 ? 0 : 1))) { neighbours.Add(_gridGOs[q - 1, r + (q % 2 == 0 ? 0 : 1)]); } // North West
+        if (IsValidHexCoordinate(q + 1, r - (q % 2 == 0 ? 1 : 0))) { neighbours.Add(_gridGOs[q + 1, r - (q % 2 == 0 ? 1 : 0)]); } // South East
+        if (IsValidHexCoordinate(q - 1, r - (q % 2 == 0 ? 1 : 0))) { neighbours.Add(_gridGOs[q - 1, r - (q % 2 == 0 ? 1 : 0)]); } // South West
+
+
+        return neighbours;
+    }
+
+    private bool IsValidHexCoordinate(int q, int r)
+    {
+        return q >= 0 && q < _gridGOs.GetLength(0) && r >= 0 && r < _gridGOs.GetLength(1);
+    }
+
+
     // Finds and returns an edge tile of a specific type
     public List<GameObject> ScanEdgeTiles(GridTile.TileState tileType, Direction direction = Direction.Any)
     {
@@ -225,6 +251,11 @@ public class GridManager : MonoBehaviour
         return edgeTiles;
     }
 
+
+    // - - -
+    // UNDO
+    // - - -
+
     public static void AddToUndoHistory(TileStateHistory latestTileSwap)
     {
         GridManager._undoStack.Push(latestTileSwap);
@@ -255,4 +286,6 @@ public class GridManager : MonoBehaviour
 
         _gridTiles[q, r].SwapTile(latestTileSwapData.startState, addToUndo:false);
     }
+
+    // - - -
 }
