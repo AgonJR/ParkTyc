@@ -8,15 +8,21 @@ public class GridManager : MonoBehaviour
     [Header("Data")]
     public GameObject tilePrefab;
     public CameraController mCam;
+    public GameObject brdrPrefab;
 
     [Header("Dev Tools")]
     public int gridSize = 3; //Assuming Square Grid
+    public int outerSize= 3;
     public bool regenerateGrid = true;
+    public bool shrnkOutrTiles = true;
 
     private GameObject[,] _gridGOs;
     private GridTile[,] _gridTiles;
 
-    private static Stack<TileStateHistory> undoStack;
+    private GameObject[] _bordrGOs;
+    private GameObject bordrParent;
+
+    private static Stack<TileStateHistory> _undoStack;
 
     public enum Direction
     {
@@ -38,6 +44,7 @@ public class GridManager : MonoBehaviour
         {
             ClearGrid();
             GenerateGrid();
+            GenerateOuterGrid();
         }
 
         CheckInputForUndo();
@@ -47,11 +54,13 @@ public class GridManager : MonoBehaviour
     {
         regenerateGrid = false;
 
-        if ( _gridGOs != null ) { foreach (GameObject tile in _gridGOs) { Destroy(tile); } }
+        if ( _gridGOs != null ) { foreach (GameObject tile in _gridGOs ) { Destroy(tile); } }
+        if (_bordrGOs != null ) { foreach (GameObject tile in _bordrGOs) { Destroy(tile); } }
 
-        _gridGOs   = new GameObject[gridSize, gridSize];
+        _undoStack = new Stack<TileStateHistory>();
         _gridTiles = new GridTile[gridSize, gridSize];
-        undoStack  = new Stack<TileStateHistory>();
+        _gridGOs   = new GameObject[gridSize, gridSize];
+        _bordrGOs  = new GameObject[((gridSize + outerSize*2) * (gridSize + outerSize*2)) - (gridSize * gridSize)];
     }
 
     public void GenerateGrid()
@@ -76,6 +85,64 @@ public class GridManager : MonoBehaviour
 
         mCam.CalculateXZMinMax();
         mCam.FrameGrid(_gridGOs[0, 0].transform, _gridGOs[gridSize - 1, gridSize - 1].transform);
+    }
+
+
+    // Out of bounds, non-player grid tiles
+    public void GenerateOuterGrid()
+    {
+        if (bordrParent == null)
+        {
+            bordrParent = new GameObject("Border Tiles");
+            bordrParent.transform.parent = this.transform;
+        }
+
+        int i = 0;
+
+        for (int q = outerSize * -1; q < gridSize + outerSize; q++)
+        {
+            for (int r = outerSize * -1; r < gridSize + outerSize; r++)
+            {
+                if ((q >= 0 && q < gridSize) && (r >= 0 && r < gridSize))
+                {
+                    continue;
+                }
+
+                Vector3 position = CalculateTilePosition(q, r);
+
+                GameObject tileGO = Instantiate(brdrPrefab, position, tilePrefab.transform.rotation);
+
+                tileGO.transform.parent = bordrParent.transform;
+                tileGO.name = "Outer Tile (" + q + " ," + r + ")";
+
+
+                //Make tiles smaller as they move further from the base grid
+                if (shrnkOutrTiles)
+                {
+                    float sizeModifier = 1.0f;
+                    if (q < -1)
+                    {
+                        sizeModifier = 1.0f / (q * -1);
+                    }
+                    else if (q > gridSize)
+                    {
+                        sizeModifier = 1.0f / (q - gridSize + 1);
+                    }
+                    else if (r < 0)
+                    {
+                        sizeModifier = 1.0f / (r * -1.0f);
+                    }
+                    else if (r > gridSize)
+                    {
+                        sizeModifier = 1.0f / (r - gridSize + 1);
+                    }
+
+                    tileGO.transform.localScale = new Vector3(tileGO.transform.localScale.x * sizeModifier, tileGO.transform.localScale.y * sizeModifier, tileGO.transform.localScale.z);
+                }
+
+                _bordrGOs[i++] = tileGO;
+            }
+        }
     }
 
     // For String Input From Debug Panel
@@ -160,7 +227,7 @@ public class GridManager : MonoBehaviour
 
     public static void AddToUndoHistory(TileStateHistory latestTileSwap)
     {
-        GridManager.undoStack.Push(latestTileSwap);
+        GridManager._undoStack.Push(latestTileSwap);
     }
 
     public void CheckInputForUndo()
@@ -176,12 +243,12 @@ public class GridManager : MonoBehaviour
 
     public void DoUndo()
     {
-        if (GridManager.undoStack.Count == 0)
+        if (GridManager._undoStack.Count == 0)
         {
             return;
         }
 
-        TileStateHistory latestTileSwapData = GridManager.undoStack.Pop();
+        TileStateHistory latestTileSwapData = GridManager._undoStack.Pop();
 
         int q = (int) latestTileSwapData.coordinates.x;
         int r = (int) latestTileSwapData.coordinates.y;

@@ -3059,7 +3059,6 @@ MonoBehaviour:
   debugUIPanel: {fileID: 1100923368}
   screenBlockr: {fileID: 1200609253}
   gameplayHUD: {fileID: 1499271313}
-  maxX: 0
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7260,8 +7259,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 3760563204290690687, guid: c8dae984e33ab4aafb79083ac812cffb, type: 3}
   mCam: {fileID: 963194229}
+  brdrPrefab: {fileID: 3760563204290690687, guid: 2a774b2643a4c4c738d6cc466fe78534, type: 3}
+  outerTileMats: []
   gridSize: 7
+  outerSize: 3
   regenerateGrid: 1
+  shrnkOutrTiles: 1
 --- !u!1001 &2084213120
 PrefabInstance:
   m_ObjectHideFlags: 0
