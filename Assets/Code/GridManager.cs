@@ -74,6 +74,7 @@ public class GridManager : MonoBehaviour
             }
         }
 
+        mCam.CalculateXZMinMax();
         mCam.FrameGrid(_gridGOs[0, 0].transform, _gridGOs[gridSize - 1, gridSize - 1].transform);
     }
 
@@ -81,6 +82,11 @@ public class GridManager : MonoBehaviour
     public void SetGridSize(string newSize)
     {
         gridSize = int.Parse(newSize);
+    }
+
+    public int GetGridSize()
+    {
+        return gridSize;
     }
 
     public void ExternalRegenerate()
