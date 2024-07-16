@@ -235,11 +235,11 @@ public class GridManager : MonoBehaviour
                     {
                         if (_gridTiles[q, r].state == tileType) { edgeTiles.Add(_gridGOs[q, r]); }
                     }
-                    else if (direction == Direction.North && r == 0)
+                    else if (direction == Direction.North && r == 0 && q > 0)
                     {
                         if (_gridTiles[q, r].state == tileType) { edgeTiles.Add(_gridGOs[q, r]); }
                     }
-                    else if (direction == Direction.South && r == s - 1)
+                    else if (direction == Direction.South && r == s - 1 && q > 0)
                     {
                         if (_gridTiles[q, r].state == tileType) { edgeTiles.Add(_gridGOs[q, r]); }
                     }

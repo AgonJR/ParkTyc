@@ -5,7 +5,6 @@ public class NPCManager : MonoBehaviour
 {
     public GameObject npcPrefab;
     [Space]
-    [Range(0, 30)] public float npcSpeed  = 5.0f;
     [Range(0, 10)] public float spawnWait = 5;
     [Range(0, 30)] public float maxSpawns = 5;
     [Space]
@@ -33,6 +32,7 @@ public class NPCManager : MonoBehaviour
     {
         _spwnTiles = GridManager.instance.ScanEdgeTiles(GridTile.TileState.Dirt, GridManager.Direction.West);
 
+        _exitTiles.Clear();
         _exitTiles.AddRange(GridManager.instance.ScanEdgeTiles(GridTile.TileState.Dirt, GridManager.Direction.East ));
         _exitTiles.AddRange(GridManager.instance.ScanEdgeTiles(GridTile.TileState.Dirt, GridManager.Direction.North));
         _exitTiles.AddRange(GridManager.instance.ScanEdgeTiles(GridTile.TileState.Dirt, GridManager.Direction.South));
@@ -61,15 +61,15 @@ public class NPCManager : MonoBehaviour
 
     public void ClearNPC(GameObject NPC)
     {
-        Destroy(NPC);
-
         for (int i = 0; i < _spawnedNPCs.Count; i++)
         {
-            if (_spawnedNPCs[i] == null)
+            if (_spawnedNPCs[i] == NPC)
             {
                 _spawnedNPCs.RemoveAt(i);
                 _spndNPCBrains.RemoveAt(i);
                 i--;
+
+                Destroy(NPC);
             }
         }
     }
