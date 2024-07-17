@@ -116,12 +116,12 @@ public class NPCBrain : MonoBehaviour
                 return;
             }
 
-            // Move Forwards Target
+            // Move Towards Target
             Vector3 direction = nextTarget.transform.position - transform.position;
 
             direction.y = 0.0f;
 
-            transform.position += direction.normalized * npcSpeed * Time.deltaTime;
+            transform.position += npcSpeed * Time.deltaTime * direction.normalized;
         }
     }
 
