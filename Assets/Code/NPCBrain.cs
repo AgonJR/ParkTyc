@@ -19,6 +19,8 @@ public class NPCBrain : MonoBehaviour
     private Vector2 _coordinates;
     private Vector2 _exitCoordinates;
     private Vector2 _entryCoordinates;
+    private Vector2 _outroCoordinates;
+    private bool _outroStarted = false;
 
 
     public void Init(int spawnQ, int spawnR)
@@ -70,15 +72,16 @@ public class NPCBrain : MonoBehaviour
 
             if (distance < minTrgtDistance)
             {
-                GridTile targetTile = nextTarget.GetComponent<GridTile>();
+                GridTile targetTile = _outroStarted ? null : nextTarget.GetComponent<GridTile>();
 
-                int q = targetTile.GetColumn();
-                int r = targetTile.GetRow();
+                int q = _outroStarted ? (int) _outroCoordinates.x : targetTile.GetColumn();
+                int r = _outroStarted ? (int) _outroCoordinates.y : targetTile.GetRow();
 
                 gameObject.name = "N P C  (" + q + " , " + r + ")";
 
                 _coordinates = new Vector2(q, r);
 
+                nextTarget = null;
 
                 if (_entryCoordinates == _coordinates)
                 {
@@ -89,13 +92,26 @@ public class NPCBrain : MonoBehaviour
 
                 if (_exitCoordinates == _coordinates)
                 {
+                    int oQ = q;
+                    int oR = r;
+
+                         if (q == 0) { oQ -= 1; }
+                    else if (r == 0) { oR -= 1; }
+                    else if (q == GridManager.instance.GetGridSize() - 1) { oQ += 1; }
+                    else if (r == GridManager.instance.GetGridSize() - 1) { oR += 1; }
+
+                    _outroStarted = true;
+                    _outroCoordinates = new Vector2(oQ, oR);
+                    nextTarget = GridManager.instance.GetBorderTileGO(oQ, oR);
+                }
+
+                if (_outroCoordinates == _coordinates)
+                {
                     GameManager.instance.AddToScore(5);
                     NPCManager.instance.ClearNPC(gameObject);
                 }
 
-                _gridVisited[q, r]++;
-
-                nextTarget = null;
+                if (_outroStarted == false) _gridVisited[q, r]++;
 
                 return;
             }

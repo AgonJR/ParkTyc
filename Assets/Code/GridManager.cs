@@ -20,8 +20,9 @@ public class GridManager : MonoBehaviour
     private GridTile[,] _gridTiles;
     private GameObject  gridParent;
 
-    private GameObject[] _bordrGOs;
-    private GameObject bordrParent;
+    private GameObject[]  _bordrGOs;
+    private GameObject _bordrParent;
+    private Dictionary<KeyValuePair<int, int>, GameObject> _borderGoDict;
 
     private static Stack<TileStateHistory> _undoStack;
 
@@ -58,10 +59,11 @@ public class GridManager : MonoBehaviour
         if ( _gridGOs != null ) { foreach (GameObject tile in _gridGOs ) { Destroy(tile); } }
         if (_bordrGOs != null ) { foreach (GameObject tile in _bordrGOs) { Destroy(tile); } }
 
-        _undoStack = new Stack<TileStateHistory>();
-        _gridTiles = new GridTile[gridSize, gridSize];
-        _gridGOs   = new GameObject[gridSize, gridSize];
-        _bordrGOs  = new GameObject[((gridSize + outerSize*2) * (gridSize + outerSize*2)) - (gridSize * gridSize)];
+        _undoStack    = new Stack<TileStateHistory>();
+        _gridTiles    = new GridTile[gridSize, gridSize];
+        _gridGOs      = new GameObject[gridSize, gridSize];
+        _bordrGOs     = new GameObject[((gridSize + outerSize*2) * (gridSize + outerSize*2)) - (gridSize * gridSize)];
+        _borderGoDict = new Dictionary<KeyValuePair<int, int>, GameObject>();
     }
 
     public void GenerateGrid()
@@ -98,10 +100,10 @@ public class GridManager : MonoBehaviour
     // Out of bounds, non-player grid tiles
     public void GenerateOuterGrid()
     {
-        if (bordrParent == null)
+        if (_bordrParent == null)
         {
-            bordrParent = new GameObject("Border Tiles");
-            bordrParent.transform.parent = this.transform;
+            _bordrParent = new GameObject("Border Tiles");
+            _bordrParent.transform.parent = this.transform;
         }
 
         int i = 0;
@@ -119,7 +121,7 @@ public class GridManager : MonoBehaviour
 
                 GameObject tileGO = Instantiate(brdrPrefab, position, tilePrefab.transform.rotation);
 
-                tileGO.transform.parent = bordrParent.transform;
+                tileGO.transform.parent = _bordrParent.transform;
                 tileGO.name = "Outer Tile (" + q + " ," + r + ")";
 
 
@@ -148,8 +150,15 @@ public class GridManager : MonoBehaviour
                 }
 
                 _bordrGOs[i++] = tileGO;
+
+                _borderGoDict.Add(new KeyValuePair<int, int>(q, r), tileGO);
             }
         }
+    }
+
+    public GameObject GetBorderTileGO(int q, int r)
+    {
+        return _borderGoDict[new KeyValuePair<int, int>(q, r)];
     }
 
     // For String Input From Debug Panel
