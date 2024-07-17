@@ -7,10 +7,14 @@ public class NPCBrain : MonoBehaviour
     [Space]
     public GameObject nextTarget;
     public float minTrgtDistance;
-    [Space]
+    [Header("Transition Data")]
     public MeshRenderer spwnMesh;
+    public MeshRenderer exitMesh;
+    [Space]
     public MeshRenderer mainMesh;
+    [Space]
     public GameObject   entryVFX;
+    public GameObject    exitVFX;
 
     private int[,] _gridVisited;
     private float[,] _exitHeurstx;
@@ -103,6 +107,10 @@ public class NPCBrain : MonoBehaviour
                     _outroStarted = true;
                     _outroCoordinates = new Vector2(oQ, oR);
                     nextTarget = GridManager.instance.GetBorderTileGO(oQ, oR);
+
+                    mainMesh.enabled = false;
+                    exitMesh.enabled = true;
+                    exitVFX.SetActive(true);
                 }
 
                 if (_outroCoordinates == _coordinates)
