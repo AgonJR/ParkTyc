@@ -48,13 +48,8 @@ public class NPCManager : MonoBehaviour
 
     public void ClearNPCs()
     {
-        if (_spawnedNPCs != null && _spawnedNPCs.Count > 0)
-        {
-            foreach (GameObject npcGO in _spawnedNPCs)
-            {
-                ClearNPC(npcGO);
-            }
-        }
+          if (_spawnedNPCs != null && _spawnedNPCs.Count > 0)
+        { do { ClearNPC(_spawnedNPCs[0]); } while (_spawnedNPCs.Count > 0); }
 
         _spawnedNPCs = new List<GameObject>();
         _spndNPCBrains = new List<NPCBrain>();
