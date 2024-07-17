@@ -1,5 +1,7 @@
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 using TMPro;
 
 public class HUDManager : MonoBehaviour
@@ -19,6 +21,9 @@ public class HUDManager : MonoBehaviour
     [Space]
     public TMP_Text VisitorText;
 
+    [Header("Debug Panels")]
+    public TMP_InputField regenSizeField;
+    public TMP_Dropdown loadGridDropdown;
 
 
     void Start()
@@ -26,6 +31,8 @@ public class HUDManager : MonoBehaviour
         SelectTileType(GridTile.TileState.Bush);
 
         ReviewUnlockedButtons();
+
+        DebugPanel_FillGridLoadDropdown();
     }
 
     private void Update()
@@ -86,5 +93,51 @@ public class HUDManager : MonoBehaviour
     {
         string visitorString = "Visitors: " + NPCManager.GetNPCCount();
         VisitorText.text = visitorString;
+    }
+
+
+    // ---
+    // DEBUG Panel
+    //
+
+    public void DebugPanel_SetUITextGridSize(int newSize)
+    {
+        regenSizeField.text = newSize + "";
+    }
+
+    public void DebugPanel_FillGridLoadDropdown()
+    {
+        string directoryPath = Path.Combine(Application.dataPath + "/SavedGrids");
+        string[] jsonPaths = Directory.GetFiles(directoryPath);
+
+        List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
+
+        foreach (string jsonPath in jsonPaths)
+        {
+            string[] splitPath = jsonPath.Split("/");
+
+            string fileName = splitPath[splitPath.Length - 1];
+
+            if (fileName.EndsWith(".json"))
+            {
+                fileName = fileName.Split(".")[0];
+                options.Add(new TMP_Dropdown.OptionData(fileName));
+            }
+        }
+
+        loadGridDropdown.ClearOptions();
+        loadGridDropdown.AddOptions(options);
+    }
+
+    public void DebugPanel_HandleLoadClick()
+    {
+        string jsonName = loadGridDropdown.options[loadGridDropdown.value].text;
+        GridManager.instance.LoadGridFromJSON(jsonName);
+    }
+
+    public void DebugPanel_HandleRegenClick()
+    {
+        int newSize = int.Parse(regenSizeField.text);
+        GridManager.instance.ExternalRegenerate(newSize);
     }
 }

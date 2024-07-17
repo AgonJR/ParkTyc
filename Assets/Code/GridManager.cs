@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -22,6 +23,7 @@ public class GridManager : MonoBehaviour
 
     private GameObject[]  _bordrGOs;
     private GameObject _bordrParent;
+    private GridTile.TileState[,] _loadedTiles;
     private Dictionary<KeyValuePair<int, int>, GameObject> _borderGoDict;
 
     private static Stack<TileStateHistory> _undoStack;
@@ -85,12 +87,14 @@ public class GridManager : MonoBehaviour
 
                 tile.Initialize(q, r);
                 tileGO.transform.parent = gridParent.transform;
-                tile.SwapTile(GridTile.TileState.Grass, addToUndo: false);
+                tile.SwapTile(_loadedTiles == null ? GridTile.TileState.Grass : _loadedTiles[q, r], addToUndo: false);
 
                 _gridGOs[q,r] = tileGO;
                 _gridTiles[q,r] = tile;
             }
         }
+
+        _loadedTiles = null;
 
         mCam.CalculateXZMinMax();
         mCam.FrameGrid(_gridGOs[0, 0].transform, _gridGOs[gridSize - 1, gridSize - 1].transform);
@@ -161,19 +165,14 @@ public class GridManager : MonoBehaviour
         return _borderGoDict[new KeyValuePair<int, int>(q, r)];
     }
 
-    // For String Input From Debug Panel
-    public void SetGridSize(string newSize)
-    {
-        gridSize = int.Parse(newSize);
-    }
-
     public int GetGridSize()
     {
         return gridSize;
     }
 
-    public void ExternalRegenerate()
+    public void ExternalRegenerate(int newSize = -1)
     {
+        gridSize = newSize > 0 ? newSize : gridSize;
         regenerateGrid = true;
     }
 
@@ -212,6 +211,7 @@ public class GridManager : MonoBehaviour
         return GetNeighbouringTiles(tile.GetColumn(), tile.GetRow());
     }
 
+    //Returns a list of up to 6 non-null GameObjects
     public List<GameObject> GetNeighbouringTiles(int q, int r)
     {
         List<GameObject> neighbours = new List<GameObject>();
@@ -227,6 +227,7 @@ public class GridManager : MonoBehaviour
         return neighbours;
     }
 
+    //Return a list of size 6, including null, to preserve directions
     public List<GameObject> GetNeighbouringTilesConst(int q, int r)
     {
         List<GameObject> neighbours = new List<GameObject>();
@@ -361,4 +362,72 @@ public class GridManager : MonoBehaviour
     }
 
     // - - -
+    // Save & Load
+    // - - -
+
+    public void SaveGridAsJSON(string fileName)
+    {
+        string directoryPath = Path.Combine(Application.dataPath + "/SavedGrids");
+        Directory.CreateDirectory(directoryPath);
+
+        string filePath = Path.Combine(directoryPath, fileName + ".json");
+
+        string txtToSave = gridSize + ",\n";
+
+        for (int r = 0; r < gridSize; r++)
+        {
+            for (int q = 0; q < gridSize; q++)
+            {
+                txtToSave += (int)_gridTiles[q, r].state + ",";
+            }
+            txtToSave += "\n";
+        }
+
+        txtToSave = txtToSave.TrimEnd('\n');
+        txtToSave = txtToSave.TrimEnd(',');
+
+        File.WriteAllText(filePath, txtToSave);
+    }
+
+    public void LoadGridFromJSON(string fileName)
+    {
+        string directoryPath = Path.Combine(Application.dataPath + "/SavedGrids");
+
+        string filePath = Path.Combine(directoryPath, fileName + ".json");
+
+        if (File.Exists(filePath))
+        {
+            string jsonTxt = File.ReadAllText(filePath);
+            jsonTxt = jsonTxt.Replace("\n", string.Empty);
+
+            string[] jsonData = jsonTxt.Split(',');
+
+            int loadedGridSize = int.Parse(jsonData[0]);
+
+            _loadedTiles = new GridTile.TileState[loadedGridSize, loadedGridSize];
+
+            int i = 1;
+            for (int r = 0; r < loadedGridSize; r++)
+            {
+                for (int q = 0; q < loadedGridSize; q++)
+                {
+                    _loadedTiles[q, r] = (GridTile.TileState) int.Parse(jsonData[i++]);
+                }
+            }
+
+            gridSize = loadedGridSize;
+
+            regenerateGrid = true;
+
+            GameManager.instance.hudManagerRef.DebugPanel_SetUITextGridSize(loadedGridSize);
+        }
+        else
+        {
+            Debug.LogError("[GridManager] LoadGRidFromJSON() - File not found: " + filePath);
+        }
+
+    }
+
+    // - - -
+
 }
