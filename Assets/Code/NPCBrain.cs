@@ -75,14 +75,9 @@ public class NPCBrain : MonoBehaviour
         {
             SelectNextTargetTile();
         }
-        else
+
+        if (nextTarget != null)
         {
-            // Check If Target Reached
-            float distance = Vector3.Distance(transform.position, nextTarget.transform.position);
-
-            if (distance < minTrgtDistance) { ProcessTargetReached(); }
-
-
             // Move Towards Target
             Vector3 direction = (nextTarget.transform.position - transform.position).normalized;
 
@@ -90,12 +85,18 @@ public class NPCBrain : MonoBehaviour
 
             transform.position += npcSpeed * Time.deltaTime * direction;
 
-            // Rotate to Face Direction
+            // Un-Comment Once Placeholder NPC Is Replace
+            //// Rotate to Face Direction
             //if (direction != Vector3.zero)
             //{
             //    Quaternion newRotation = Quaternion.LookRotation(direction);
             //    transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * npcSpeed);
             //}
+
+            // Check If Target Reached
+            float distance = Vector3.Distance(transform.position, nextTarget.transform.position);
+
+            if (distance < minTrgtDistance) { ProcessTargetReached(); }
         }
     }
 
@@ -110,7 +111,7 @@ public class NPCBrain : MonoBehaviour
 
         _coordinates = new Vector2(q, r);
 
-        SelectNextTargetTile();
+        nextTarget = null;
 
         // Entered Grid
         if (_entryCoordinates == _coordinates)
@@ -143,7 +144,7 @@ public class NPCBrain : MonoBehaviour
         }
 
         // Left Grid
-        if (_outroCoordinates == _coordinates)
+        if (_outroStarted && _outroCoordinates == _coordinates)
         {
             GameManager.instance.AddToScore(5);
             NPCManager.instance.ClearNPC(gameObject);
