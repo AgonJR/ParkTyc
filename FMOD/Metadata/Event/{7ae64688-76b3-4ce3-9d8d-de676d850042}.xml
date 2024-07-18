@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{7ae64688-76b3-4ce3-9d8d-de676d850042}">
 		<property name="name">
-			<value>Test</value>
+			<value>AMB_General</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
@@ -53,7 +53,7 @@
 			<destination>{b8b39ca7-67df-4b07-9749-15157e02ed4a}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{8c409a69-1bab-4b41-8d8b-7d0d223cd764}</destination>
+			<destination>{7ca48b3c-e73c-4f3f-bb46-915eaecd94ea}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{fcf96220-521f-4746-8979-80be6f36555c}" />
