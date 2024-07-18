@@ -16,14 +16,14 @@ public class PathTile : MonoBehaviour
     public GameObject tileChunkEdgeEnd;
     public GameObject tileChunkEdgeContinue;
 
-    [SerializeField] private int q;
-    [SerializeField] private int r;
+    private int q;
+    private int r;
 
-    [SerializeField] private List<GridTile> neighbourTiles;
-    [SerializeField] private int n; // neighbour count
+    private List<GridTile> neighbourTiles = new List<GridTile>();
+    private int n; // neighbour count
 
-    [SerializeField] private List<PathTile> neighbourPaths;
-    [SerializeField] private int d; // dirt neighbour count
+    private List<PathTile> neighbourPaths = new List<PathTile>();
+    private int d; // dirt neighbour count
 
 
 
