@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GridTile : MonoBehaviour
 {
@@ -23,6 +24,28 @@ public class GridTile : MonoBehaviour
         Rock,
         Water
     }
+
+    public static readonly Dictionary<TileState, int> stateWalkScores = new()
+    {
+        { TileState.Base,  9 },
+        { TileState.Grass, 5 },
+        { TileState.Dirt,  1 },
+        { TileState.Tree, -1 },
+        { TileState.Bush, -1 },
+        { TileState.Rock, -1 },
+        { TileState.Water,-1 }
+    };
+
+    public static readonly Dictionary<TileState, int> stateUnlockCost = new()
+    {
+        { TileState.Base,  0  },
+        { TileState.Grass, 0  },
+        { TileState.Dirt,  0  },
+        { TileState.Tree,  5  },
+        { TileState.Bush,  0  },
+        { TileState.Rock,  20 },
+        { TileState.Water, 35 }
+    };
 
     [Header("Tile Status")]
     public TileState state = TileState.Base;
@@ -84,8 +107,10 @@ public class GridTile : MonoBehaviour
         SwapTile(HUDManager.selectedType);
     }
 
-    public void SwapTile(GridTile.TileState targetState)
+    public void SwapTile(GridTile.TileState targetState, bool addToUndo = true)
     {
+        if ( addToUndo ) GridManager.AddToUndoHistory(new TileStateHistory(_coordinates, state, targetState));
+
         state = targetState;
 
         if (tileBase  != null)  tileBase.SetActive(TileState.Base  == state);
@@ -95,5 +120,47 @@ public class GridTile : MonoBehaviour
         if (tileBush  != null)  tileBush.SetActive(TileState.Bush  == state);
         if (tileRock  != null)  tileRock.SetActive(TileState.Rock  == state);
         if (tileWater != null) tileWater.SetActive(TileState.Water == state);
+
+        //// Debug - Testing GetNeighboringTiles()
+        //if (targetState == TileState.Bush)
+        //{
+        //    List<GameObject> neighbourGOs = GridManager.instance.GetNeighbouringTiles((int)_coordinates.x, (int)_coordinates.y);
+        //    for (int i = 0; i < neighbourGOs.Count; i++)
+        //    {
+        //        GridTile nextNTile = neighbourGOs[i].GetComponent<GridTile>();
+        //        nextNTile.SwapTile(TileState.Dirt, false);
+        //    }
+        //}
+    }
+
+    public int GetColumn()
+    {
+        return (int) _coordinates.x;
+    }
+
+    public int GetRow()
+    {
+        return (int)_coordinates.y;
+    }
+
+    public Vector2 GetCoordinates()
+    {
+        return _coordinates;
+    }
+
+}
+
+
+public struct TileStateHistory
+{
+    public Vector2 coordinates;
+    public GridTile.TileState startState;
+    public GridTile.TileState endState;
+
+    public TileStateHistory(Vector2 coords, GridTile.TileState start, GridTile.TileState end)
+    {
+        coordinates = coords;
+        startState  = start;
+        endState    = end;
     }
 }
