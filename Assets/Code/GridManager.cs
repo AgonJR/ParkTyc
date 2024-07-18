@@ -211,70 +211,48 @@ public class GridManager : MonoBehaviour
         return GetNeighbouringTiles(tile.GetColumn(), tile.GetRow());
     }
 
-    //Returns a list of up to 6 non-null GameObjects
-    public List<GameObject> GetNeighbouringTiles(int q, int r)
+    public List<GameObject> GetNeighbouringTilesConst(GridTile tile)
     {
-        List<GameObject> neighbours = new List<GameObject>();
-
-        if (IsValidHexCoordinate(q + 0, r + 1)) { neighbours.Add(_gridGOs[q + 0, r + 1]); } // North
-        if (IsValidHexCoordinate(q + 0, r - 1)) { neighbours.Add(_gridGOs[q + 0, r - 1]); } // South
-        if (IsValidHexCoordinate(q + 1, r + (q % 2 == 0 ? 0 : 1))) { neighbours.Add(_gridGOs[q + 1, r + (q % 2 == 0 ? 0 : 1)]); } // North East
-        if (IsValidHexCoordinate(q - 1, r + (q % 2 == 0 ? 0 : 1))) { neighbours.Add(_gridGOs[q - 1, r + (q % 2 == 0 ? 0 : 1)]); } // North West
-        if (IsValidHexCoordinate(q + 1, r - (q % 2 == 0 ? 1 : 0))) { neighbours.Add(_gridGOs[q + 1, r - (q % 2 == 0 ? 1 : 0)]); } // South East
-        if (IsValidHexCoordinate(q - 1, r - (q % 2 == 0 ? 1 : 0))) { neighbours.Add(_gridGOs[q - 1, r - (q % 2 == 0 ? 1 : 0)]); } // South West
-
-
-        return neighbours;
-    }
-
-    //Return a list of size 6, including null, to preserve directions
-    public List<GameObject> GetNeighbouringTilesConst(int q, int r)
-    {
-        List<GameObject> neighbours = new List<GameObject>();
-
-        if (IsValidHexCoordinate(q + 0, r + 1)) {  // North
-            neighbours.Add(_gridGOs[q + 0, r + 1]); 
-        } else {
-            neighbours.Add(null); 
-        }
-
-        if (IsValidHexCoordinate(q + 1, r + (q % 2 == 0 ? 0 : 1))) {  // North East
-            neighbours.Add(_gridGOs[q + 1, r + (q % 2 == 0 ? 0 : 1)]); 
-        } else {
-            neighbours.Add(null); 
-        }
-
-        if (IsValidHexCoordinate(q + 1, r - (q % 2 == 0 ? 1 : 0))) {  // South East
-            neighbours.Add(_gridGOs[q + 1, r - (q % 2 == 0 ? 1 : 0)]);
-        } else {
-            neighbours.Add(null); 
-        } 
-
-        if (IsValidHexCoordinate(q + 0, r - 1)) {  // South
-            neighbours.Add(_gridGOs[q + 0, r - 1]); 
-        } else {
-            neighbours.Add(null); 
-        }
-
-        if (IsValidHexCoordinate(q - 1, r - (q % 2 == 0 ? 1 : 0))) {  // South West
-            neighbours.Add(_gridGOs[q - 1, r - (q % 2 == 0 ? 1 : 0)]); 
-        } else {
-            neighbours.Add(null); 
-        }
-
-        if (IsValidHexCoordinate(q - 1, r + (q % 2 == 0 ? 0 : 1))) {  // North West
-            neighbours.Add(_gridGOs[q - 1, r + (q % 2 == 0 ? 0 : 1)]); 
-        } else {
-            neighbours.Add(null); 
-        }
-
-
-        return neighbours;
+        return GetNeighbouringTilesConst(tile.GetColumn(), tile.GetRow());
     }
 
     private bool IsValidHexCoordinate(int q, int r)
     {
         return q >= 0 && q < _gridGOs.GetLength(0) && r >= 0 && r < _gridGOs.GetLength(1);
+    }
+
+    //Returns a list of up to 6 non-null GameObjects
+    public List<GameObject> GetNeighbouringTiles(int q, int r)
+    {
+        List<GameObject> neighbours = new List<GameObject>();
+
+        if (IsValidHexCoordinate(q + 0, r - 1)) { neighbours.Add(_gridGOs[q + 0, r - 1]); } // North
+        if (IsValidHexCoordinate(q + 0, r + 1)) { neighbours.Add(_gridGOs[q + 0, r + 1]); } // South
+        if (IsValidHexCoordinate(q + 1, r + (q % 2 == 0 ? 0 : 1))) { neighbours.Add(_gridGOs[q + 1, r + (q % 2 == 0 ? 0 : 1)]); } // South East
+        if (IsValidHexCoordinate(q - 1, r + (q % 2 == 0 ? 0 : 1))) { neighbours.Add(_gridGOs[q - 1, r + (q % 2 == 0 ? 0 : 1)]); } // South West
+        if (IsValidHexCoordinate(q + 1, r - (q % 2 == 0 ? 1 : 0))) { neighbours.Add(_gridGOs[q + 1, r - (q % 2 == 0 ? 1 : 0)]); } // North East
+        if (IsValidHexCoordinate(q - 1, r - (q % 2 == 0 ? 1 : 0))) { neighbours.Add(_gridGOs[q - 1, r - (q % 2 == 0 ? 1 : 0)]); } // North West
+
+
+        return neighbours;
+    }
+
+    //Returns a list of exactly 6 GameObjects, including null
+    public List<GameObject> GetNeighbouringTilesConst(int q, int r)
+    {
+        List<GameObject> neighbours = new List<GameObject>();
+
+        for (int i = 0; i < 6; i++) { neighbours.Add(null); }
+
+        if (IsValidHexCoordinate(q + 0, r - 1)) { neighbours[0] = _gridGOs[q + 0, r - 1]; } // North
+        if (IsValidHexCoordinate(q + 0, r + 1)) { neighbours[1] = _gridGOs[q + 0, r + 1]; } // South
+        if (IsValidHexCoordinate(q + 1, r + (q % 2 == 0 ? 0 : 1))) { neighbours[2] = _gridGOs[q + 1, r + (q % 2 == 0 ? 0 : 1)]; } // South East
+        if (IsValidHexCoordinate(q - 1, r + (q % 2 == 0 ? 0 : 1))) { neighbours[3] = _gridGOs[q - 1, r + (q % 2 == 0 ? 0 : 1)]; } // South West
+        if (IsValidHexCoordinate(q + 1, r - (q % 2 == 0 ? 1 : 0))) { neighbours[4] = _gridGOs[q + 1, r - (q % 2 == 0 ? 1 : 0)]; } // North East
+        if (IsValidHexCoordinate(q - 1, r - (q % 2 == 0 ? 1 : 0))) { neighbours[5] = _gridGOs[q - 1, r - (q % 2 == 0 ? 1 : 0)]; } // North West
+
+
+        return neighbours;
     }
 
 
