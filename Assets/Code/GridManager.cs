@@ -345,7 +345,7 @@ public class GridManager : MonoBehaviour
 
     public void SaveGridAsJSON(string fileName)
     {
-        string directoryPath = Path.Combine(Application.dataPath + "/SavedGrids");
+        string directoryPath = Path.Combine(Application.dataPath + "/SavedGrids/");
         Directory.CreateDirectory(directoryPath);
 
         string filePath = Path.Combine(directoryPath, fileName + ".json");
@@ -369,7 +369,7 @@ public class GridManager : MonoBehaviour
 
     public void LoadGridFromJSON(string fileName)
     {
-        string directoryPath = Path.Combine(Application.dataPath + "/SavedGrids");
+        string directoryPath = Path.Combine(Application.dataPath + "/SavedGrids/");
 
         string filePath = Path.Combine(directoryPath, fileName + ".json");
 
