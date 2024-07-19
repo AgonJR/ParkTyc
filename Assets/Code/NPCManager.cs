@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 public class NPCManager : MonoBehaviour
 {
+    public static NPCManager instance;
+
+    [Header("NPC Data")]
     public GameObject npcPrefab;
     [Space]
     [Range(0, 10)] public float spawnWait = 5;
@@ -18,8 +21,8 @@ public class NPCManager : MonoBehaviour
                      private List<NPCBrain> _spndNPCBrains;
 
     private float spawnDelay = 0;
-
-    public static NPCManager instance;
+    private int maxSpawnTileChecks = 10;
+    private int spawnCheckCount = 0;
 
 
     void Start()
@@ -34,12 +37,25 @@ public class NPCManager : MonoBehaviour
     {
         _spwnTiles = GridManager.instance.ScanEdgeTiles(GridTile.TileState.Dirt, GridManager.Direction.West);
 
-        _exitTiles = GridManager.instance.ScanEdgeTiles(GridTile.TileState.Dirt, GridManager.Direction.East );
+        _exitTiles = GridManager.instance.ScanEdgeTiles(GridTile.TileState.Dirt, GridManager.Direction.East);
 
         if (_exitTiles.Count == 0)
         {
             _exitTiles.AddRange(GridManager.instance.ScanEdgeTiles(GridTile.TileState.Dirt, GridManager.Direction.North));
             _exitTiles.AddRange(GridManager.instance.ScanEdgeTiles(GridTile.TileState.Dirt, GridManager.Direction.South));
+        }
+
+        if (_spwnTiles.Count == 0)
+        {
+            if (++spawnCheckCount >= maxSpawnTileChecks)
+            {
+                var westernGrassTiles = GridManager.instance.ScanEdgeTiles(GridTile.TileState.Grass, GridManager.Direction.West);
+                _spwnTiles.Add(westernGrassTiles[Random.Range(0, westernGrassTiles.Count)]);
+            }
+        }
+        else
+        {
+            spawnCheckCount = 0;
         }
     }
 
@@ -57,6 +73,7 @@ public class NPCManager : MonoBehaviour
         _spndNPCBrains = new List<NPCBrain>();
 
         spawnDelay = spawnWait;
+        spawnCheckCount = 0;
     }
 
     public void ClearNPC(GameObject NPC)
