@@ -1,6 +1,7 @@
 using System.IO;
 using UnityEngine;
 using System.Collections.Generic;
+using FMODUnity;
 
 public class GridManager : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class GridManager : MonoBehaviour
     private Dictionary<KeyValuePair<int, int>, GameObject> _borderGoDict;
 
     private static Stack<TileStateHistory> _undoStack;
+
+    [SerializeField] private EventReference undoSFX;
 
     public enum Direction
     {
@@ -338,6 +341,8 @@ public class GridManager : MonoBehaviour
         {
             return;
         }
+
+        FMODUnity.RuntimeManager.PlayOneShot(undoSFX, transform.position);
 
         TileStateHistory latestTileSwapData = GridManager._undoStack.Pop();
 
