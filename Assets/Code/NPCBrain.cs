@@ -7,6 +7,7 @@ public class NPCBrain : MonoBehaviour
     [Space]
     public GameObject nextTarget;
     public float minTrgtDistance;
+    public int  maxStepsWhenLost;
     [Header("Transition Data")]
     public MeshRenderer spwnMesh;
     public MeshRenderer exitMesh;
@@ -25,6 +26,7 @@ public class NPCBrain : MonoBehaviour
     private int[,] _gridVisited;
     private float[,] _exitHeurstx;
     private GameObject _exitTarget;
+    private int _stepCount = 0;
 
     private Vector2 _coordinates;
     private Vector2 _exitCoordinates;
@@ -56,6 +58,7 @@ public class NPCBrain : MonoBehaviour
             }
         }
 
+        _stepCount = 0;
         _gridVisited[spawnQ, spawnR] = 1;
     }
 
@@ -112,6 +115,8 @@ public class NPCBrain : MonoBehaviour
         _coordinates = new Vector2(q, r);
 
         nextTarget = null;
+
+        _stepCount++;
 
         // Entered Grid
         if (_entryCoordinates == _coordinates)
@@ -196,6 +201,11 @@ public class NPCBrain : MonoBehaviour
     {
         if (exitTiles.Count == 0)
         {
+            if (_stepCount >= maxStepsWhenLost)
+            {
+                SelectExitTarget(GridManager.instance.ScanEdgeTiles(GridTile.TileState.Grass, GridManager.Direction.Any));
+            }
+
             return;
         }
 

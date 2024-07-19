@@ -5154,12 +5154,13 @@ MonoBehaviour:
   npcSpeed: 11
   nextTarget: {fileID: 0}
   minTrgtDistance: 3
+  maxStepsWhenLost: 30
   spwnMesh: {fileID: 1607489665292490834}
   exitMesh: {fileID: 4240939403120732835}
   mainMesh: {fileID: 1452011546323527105}
   entryVFX: {fileID: 3909775216252949888}
   exitVFX: {fileID: 7992575158847586388}
-  faceProbability: 1
+  faceProbability: 33
   faceMesh: {fileID: 486207206152524203}
   faceMats:
   - {fileID: 2100000, guid: b7983cf368b6a45f7898875dd7cc23dd, type: 2}
