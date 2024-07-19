@@ -1078,6 +1078,10 @@ MonoBehaviour:
   tileTripleB: {fileID: 7401767874330548212}
   tileTripleC: {fileID: 1930215145966925411}
   tileTripleD: {fileID: 4419736390582657828}
+  tileQuadA: {fileID: 8820169323055947839}
+  tileQuadB: {fileID: 5188697544097964441}
+  tileQuadC: {fileID: 4300873885194793976}
+  tileQuadD: {fileID: 3391322691399036480}
 --- !u!1 &5846559301362391708
 GameObject:
   m_ObjectHideFlags: 0

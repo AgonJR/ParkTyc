@@ -20,6 +20,11 @@ public class PathTile : MonoBehaviour
     public GameObject tileTripleB;
     public GameObject tileTripleC;
     public GameObject tileTripleD;
+    [Space]
+    public GameObject tileQuadA;
+    public GameObject tileQuadB;
+    public GameObject tileQuadC;
+    public GameObject tileQuadD;
 
     private int q;
     private int r;
@@ -118,7 +123,7 @@ public class PathTile : MonoBehaviour
                 case 1: ModifyPath_End();        break;
                 case 2: ModifyPath_ConnectTwo(); break;
                 case 3: ModifyPath_Triple();     break;
-                case 4: ModifyPath_Solid();      break;
+                case 4: ModifyPath_Quads();      break;
                 case 5: ModifyPath_Solid();      break;
                 case 6: ModifyPath_Solid();      break;
             }
@@ -369,6 +374,96 @@ public class PathTile : MonoBehaviour
         }
     }
 
+    private void ModifyPath_Quads()
+    {
+        ToggleAllSubTiles(false);
+
+        int[] I = new int[4];
+        int[] Q = new int[4];
+        int[] R = new int[4];
+
+        int j = 0;
+        for (int i = 0; i < 6; i++)
+        {
+            PathTile pT = neighbourPaths[i];
+
+            if (pT != null)
+            {
+                I[j] = i;
+                Q[j] = pT.q;
+                R[j] = pT.r;
+
+                j++;
+            }
+        }
+
+        // Check if all three are adjascent
+        int combo = -1;
+        bool configA = false;
+
+        if (NumsMatch(I, new int[] { 0, 5, 3, 1 })) { configA = true; combo = 0; } //  N, NW, SW,  S
+        if (NumsMatch(I, new int[] { 5, 3, 1, 2 })) { configA = true; combo = 1; } // NW, SW,  S, SE
+        if (NumsMatch(I, new int[] { 3, 1, 2, 4 })) { configA = true; combo = 2; } // SW,  S, SE, NE
+        if (NumsMatch(I, new int[] { 1, 2, 4, 0 })) { configA = true; combo = 3; } //  S, SE, NE,  N
+        if (NumsMatch(I, new int[] { 2, 4, 0, 5 })) { configA = true; combo = 4; } // SE, NE,  N, NW
+        if (NumsMatch(I, new int[] { 4, 0, 5, 3 })) { configA = true; combo = 5; } // NE,  N, NW, SW
+
+        if (configA)
+        {
+            tileQuadA.SetActive(true);
+            transform.localEulerAngles = new Vector3(0, 0, -60 * combo);
+            return;
+        }
+
+        bool configB = false;
+
+        if (NumsMatch(I, new int[] { 0, 5, 3, 2 })) { configB = true; combo = 0; } //  N, NW, SW, SE
+        if (NumsMatch(I, new int[] { 5, 3, 1, 4 })) { configB = true; combo = 1; } // NW, SW,  S, NE
+        if (NumsMatch(I, new int[] { 3, 1, 2, 0 })) { configB = true; combo = 2; } // SW,  S, SE,  N
+        if (NumsMatch(I, new int[] { 1, 2, 4, 5 })) { configB = true; combo = 3; } //  S, SE, NE, NW
+        if (NumsMatch(I, new int[] { 2, 4, 0, 3 })) { configB = true; combo = 4; } // SE, NE,  N, SW
+        if (NumsMatch(I, new int[] { 4, 0, 5, 1 })) { configB = true; combo = 5; } // NE,  N, NW,  N
+
+        if (configB)
+        {
+            tileQuadB.SetActive(true);
+            transform.localEulerAngles = new Vector3(0, 0, -60 * combo);
+            return;
+        }
+
+        bool configC = false;
+
+        if (NumsMatch(I, new int[] { 0, 5, 1, 2 })) { configC = true; combo = 0; } //  N, NW,  S, SE
+        if (NumsMatch(I, new int[] { 5, 3, 2, 4 })) { configC = true; combo = 1; } // NW, SW, SE, NE
+        if (NumsMatch(I, new int[] { 3, 1, 4, 0 })) { configC = true; combo = 2; } // SW,  S, NE,  N
+        if (NumsMatch(I, new int[] { 1, 2, 0, 5 })) { configC = true; combo = 3; } //  S, SE,  N, NW
+        if (NumsMatch(I, new int[] { 2, 4, 5, 3 })) { configC = true; combo = 4; } // SE, NE, NW, SW
+        if (NumsMatch(I, new int[] { 4, 0, 3, 1 })) { configC = true; combo = 5; } // NE,  N, SW,  N
+
+        if (configC)
+        {
+            tileQuadC.SetActive(true);
+            transform.localEulerAngles = new Vector3(0, 0, -60 * combo);
+            return;
+        }
+
+        bool configD = false;
+
+        if (NumsMatch(I, new int[] { 0, 3, 1, 2 })) { configD = true; combo = 0; } //  N, SW,  S, SE
+        if (NumsMatch(I, new int[] { 5, 1, 2, 4 })) { configD = true; combo = 1; } // NW,  S, SE, NE
+        if (NumsMatch(I, new int[] { 3, 2, 4, 0 })) { configD = true; combo = 2; } // SW, SE, NE,  N
+        if (NumsMatch(I, new int[] { 1, 4, 0, 5 })) { configD = true; combo = 3; } //  S, NE,  N, NW
+        if (NumsMatch(I, new int[] { 2, 0, 5, 3 })) { configD = true; combo = 4; } // SE,  N, NW, SW
+        if (NumsMatch(I, new int[] { 4, 5, 3, 1 })) { configD = true; combo = 5; } // NE, NW, SW,  N
+
+        if (configD)
+        {
+            tileQuadD.SetActive(true);
+            transform.localEulerAngles = new Vector3(0, 0, -60 * combo);
+            return;
+        }
+    }
+
     private void ToggleAllSubTiles(bool enable)
     {
         tileGrass.SetActive(enable);
@@ -387,6 +482,11 @@ public class PathTile : MonoBehaviour
         tileTripleB.SetActive(enable);
         tileTripleC.SetActive(enable);
         tileTripleD.SetActive(enable);
+
+        tileQuadA.SetActive(enable);
+        tileQuadB.SetActive(enable);
+        tileQuadC.SetActive(enable);
+        tileQuadD.SetActive(enable);
     }
 
     private bool isAny(int i, int[] nums)
