@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using FMODUnity;
 
 public class GridTile : MonoBehaviour
 {
@@ -13,6 +14,15 @@ public class GridTile : MonoBehaviour
     public GameObject tileBush ;
     public GameObject tileRock ;
     public GameObject tileWater;
+
+    [Header("Tile SFX")]
+    public EventReference SFXBase ;
+    public EventReference SFXGrass;
+    public EventReference SFXDirt ;
+    public EventReference SFXTree ;
+    public EventReference SFXBush ;
+    public EventReference SFXRock ;
+    public EventReference SFXWater;
 
     public enum TileState
     {
@@ -121,16 +131,20 @@ public class GridTile : MonoBehaviour
         if (tileRock  != null)  tileRock.SetActive(TileState.Rock  == state);
         if (tileWater != null) tileWater.SetActive(TileState.Water == state);
 
-        //// Debug - Testing GetNeighboringTiles()
-        //if (targetState == TileState.Bush)
-        //{
-        //    List<GameObject> neighbourGOs = GridManager.instance.GetNeighbouringTiles((int)_coordinates.x, (int)_coordinates.y);
-        //    for (int i = 0; i < neighbourGOs.Count; i++)
-        //    {
-        //        GridTile nextNTile = neighbourGOs[i].GetComponent<GridTile>();
-        //        nextNTile.SwapTile(TileState.Dirt, false);
-        //    }
-        //}
+        // Play SFX if NOT Undo
+        if (addToUndo)
+        {
+            switch (state)
+            {
+                case TileState.Base:  RuntimeManager.PlayOneShot(SFXBase,  transform.position); break;
+                case TileState.Grass: RuntimeManager.PlayOneShot(SFXGrass, transform.position); break;
+                case TileState.Dirt:  RuntimeManager.PlayOneShot(SFXDirt,  transform.position); break;
+                case TileState.Tree:  RuntimeManager.PlayOneShot(SFXTree,  transform.position); break;
+                case TileState.Bush:  RuntimeManager.PlayOneShot(SFXBush,  transform.position); break;
+                case TileState.Rock:  RuntimeManager.PlayOneShot(SFXRock,  transform.position); break;
+                case TileState.Water: RuntimeManager.PlayOneShot(SFXWater, transform.position); break;
+            }   
+        }
     }
 
     public int GetColumn()
