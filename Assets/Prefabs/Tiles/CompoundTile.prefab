@@ -60,6 +60,55 @@ MonoBehaviour:
   tileBush: {fileID: 3328939398909955508}
   tileRock: {fileID: 3303925229740971995}
   tileWater: {fileID: 4044329163615658898}
+  SFXBase:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  SFXGrass:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  SFXDirt:
+    Guid:
+      Data1: 726565984
+      Data2: 1339586345
+      Data3: -178270297
+      Data4: 130324379
+    Path: event:/UI/Tiles/UI_Tiles_DirtPath
+  SFXTree:
+    Guid:
+      Data1: 344574905
+      Data2: 1083468671
+      Data3: 690997401
+      Data4: 1075649195
+    Path: event:/UI/Tiles/UI_Tiles_Tree
+  SFXBush:
+    Guid:
+      Data1: -355400050
+      Data2: 1265431338
+      Data3: 307927975
+      Data4: 661809910
+    Path: event:/UI/Tiles/UI_Tiles_Bush
+  SFXRock:
+    Guid:
+      Data1: -1928179956
+      Data2: 1305019072
+      Data3: -51152981
+      Data4: 1370092705
+    Path: event:/UI/Tiles/UI_Tiles_Rock
+  SFXWater:
+    Guid:
+      Data1: 333865734
+      Data2: 1274121530
+      Data3: -401799523
+      Data4: -1957955013
+    Path: event:/UI/Tiles/UI_Tiles_Water
   state: 0
 --- !u!64 &-681877845930211764
 MeshCollider:
