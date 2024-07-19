@@ -6,6 +6,8 @@ public class NPCManager : MonoBehaviour
     public GameObject npcPrefab;
     [Space]
     [Range(0, 10)] public float spawnWait = 5;
+    [Range(0,  3)] public float wVariance = 1;
+    [Space]
     [Range(0, 30)] public float maxSpawns = 5;
     [Space]
 
@@ -111,7 +113,7 @@ public class NPCManager : MonoBehaviour
             _spawnedNPCs.Add(newNPC);
             _spndNPCBrains.Add(newBrain);
 
-            spawnDelay = spawnWait;
+            spawnDelay = spawnWait + Random.Range(wVariance * -1, wVariance);
 
             // Update U.I.
             GameManager.instance.hudManagerRef.DisplayVisitorCount();

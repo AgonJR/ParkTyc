@@ -6115,6 +6115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcPrefab: {fileID: 7844687039791577156, guid: 2665fd90d5aad49d2ad3fb7057765131, type: 3}
   spawnWait: 1.5
+  wVariance: 0.5
   maxSpawns: 3
   _spwnTiles: []
   _exitTiles: []
