@@ -11,6 +11,8 @@ public class GridManager : MonoBehaviour
     public GameObject tilePrefab;
     public CameraController mCam;
     public GameObject brdrPrefab;
+    [Space]
+    public EventReference undoSFX;
 
     [Header("Dev Tools")]
     public int gridSize = 3; //Assuming Square Grid
@@ -28,8 +30,6 @@ public class GridManager : MonoBehaviour
     private Dictionary<KeyValuePair<int, int>, GameObject> _borderGoDict;
 
     private static Stack<TileStateHistory> _undoStack;
-
-    [SerializeField] private EventReference undoSFX;
 
     public enum Direction
     {
@@ -342,12 +342,12 @@ public class GridManager : MonoBehaviour
             return;
         }
 
-        FMODUnity.RuntimeManager.PlayOneShot(undoSFX, transform.position);
-
         TileStateHistory latestTileSwapData = GridManager._undoStack.Pop();
 
         int q = (int) latestTileSwapData.coordinates.x;
         int r = (int) latestTileSwapData.coordinates.y;
+
+        RuntimeManager.PlayOneShot(undoSFX, transform.position);
 
         _gridTiles[q, r].SwapTile(latestTileSwapData.startState, addToUndo:false);
     }
