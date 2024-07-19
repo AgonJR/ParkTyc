@@ -25,6 +25,8 @@ public class PathTile : MonoBehaviour
     public GameObject tileQuadB;
     public GameObject tileQuadC;
     public GameObject tileQuadD;
+    [Space]
+    public GameObject tileQuint;
 
     private int q;
     private int r;
@@ -124,7 +126,7 @@ public class PathTile : MonoBehaviour
                 case 2: ModifyPath_ConnectTwo(); break;
                 case 3: ModifyPath_Triple();     break;
                 case 4: ModifyPath_Quads();      break;
-                case 5: ModifyPath_Solid();      break;
+                case 5: ModifyPath_Quint();      break;
                 case 6: ModifyPath_Solid();      break;
             }
         }
@@ -464,6 +466,38 @@ public class PathTile : MonoBehaviour
         }
     }
 
+    private void ModifyPath_Quint()
+    {
+        ToggleAllSubTiles(false);
+
+        int missingIndex = -1;
+        for (int i = 0; i < 6; i++)
+        {
+            PathTile pT = neighbourPaths[i];
+
+            if (pT == null)
+            {
+                missingIndex = i;
+                break;
+            }
+        }
+
+        int combo = 0;
+        switch (missingIndex)
+        {
+            case 4: combo = 0; break; // NE
+            case 0: combo = 1; break; // N
+            case 5: combo = 2; break; // NW
+            case 3: combo = 3; break; // SW
+            case 1: combo = 4; break; // S
+            case 2: combo = 5; break; // SE
+        }
+
+        transform.localEulerAngles = new Vector3(0, 0, -60 * combo);
+
+        tileQuint.SetActive(true);
+    }
+
     private void ToggleAllSubTiles(bool enable)
     {
         tileGrass.SetActive(enable);
@@ -487,6 +521,8 @@ public class PathTile : MonoBehaviour
         tileQuadB.SetActive(enable);
         tileQuadC.SetActive(enable);
         tileQuadD.SetActive(enable);
+
+        tileQuint.SetActive(enable);
     }
 
     private bool isAny(int i, int[] nums)
