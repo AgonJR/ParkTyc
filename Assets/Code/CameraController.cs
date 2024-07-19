@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    private Camera _mainCamRef;
+
+    [Header("Data")]
     public float wasdSpeed = 30.0f;
     public float pannSpeed = 03.0f;
     [Space]
@@ -10,25 +13,36 @@ public class CameraController : MonoBehaviour
     public float minZoom   = 11.0f;
     public bool invrseZoom = false;
 
+    [Header("Alternate Cameras")]
+    public KeyCode CameraToggle = KeyCode.C;
+    public Camera OverheadCamera;
+
     [Header("Debugging")]
     public GameObject debugUIPanel;
     public GameObject screenBlockr;
     public GameObject gameplayHUD;
 
     private Vector2 panStartPos;
+    private float panStartHight;
 
     private float minX = 0.0f;
     private float maxX = 0.0f;
     private float minZ = 0.0f;
     private float maxZ = 0.0f;
 
+    void Start()
+    {
+        // Assume Controller's On Main Camera
+        _mainCamRef = GetComponent<Camera>();
+    }
 
     void Update()
     {
         processPAN();
         processWASD();
-        processScroll();
         processDebug();
+        processScroll();
+        processAltToggle();
     }
 
     private void processWASD()
@@ -82,6 +96,7 @@ public class CameraController : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             panStartPos = Input.mousePosition;
+            panStartHight = transform.position.y;
         }
         else if (Input.GetMouseButton(1))
         {
@@ -91,14 +106,24 @@ public class CameraController : MonoBehaviour
 
             Vector3 moveDirection = new Vector3(deltaMousePos.x, 0, deltaMousePos.y) * pannSpeed * Time.deltaTime;
             moveDirection = transform.TransformDirection(moveDirection);
-            moveDirection.y = transform.position.z; // this works ¯\_(ツ)_/¯
 
             Vector3 newPosition = transform.position + moveDirection;
 
             newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX);
+            newPosition.y = panStartHight;
             newPosition.z = Mathf.Clamp(newPosition.z, minZ, maxZ);
 
             transform.position = newPosition;
+        }
+    }
+
+    private void processAltToggle()
+    {
+        if (Input.GetKeyDown(CameraToggle))
+        {
+            // Only make sense for two cams
+            _mainCamRef.enabled = !_mainCamRef.enabled;
+            OverheadCamera.enabled = !OverheadCamera.enabled;
         }
     }
 
