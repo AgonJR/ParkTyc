@@ -273,6 +273,8 @@ public class PathTile : MonoBehaviour
                 tileGrass.SetActive(true);
                 tilePathStraight.SetActive(true);
 
+                transform.localEulerAngles = new Vector3(0, 0, 0);
+
                 if ((i1 == 3 || i1 == 4) && (i2 == 3 || i2 == 4)) // NE & SW
                 {
                     transform.localEulerAngles = new Vector3(0, 0, 60);
