@@ -50,28 +50,33 @@ public class CameraController : MonoBehaviour
         float hInput = Input.GetAxis("Horizontal");
         float vInput = Input.GetAxis("Vertical");
 
-        Vector3 moveDirection = new Vector3(hInput, 0.0f, vInput).normalized;
+        if (Mathf.Abs(hInput) > 0.0f || Mathf.Abs(vInput) > 0.0f)
+        {
+            Vector3 moveDirection = new Vector3(hInput, 0.0f, vInput).normalized;
 
-        Vector3 newPosition = transform.position + moveDirection * wasdSpeed * Time.deltaTime;
+            Vector3 newPosition = transform.position + moveDirection * wasdSpeed * Time.deltaTime;
 
-        newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX); 
-        newPosition.z = Mathf.Clamp(newPosition.z, minZ, maxZ);
+            newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX);
+            newPosition.z = Mathf.Clamp(newPosition.z, minZ, maxZ);
 
-        transform.position = newPosition;
+            transform.position = newPosition;
+        }
     }
 
     private void processScroll()
     {
         float scrollInput  = Input.GetAxis("Mouse ScrollWheel") * (invrseZoom ? 1.0f : -1.0f);
-        float newYPosition = transform.position.y + scrollInput * zoomSpeed;
-
-        newYPosition = Mathf.Clamp(newYPosition, minZoom, maxZoom);
-
-        transform.position = new Vector3(transform.position.x, newYPosition, transform.position.z);
 
         if (Mathf.Abs(scrollInput) > 0.0f)
         {
             CalculateXZMinMax();
+
+            float newYPosition = transform.position.y + scrollInput * zoomSpeed;
+
+            newYPosition = Mathf.Clamp(newYPosition, minZoom, maxZoom);
+
+            transform.position = new Vector3(transform.position.x, newYPosition, transform.position.z);
+
         }
     }
 
@@ -145,7 +150,10 @@ public class CameraController : MonoBehaviour
             Bounds bounds = new Bounds(topLeftTile.position, Vector3.zero);
             bounds.Encapsulate(botRightTile.position);
 
-            Camera.main.transform.position = bounds.center - Vector3.forward * 21.0f;
+            Vector3 camPos = bounds.center - Vector3.forward * 21.0f;
+            camPos = new Vector3(camPos.x, transform.position.y, camPos.z);
+
+            transform.position = camPos; // bounds.center - Vector3.forward * 21.0f;
         }
     }
 
