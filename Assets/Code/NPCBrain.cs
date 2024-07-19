@@ -16,6 +16,12 @@ public class NPCBrain : MonoBehaviour
     public GameObject   entryVFX;
     public GameObject    exitVFX;
 
+    [Header("Demo Faces")]
+    [Range(0, 100)]
+    public int faceProbability = 50;
+    public MeshRenderer faceMesh;
+    public Material[] faceMats;
+
     private int[,] _gridVisited;
     private float[,] _exitHeurstx;
     private GameObject _exitTarget;
@@ -69,68 +75,84 @@ public class NPCBrain : MonoBehaviour
         {
             SelectNextTargetTile();
         }
-        else
+
+        if (nextTarget != null)
         {
-            // Check If Target Reached
-            float distance = Vector3.Distance(transform.position, nextTarget.transform.position);
-
-            if (distance < minTrgtDistance)
-            {
-                GridTile targetTile = _outroStarted ? null : nextTarget.GetComponent<GridTile>();
-
-                int q = _outroStarted ? (int) _outroCoordinates.x : targetTile.GetColumn();
-                int r = _outroStarted ? (int) _outroCoordinates.y : targetTile.GetRow();
-
-                gameObject.name = "N P C  (" + q + " , " + r + ")";
-
-                _coordinates = new Vector2(q, r);
-
-                nextTarget = null;
-
-                if (_entryCoordinates == _coordinates)
-                {
-                    spwnMesh.enabled = false;
-                    mainMesh.enabled = true;
-                    entryVFX.SetActive(true);
-                }
-
-                if (_exitCoordinates == _coordinates)
-                {
-                    int oQ = q;
-                    int oR = r;
-
-                         if (q == 0) { oQ -= 1; }
-                    else if (r == 0) { oR -= 1; }
-                    else if (q == GridManager.instance.GetGridSize() - 1) { oQ += 1; }
-                    else if (r == GridManager.instance.GetGridSize() - 1) { oR += 1; }
-
-                    _outroStarted = true;
-                    _outroCoordinates = new Vector2(oQ, oR);
-                    nextTarget = GridManager.instance.GetBorderTileGO(oQ, oR);
-
-                    mainMesh.enabled = false;
-                    exitMesh.enabled = true;
-                    exitVFX.SetActive(true);
-                }
-
-                if (_outroCoordinates == _coordinates)
-                {
-                    GameManager.instance.AddToScore(5);
-                    NPCManager.instance.ClearNPC(gameObject);
-                }
-
-                if (_outroStarted == false) _gridVisited[q, r]++;
-
-                return;
-            }
-
             // Move Towards Target
-            Vector3 direction = nextTarget.transform.position - transform.position;
+            Vector3 direction = (nextTarget.transform.position - transform.position).normalized;
 
             direction.y = 0.0f;
 
-            transform.position += npcSpeed * Time.deltaTime * direction.normalized;
+            transform.position += npcSpeed * Time.deltaTime * direction;
+
+            // Un-Comment Once Placeholder NPC Is Replace
+            //// Rotate to Face Direction
+            //if (direction != Vector3.zero)
+            //{
+            //    Quaternion newRotation = Quaternion.LookRotation(direction);
+            //    transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * npcSpeed);
+            //}
+
+            // Check If Target Reached
+            float distance = Vector3.Distance(transform.position, nextTarget.transform.position);
+
+            if (distance < minTrgtDistance) { ProcessTargetReached(); }
         }
+    }
+
+    private void ProcessTargetReached()
+    {
+        GridTile targetTile = _outroStarted ? null : nextTarget.GetComponent<GridTile>();
+
+        int q = _outroStarted ? (int)_outroCoordinates.x : targetTile.GetColumn();
+        int r = _outroStarted ? (int)_outroCoordinates.y : targetTile.GetRow();
+
+        gameObject.name = "N P C  (" + q + " , " + r + ")";
+
+        _coordinates = new Vector2(q, r);
+
+        nextTarget = null;
+
+        // Entered Grid
+        if (_entryCoordinates == _coordinates)
+        {
+            spwnMesh.enabled = false;
+            mainMesh.enabled = true;
+            entryVFX.SetActive(true);
+            ToggleFace();
+        }
+
+        // Exit Reached
+        if (_exitCoordinates == _coordinates)
+        {
+            int oQ = q;
+            int oR = r;
+
+            if (q == 0) { oQ -= 1; }
+            else if (r == 0) { oR -= 1; }
+            else if (q == GridManager.instance.GetGridSize() - 1) { oQ += 1; }
+            else if (r == GridManager.instance.GetGridSize() - 1) { oR += 1; }
+
+            _outroStarted = true;
+            _outroCoordinates = new Vector2(oQ, oR);
+            nextTarget = GridManager.instance.GetBorderTileGO(oQ, oR);
+
+            mainMesh.enabled = false;
+            faceMesh.enabled = false;
+            exitMesh.enabled = true;
+            exitVFX.SetActive(true);
+        }
+
+        // Left Grid
+        if (_outroStarted && _outroCoordinates == _coordinates)
+        {
+            GameManager.instance.AddToScore(5);
+            NPCManager.instance.ClearNPC(gameObject);
+        }
+
+        if (_outroStarted == false) _gridVisited[q, r]++;
+
+        return;
     }
 
     private void SelectNextTargetTile()
@@ -205,6 +227,22 @@ public class NPCBrain : MonoBehaviour
                 float distanceToExit = GridManager.CalculateDistance(q, r, eQ, eR);
 
                 _exitHeurstx[q, r] = distanceToExit;
+            }
+        }
+    }
+
+    private void ToggleFace()
+    {
+        faceMesh.enabled = false;
+
+        if (faceMats.Length > 0)
+        {
+            int roll = Random.Range(0, 100);
+
+            if (roll <= faceProbability)
+            {
+                faceMesh.enabled = true;
+                faceMesh.material = faceMats[Random.Range(0, faceMats.Length)];
             }
         }
     }
