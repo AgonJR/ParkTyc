@@ -22,6 +22,7 @@ public class NPCBrain : MonoBehaviour
     private int[,] _gridVisited;
     private float[,] _exitHeurstx;
     private GameObject _exitTarget;
+    private GridTile _exitTile;
     private int _stepCount = 0;
 
     private Vector2 _coordinates;
@@ -65,7 +66,7 @@ public class NPCBrain : MonoBehaviour
 
     private void ProcessMovement()
     {
-        if (_exitTarget == null)
+        if (_exitTarget == null || GridTile.stateWalkScores[_exitTile.state] < 0)
         {
             SelectExitTarget(NPCManager.RequestExitTiles());
         }
@@ -213,7 +214,8 @@ public class NPCBrain : MonoBehaviour
 
         if (_exitTarget != null)
         {
-            _exitCoordinates = _exitTarget.GetComponent<GridTile>().GetCoordinates();
+            _exitTile = _exitTarget.GetComponent<GridTile>();
+            _exitCoordinates = _exitTile.GetCoordinates();
 
             GenerateExitHeuristics();
         }
