@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -16,7 +14,6 @@ public class ClothingRandomizer : MonoBehaviour
     [Tooltip("Groups of items, from each, only a single garment will be visible")]
     public ClothingGroup[] clothingGroups;
 
-    // Start is called before the first frame update
     void Start()
     {
         for (int i = 0; i < this.clothingGroups.Length; i++) {            
@@ -26,11 +23,5 @@ public class ClothingRandomizer : MonoBehaviour
             System.Array.ForEach(clothingGroup.clothingItems, item => item.SetActive(false));
             clothingGroup.clothingItems[enableIndex].SetActive(true);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

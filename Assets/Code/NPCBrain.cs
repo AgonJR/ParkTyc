@@ -12,16 +12,12 @@ public class NPCBrain : MonoBehaviour
     public MeshRenderer spwnMesh;
     public MeshRenderer exitMesh;
     [Space]
-    public MeshRenderer mainMesh;
+    public GameObject  modelMale;
+    public GameObject  modelFeml;
     [Space]
     public GameObject   entryVFX;
     public GameObject    exitVFX;
-
-    [Header("Demo Faces")]
-    [Range(0, 100)]
-    public int faceProbability = 50;
-    public MeshRenderer faceMesh;
-    public Material[] faceMats;
+    [Space]
 
     private int[,] _gridVisited;
     private float[,] _exitHeurstx;
@@ -88,13 +84,12 @@ public class NPCBrain : MonoBehaviour
 
             transform.position += npcSpeed * Time.deltaTime * direction;
 
-            // Un-Comment Once Placeholder NPC Is Replace
-            //// Rotate to Face Direction
-            //if (direction != Vector3.zero)
-            //{
-            //    Quaternion newRotation = Quaternion.LookRotation(direction);
-            //    transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * npcSpeed);
-            //}
+            // Rotate to Face Direction
+            if (direction != Vector3.zero)
+            {
+                Quaternion newRotation = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * npcSpeed);
+            }
 
             // Check If Target Reached
             float distance = Vector3.Distance(transform.position, nextTarget.transform.position);
@@ -122,9 +117,10 @@ public class NPCBrain : MonoBehaviour
         if (_entryCoordinates == _coordinates)
         {
             spwnMesh.enabled = false;
-            mainMesh.enabled = true;
             entryVFX.SetActive(true);
-            ToggleFace();
+
+            modelMale.SetActive(Random.Range(0, 100) > 50);
+            modelFeml.SetActive(!modelMale.activeInHierarchy);
         }
 
         // Exit Reached
@@ -142,8 +138,9 @@ public class NPCBrain : MonoBehaviour
             _outroCoordinates = new Vector2(oQ, oR);
             nextTarget = GridManager.instance.GetBorderTileGO(oQ, oR);
 
-            mainMesh.enabled = false;
-            faceMesh.enabled = false;
+            modelMale.SetActive(false);
+            modelFeml.SetActive(false);
+
             exitMesh.enabled = true;
             exitVFX.SetActive(true);
         }
@@ -237,22 +234,6 @@ public class NPCBrain : MonoBehaviour
                 float distanceToExit = GridManager.CalculateDistance(q, r, eQ, eR);
 
                 _exitHeurstx[q, r] = distanceToExit;
-            }
-        }
-    }
-
-    private void ToggleFace()
-    {
-        faceMesh.enabled = false;
-
-        if (faceMats.Length > 0)
-        {
-            int roll = Random.Range(0, 100);
-
-            if (roll <= faceProbability)
-            {
-                faceMesh.enabled = true;
-                faceMesh.material = faceMats[Random.Range(0, faceMats.Length)];
             }
         }
     }
