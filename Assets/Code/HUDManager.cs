@@ -20,6 +20,9 @@ public class HUDManager : MonoBehaviour
     public Animator ScoreAnimator;
     [Space]
     public TMP_Text VisitorText;
+    [Header("Custom Cursor")]
+    public bool useCustomCursor;
+    public Texture2D cursorTexture;
 
     [Header("Debug Panels")]
     public TMP_InputField regenSizeField;
@@ -33,6 +36,8 @@ public class HUDManager : MonoBehaviour
         ReviewUnlockedButtons();
 
         DebugPanel_FillGridLoadDropdown();
+
+        if (useCustomCursor) Cursor.SetCursor(cursorTexture, new Vector2(16, 16), CursorMode.Auto);
     }
 
     private void Update()
