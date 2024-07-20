@@ -62,18 +62,18 @@ MonoBehaviour:
   tileWater: {fileID: 4044329163615658898}
   SFXBase:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -1961250419
+      Data2: 1162801003
+      Data3: 1454122656
+      Data4: 1724504326
+    Path: event:/UI/Tiles/UI_Tiles_Grass
   SFXGrass:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -1961250419
+      Data2: 1162801003
+      Data3: 1454122656
+      Data4: 1724504326
+    Path: event:/UI/Tiles/UI_Tiles_Grass
   SFXDirt:
     Guid:
       Data1: 726565984
