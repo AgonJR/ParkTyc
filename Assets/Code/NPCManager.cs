@@ -21,7 +21,7 @@ public class NPCManager : MonoBehaviour
                      private List<NPCBrain> _spndNPCBrains;
 
     private float spawnDelay = 0;
-    private int maxSpawnTileChecks = 10;
+    private int maxSpawnTileChecks = 30;
     private int spawnCheckCount = 0;
 
 
