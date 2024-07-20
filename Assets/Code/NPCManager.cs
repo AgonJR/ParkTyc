@@ -50,7 +50,7 @@ public class NPCManager : MonoBehaviour
             if (++spawnCheckCount >= maxSpawnTileChecks)
             {
                 var westernGrassTiles = GridManager.instance.ScanEdgeTiles(GridTile.TileState.Grass, GridManager.Direction.West);
-                _spwnTiles.Add(westernGrassTiles[Random.Range(0, westernGrassTiles.Count)]);
+                if (westernGrassTiles.Count > 0) { _spwnTiles.Add(westernGrassTiles[Random.Range(0, westernGrassTiles.Count)]); }
             }
         }
         else
