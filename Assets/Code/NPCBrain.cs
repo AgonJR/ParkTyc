@@ -19,6 +19,8 @@ public class NPCBrain : MonoBehaviour
     public GameObject    exitVFX;
     [Space]
 
+    private Animator _animatorRef;
+
     private int[,] _gridVisited;
     private float[,] _exitHeurstx;
     private GameObject _exitTarget;
@@ -122,6 +124,9 @@ public class NPCBrain : MonoBehaviour
 
             modelMale.SetActive(Random.Range(0, 100) > 50);
             modelFeml.SetActive(!modelMale.activeInHierarchy);
+
+            _animatorRef = modelMale.activeInHierarchy ? modelMale.GetComponent<Animator>() : modelFeml.GetComponent<Animator>();
+            _animatorRef.SetInteger("animState", 1); // Walk
         }
 
         // Exit Reached
