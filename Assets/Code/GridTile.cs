@@ -201,6 +201,13 @@ public class GridTile : MonoBehaviour
 
     public void RotateTile(int times = 1)
     {
+        if ( _activeTileGO != null )
+        {
+            Transform tileT = _activeTileGO.transform;
+            tileT.localEulerAngles = new Vector3(tileT.localEulerAngles.x, tileT.localEulerAngles.y, tileT.localEulerAngles.z + (60 * times));
+            return;
+        }
+
         transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z + (60 * times));
     }
 
