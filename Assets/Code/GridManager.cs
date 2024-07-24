@@ -101,6 +101,8 @@ public class GridManager : MonoBehaviour
 
         mCam.CalculateXZMinMax();
         mCam.FrameGrid(_gridGOs[0, 0].transform, _gridGOs[gridSize - 1, gridSize - 1].transform);
+
+        GameManager.instance.ResetScore();
     }
 
 

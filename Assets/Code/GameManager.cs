@@ -30,4 +30,11 @@ public class GameManager : MonoBehaviour
 
         hudManagerRef.DisplayScoreChange(amount);
     }
+
+    public void ResetScore()
+    {
+        Score = 0;
+        
+        hudManagerRef.DisplayScoreChange(0);
+    }
 }
