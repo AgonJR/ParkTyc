@@ -15,6 +15,7 @@ public class GridTile : MonoBehaviour
     public GameObject tileRock ;
     public GameObject tileWater;
     public GameObject tileBench;
+    public GameObject tileCamp;
 
     [Header("Tile SFX")]
     public EventReference SFXBase ;
@@ -35,7 +36,8 @@ public class GridTile : MonoBehaviour
         Bush,
         Rock,
         Water,
-        Bench
+        Bench,
+        Camp
     }
 
     public static readonly Dictionary<TileState, int> stateWalkScores = new()
@@ -47,7 +49,8 @@ public class GridTile : MonoBehaviour
         { TileState.Bush, -1 },
         { TileState.Rock, -1 },
         { TileState.Water,-1 },
-        { TileState.Bench,-1 }
+        { TileState.Bench,-1 },
+        { TileState.Camp, -1 }
     };
 
     public static readonly Dictionary<TileState, int> stateUnlockCost = new()
@@ -59,7 +62,8 @@ public class GridTile : MonoBehaviour
         { TileState.Bush,  0  },
         { TileState.Rock,  20 },
         { TileState.Water, 35 },
-        { TileState.Bench, 0  } // Zero for Testing
+        { TileState.Bench, 0  }, // Zero for Testing,
+        { TileState.Camp,  0  }  // Zero for Testing
     };
 
     [Header("Tile Status")]
@@ -157,6 +161,7 @@ public class GridTile : MonoBehaviour
         if (tileRock  != null)  tileRock.SetActive(TileState.Rock  == state);
         if (tileWater != null) tileWater.SetActive(TileState.Water == state);
         if (tileBench != null) tileBench.SetActive(TileState.Bench == state);
+        if (tileCamp  != null)  tileCamp.SetActive(TileState.Camp  == state);
 
         // Play SFX if NOT Undo
         if (addToUndo)
@@ -223,11 +228,17 @@ public class GridTile : MonoBehaviour
             case TileState.Rock:  _activeTileGO = tileRock;  break;
             case TileState.Water: _activeTileGO = tileWater; break;
             case TileState.Bench: _activeTileGO = tileBench; break;
+            case TileState.Camp:  _activeTileGO = tileCamp;  break;
         } 
 
         if ( state == TileState.Bench ) 
         {
             _activeTileGO.GetComponent<BenchTile>().Initialize(this);
+        }
+
+        if ( state == TileState.Camp ) 
+        {
+            _activeTileGO.GetComponent<CampTile>().Initialize(this);
         }
     }
 }

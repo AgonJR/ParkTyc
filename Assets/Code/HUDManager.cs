@@ -50,6 +50,7 @@ public class HUDManager : MonoBehaviour
         if (Input.GetKey(KeyCode.Alpha5)) SelectTileType(GridTile.TileState.Rock );
         if (Input.GetKey(KeyCode.Alpha6)) SelectTileType(GridTile.TileState.Water);
         if (Input.GetKey(KeyCode.Alpha7)) SelectTileType(GridTile.TileState.Bench);
+        if (Input.GetKey(KeyCode.Alpha8)) SelectTileType(GridTile.TileState.Camp);
     }
 
     public void SelectTileType(GridTile.TileState newType)
