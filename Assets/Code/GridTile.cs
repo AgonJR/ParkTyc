@@ -129,6 +129,22 @@ public class GridTile : MonoBehaviour
         SwapTile(HUDManager.selectedType);
     }
 
+    private void OnMouseOver()
+    {
+        if ( Input.GetKeyDown(KeyCode.R ) )
+        {
+            switch (state)
+            {
+                case TileState.Dirt:  return;
+                case TileState.Base:  return;
+                case TileState.Water: return;
+                case TileState.Grass: return;
+            }
+            
+            RotateTile(1);
+        }
+    }
+
     public void SwapTile(GridTile.TileState targetState, bool addToUndo = true)
     {
         if ( addToUndo ) GridManager.AddToUndoHistory(new TileStateHistory(_coordinates, state, targetState));
@@ -182,6 +198,11 @@ public class GridTile : MonoBehaviour
     public Vector2 GetCoordinates()
     {
         return _coordinates;
+    }
+
+    public void RotateTile(int times = 1)
+    {
+        transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z + (60 * times));
     }
 
 }
