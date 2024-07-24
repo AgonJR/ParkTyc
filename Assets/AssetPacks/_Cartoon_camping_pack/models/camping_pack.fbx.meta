@@ -1,0 +1,194 @@
+fileFormatVersion: 2
+guid: f6a10a13eb28dbe4e9ad258c2bc5236a
+timeCreated: 1524154643
+licenseType: Store
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: ash
+    100002: axe
+    100004: big_chair
+    100006: boat
+    100008: campfire_stones
+    100010: campfire_wood
+    100012: //RootNode
+    100014: carpet
+    100016: cauldron
+    100018: cauldron_holder
+    100020: coller_box
+    100022: first_aid
+    100024: fishing_rod
+    100026: lantern
+    100028: log
+    100030: map
+    100032: paddle
+    100034: pile_firewood
+    100036: plaid
+    100038: shovel
+    100040: small_chair
+    100042: table
+    100044: tent_big
+    100046: tent_small
+    400000: ash
+    400002: axe
+    400004: big_chair
+    400006: boat
+    400008: campfire_stones
+    400010: campfire_wood
+    400012: //RootNode
+    400014: carpet
+    400016: cauldron
+    400018: cauldron_holder
+    400020: coller_box
+    400022: first_aid
+    400024: fishing_rod
+    400026: lantern
+    400028: log
+    400030: map
+    400032: paddle
+    400034: pile_firewood
+    400036: plaid
+    400038: shovel
+    400040: small_chair
+    400042: table
+    400044: tent_big
+    400046: tent_small
+    2300000: ash
+    2300002: axe
+    2300004: big_chair
+    2300006: boat
+    2300008: campfire_stones
+    2300010: campfire_wood
+    2300012: carpet
+    2300014: cauldron
+    2300016: cauldron_holder
+    2300018: coller_box
+    2300020: first_aid
+    2300022: fishing_rod
+    2300024: lantern
+    2300026: log
+    2300028: map
+    2300030: paddle
+    2300032: pile_firewood
+    2300034: plaid
+    2300036: shovel
+    2300038: small_chair
+    2300040: table
+    2300042: tent_big
+    2300044: tent_small
+    3300000: ash
+    3300002: axe
+    3300004: big_chair
+    3300006: boat
+    3300008: campfire_stones
+    3300010: campfire_wood
+    3300012: carpet
+    3300014: cauldron
+    3300016: cauldron_holder
+    3300018: coller_box
+    3300020: first_aid
+    3300022: fishing_rod
+    3300024: lantern
+    3300026: log
+    3300028: map
+    3300030: paddle
+    3300032: pile_firewood
+    3300034: plaid
+    3300036: shovel
+    3300038: small_chair
+    3300040: table
+    3300042: tent_big
+    3300044: tent_small
+    4300000: ash
+    4300002: pile_firewood
+    4300004: campfire_stones
+    4300006: campfire_wood
+    4300008: cauldron_holder
+    4300010: cauldron
+    4300012: table
+    4300014: lantern
+    4300016: map
+    4300018: small_chair
+    4300020: big_chair
+    4300022: coller_box
+    4300024: fishing_rod
+    4300026: axe
+    4300028: shovel
+    4300030: first_aid
+    4300032: log
+    4300034: carpet
+    4300036: plaid
+    4300038: paddle
+    4300040: boat
+    4300042: tent_small
+    4300044: tent_big
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 0
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
