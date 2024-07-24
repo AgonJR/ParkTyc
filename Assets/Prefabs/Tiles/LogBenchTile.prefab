@@ -428,8 +428,8 @@ GameObject:
   - component: {fileID: 5910840308049018326}
   - component: {fileID: 7101106074521814170}
   - component: {fileID: 1367967158262402469}
-  - component: {fileID: 2951689861482085972}
   - component: {fileID: 6621487224879635905}
+  - component: {fileID: 5565862906537606564}
   m_Layer: 0
   m_Name: LogBenchTile
   m_TagString: Untagged
@@ -509,28 +509,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2951689861482085972
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6073209844188446167}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2041144969986664275, guid: 356fbf2300f6b8540914103d877f1c0f, type: 3}
 --- !u!114 &6621487224879635905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -550,6 +528,18 @@ MonoBehaviour:
   - {fileID: 5127058122551698456}
   Minimum: 0
   Maximum: 4
+--- !u!114 &5565862906537606564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6073209844188446167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eaf79291626f46eb94e381d6f6b4751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7768298916208935285
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,7 +14,6 @@ public class GridTile : MonoBehaviour
     public GameObject tileBush ;
     public GameObject tileRock ;
     public GameObject tileWater;
-    [Space]
     public GameObject tileBench;
 
     [Header("Tile SFX")]
@@ -25,7 +24,6 @@ public class GridTile : MonoBehaviour
     public EventReference SFXBush ;
     public EventReference SFXRock ;
     public EventReference SFXWater;
-    [Space]
     public EventReference SFXBench;
 
     public enum TileState
@@ -61,9 +59,8 @@ public class GridTile : MonoBehaviour
         { TileState.Bush,  0  },
         { TileState.Rock,  20 },
         { TileState.Water, 35 },
-        { TileState.Bench, 50 }
+        { TileState.Bench, 0  } // Zero for Testing
     };
-
 
     [Header("Tile Status")]
     public TileState state  = TileState.Base;
@@ -72,9 +69,9 @@ public class GridTile : MonoBehaviour
     public int maxCapacity  = 0;
     public int curOccupancy = 0;
 
-
     private Vector2 _coordinates;
     private Vector3 _highlightPos;
+    private GameObject _activeTileGO;
 
     private static GameObject _highlightTileObject;
 
@@ -183,6 +180,8 @@ public class GridTile : MonoBehaviour
             case TileState.Bench: isActivity = true; maxCapacity = 1; curOccupancy = 0; break;
             default: isActivity = false; break;
         }
+
+        InitializeActiveTile();
     }
 
     public int GetColumn()
@@ -205,6 +204,25 @@ public class GridTile : MonoBehaviour
         transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z + (60 * times));
     }
 
+    public void InitializeActiveTile()
+    {
+        switch (state)
+        {
+            case TileState.Base:  _activeTileGO = tileBase;  break;
+            case TileState.Grass: _activeTileGO = tileGrass; break;
+            case TileState.Dirt:  _activeTileGO = tileDirt;  break;
+            case TileState.Tree:  _activeTileGO = tileTree;  break;
+            case TileState.Bush:  _activeTileGO = tileBush;  break;
+            case TileState.Rock:  _activeTileGO = tileRock;  break;
+            case TileState.Water: _activeTileGO = tileWater; break;
+            case TileState.Bench: _activeTileGO = tileBench; break;
+        } 
+
+        if ( state == TileState.Bench ) 
+        {
+            _activeTileGO.GetComponent<BenchTile>().Initialize(this);
+        }
+    }
 }
 
 

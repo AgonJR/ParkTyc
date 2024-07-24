@@ -694,7 +694,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5468919196227240320
 Transform:
   m_ObjectHideFlags: 0
@@ -1830,6 +1830,10 @@ PrefabInstance:
     - target: {fileID: 1920024014774358, guid: eaa97a6c6f23390449f15fbdbbbbbe2f, type: 3}
       propertyPath: m_Name
       value: tent_big
+      objectReference: {fileID: 0}
+    - target: {fileID: 1920024014774358, guid: eaa97a6c6f23390449f15fbdbbbbbe2f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4623032420658910, guid: eaa97a6c6f23390449f15fbdbbbbbe2f, type: 3}
       propertyPath: m_LocalScale.x
