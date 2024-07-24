@@ -26,6 +26,6 @@ public class BenchTile : MonoBehaviour
         else if ( neighbours[5] != null && neighbours[5].GetComponent<GridTile>().state == GridTile.TileState.Dirt) { rDelta =  60 * 0; } // NW
         else if ( neighbours[0] != null && neighbours[0].GetComponent<GridTile>().state == GridTile.TileState.Dirt) { rDelta =  60 * 1; } //  N
 
-        transform.localEulerAngles = new Vector3(-90.0f, 0.0f, rDelta);
+        transform.localEulerAngles = new Vector3(0, 0, rDelta);
     }
 }
