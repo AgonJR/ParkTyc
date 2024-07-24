@@ -42,13 +42,14 @@ public class HUDManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKey(KeyCode.Alpha0)) SelectTileType(GridTile.TileState.Base );
         if (Input.GetKey(KeyCode.Alpha1)) SelectTileType(GridTile.TileState.Grass);
         if (Input.GetKey(KeyCode.Alpha2)) SelectTileType(GridTile.TileState.Dirt );
         if (Input.GetKey(KeyCode.Alpha3)) SelectTileType(GridTile.TileState.Tree );
         if (Input.GetKey(KeyCode.Alpha4)) SelectTileType(GridTile.TileState.Bush );
         if (Input.GetKey(KeyCode.Alpha5)) SelectTileType(GridTile.TileState.Rock );
         if (Input.GetKey(KeyCode.Alpha6)) SelectTileType(GridTile.TileState.Water);
-        if (Input.GetKey(KeyCode.Alpha0)) SelectTileType(GridTile.TileState.Base );
+        if (Input.GetKey(KeyCode.Alpha7)) SelectTileType(GridTile.TileState.Bench);
     }
 
     public void SelectTileType(GridTile.TileState newType)

@@ -14,6 +14,8 @@ public class GridTile : MonoBehaviour
     public GameObject tileBush ;
     public GameObject tileRock ;
     public GameObject tileWater;
+    [Space]
+    public GameObject tileBench;
 
     [Header("Tile SFX")]
     public EventReference SFXBase ;
@@ -23,6 +25,8 @@ public class GridTile : MonoBehaviour
     public EventReference SFXBush ;
     public EventReference SFXRock ;
     public EventReference SFXWater;
+    [Space]
+    public EventReference SFXBench;
 
     public enum TileState
     {
@@ -32,7 +36,8 @@ public class GridTile : MonoBehaviour
         Tree,
         Bush,
         Rock,
-        Water
+        Water,
+        Bench
     }
 
     public static readonly Dictionary<TileState, int> stateWalkScores = new()
@@ -43,7 +48,8 @@ public class GridTile : MonoBehaviour
         { TileState.Tree, -1 },
         { TileState.Bush, -1 },
         { TileState.Rock, -1 },
-        { TileState.Water,-1 }
+        { TileState.Water,-1 },
+        { TileState.Bench,-1 }
     };
 
     public static readonly Dictionary<TileState, int> stateUnlockCost = new()
@@ -54,11 +60,17 @@ public class GridTile : MonoBehaviour
         { TileState.Tree,  5  },
         { TileState.Bush,  0  },
         { TileState.Rock,  20 },
-        { TileState.Water, 35 }
+        { TileState.Water, 35 },
+        { TileState.Bench, 50 }
     };
 
+
     [Header("Tile Status")]
-    public TileState state = TileState.Base;
+    public TileState state  = TileState.Base;
+    [Space]
+    public bool isActivity  = false;
+    public int maxCapacity  = 0;
+    public int curOccupancy = 0;
 
 
     private Vector2 _coordinates;
@@ -123,6 +135,7 @@ public class GridTile : MonoBehaviour
 
         state = targetState;
 
+        // Set State
         if (tileBase  != null)  tileBase.SetActive(TileState.Base  == state);
         if (tileGrass != null) tileGrass.SetActive(TileState.Grass == state);
         if (tileDirt  != null)  tileDirt.SetActive(TileState.Dirt  == state);
@@ -130,6 +143,7 @@ public class GridTile : MonoBehaviour
         if (tileBush  != null)  tileBush.SetActive(TileState.Bush  == state);
         if (tileRock  != null)  tileRock.SetActive(TileState.Rock  == state);
         if (tileWater != null) tileWater.SetActive(TileState.Water == state);
+        if (tileBench != null) tileBench.SetActive(TileState.Bench == state);
 
         // Play SFX if NOT Undo
         if (addToUndo)
@@ -143,7 +157,15 @@ public class GridTile : MonoBehaviour
                 case TileState.Bush:  RuntimeManager.PlayOneShot(SFXBush,  transform.position); break;
                 case TileState.Rock:  RuntimeManager.PlayOneShot(SFXRock,  transform.position); break;
                 case TileState.Water: RuntimeManager.PlayOneShot(SFXWater, transform.position); break;
+                case TileState.Bench: RuntimeManager.PlayOneShot(SFXBench, transform.position); break;
             }   
+        }
+
+        // Interactable Tiles
+        switch ( state )
+        {
+            case TileState.Bench: isActivity = true; maxCapacity = 1; curOccupancy = 0; break;
+            default: isActivity = false; break;
         }
     }
 

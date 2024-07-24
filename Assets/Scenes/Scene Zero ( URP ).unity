@@ -4002,9 +4002,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '7  ???
-
-'
+  m_text: 7 Bench
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5110,6 +5108,7 @@ MonoBehaviour:
   - {fileID: 1196862775}
   - {fileID: 1661914026}
   - {fileID: 321626519}
+  - {fileID: 2072241139}
   ScoreText: {fileID: 1613205798}
   DeltaText: {fileID: 381561350}
   ScoreAnimator: {fileID: 381561347}
@@ -7242,7 +7241,7 @@ GameObject:
   - component: {fileID: 2072241140}
   - component: {fileID: 2072241139}
   m_Layer: 5
-  m_Name: Button (UnAssigned)
+  m_Name: Button (Bench)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7307,7 +7306,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 2072241140}
   m_OnClick:
     m_PersistentCalls:
@@ -7319,7 +7318,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 6
+          m_IntArgument: 7
           m_FloatArgument: 0
           m_StringArgument: Grass
           m_BoolArgument: 0
