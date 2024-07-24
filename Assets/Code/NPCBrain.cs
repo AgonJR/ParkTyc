@@ -33,6 +33,10 @@ public class NPCBrain : MonoBehaviour
     private Vector2 _outroCoordinates;
     private bool _outroStarted = false;
 
+    private bool _activityStarted = false;
+    private GridTile _activityTile = null;
+    private Vector2 _activityCoordinates;
+
 
     public void Init(int spawnQ, int spawnR)
     {
@@ -63,6 +67,7 @@ public class NPCBrain : MonoBehaviour
 
     private void FixedUpdate()
     {
+        ProcessActivity();
         ProcessMovement();
     }
 
@@ -73,7 +78,7 @@ public class NPCBrain : MonoBehaviour
             SelectExitTarget(NPCManager.RequestExitTiles());
         }
 
-        if (nextTarget == null)
+        if (nextTarget == null && _activityStarted == false)
         {
             SelectNextTargetTile();
         }
@@ -160,6 +165,13 @@ public class NPCBrain : MonoBehaviour
 
         if (_outroStarted == false) _gridVisited[q, r]++;
 
+        // Activity Reached
+        if (_activityStarted && _activityCoordinates == _coordinates)
+        {
+            // _animatorRef.SetTrigger("Bench_Sit");
+            _animatorRef.SetInteger("animState", 0); // Idle, until we figure out sit/stand
+        }
+
         return;
     }
 
@@ -168,8 +180,34 @@ public class NPCBrain : MonoBehaviour
         List<GameObject> neighbourGOs = GridManager.instance.GetNeighbouringTiles((int)_coordinates.x, (int)_coordinates.y);
         List<GridTile> neighbourTiles = new List<GridTile>();
 
-        float[] nWeights = new float[neighbourGOs.Count];
+        //
+        // Check For Possible Interactions
+        //
 
+        for ( int i = 0; i < neighbourGOs.Count; i++ )
+        {
+            GridTile nextNTile = neighbourGOs[i].GetComponent<GridTile>();
+            
+            if ( nextNTile.isActivity && nextNTile.curOccupancy < nextNTile.maxCapacity && _gridVisited[nextNTile.GetColumn(), nextNTile.GetRow()] == 0)
+            {
+                _activityStarted = true;
+
+                _activityTile = nextNTile;
+                _activityTile.curOccupancy++;
+                nextTarget = _activityTile.gameObject;
+
+                _activityCoordinates = _activityTile.GetCoordinates();
+                _gridVisited[nextNTile.GetColumn(), nextNTile.GetRow()]++;
+
+                return;
+            }
+        }
+
+        //
+        // Move Towards Exit
+        //
+
+        float[] nWeights = new float[neighbourGOs.Count];
         for ( int i = 0; i < neighbourGOs.Count; i++ )
         {
             GridTile nextNTile = neighbourGOs[i].GetComponent<GridTile>();
@@ -183,14 +221,9 @@ public class NPCBrain : MonoBehaviour
         }
 
         float minWeight = float.MaxValue;
-
-
         for (int i = 0; i < neighbourGOs.Count; i++)
         {
-            if (nWeights[i] < 0)
-            {
-                continue;
-            }
+            if (nWeights[i] < 0) { continue; }
 
             if (nWeights[i] < minWeight)
             {
@@ -242,6 +275,29 @@ public class NPCBrain : MonoBehaviour
 
                 _exitHeurstx[q, r] = distanceToExit;
             }
+        }
+    }
+
+    private int activityCounter =  0; // Temporary
+    private void ProcessActivity()
+    {
+        if ( _activityStarted && _activityTile != null )
+        {
+            activityCounter++;
+
+            if (activityCounter > 300 )
+            {
+                _activityStarted = false;
+                _activityTile.curOccupancy--;
+                _activityTile = null;
+
+
+                // _animatorRef.SetTrigger("Bench_Stand");
+                _animatorRef.SetInteger("animState", 1); // Walk
+
+                activityCounter = 0;
+            }
+
         }
     }
 }
