@@ -76,6 +76,7 @@ public class GridTile : MonoBehaviour
     private Vector2 _coordinates;
     private Vector3 _highlightPos;
     private GameObject _activeTileGO;
+    private GridTile[] _neighbourTiles;
 
     private static GameObject _highlightTileObject;
 
@@ -187,6 +188,8 @@ public class GridTile : MonoBehaviour
         }
 
         InitializeActiveTile();
+        
+        if ( addToUndo ) PingNeighbours();
     }
 
     public int GetColumn()
@@ -239,6 +242,34 @@ public class GridTile : MonoBehaviour
         if ( state == TileState.Camp ) 
         {
             _activeTileGO.GetComponent<CampTile>().Initialize(this);
+        }
+    }
+
+    public void PingNeighbours()
+    {
+        if ( _neighbourTiles == null )
+        {
+            _neighbourTiles = new GridTile[6];
+
+            List<GameObject> neighbourGOs = GridManager.instance.GetNeighbouringTilesConst(GetColumn(), GetRow());
+
+            for ( int i = 0; i < 6; i++ )
+            {
+                _neighbourTiles[i] = neighbourGOs[i] == null ? null : neighbourGOs[i].GetComponent<GridTile>();
+            }
+        }
+
+        for ( int i = 0; i < 6; i++ )
+        {
+            if ( _neighbourTiles[i] != null ) _neighbourTiles[i].PingActiveTile();
+        }
+    }
+
+    public void PingActiveTile()
+    {
+        if ( state == TileState.Camp ) 
+        {
+            _activeTileGO.GetComponent<CampTile>().RecalculateStatus();
         }
     }
 }
