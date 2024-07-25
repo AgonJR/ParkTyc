@@ -90,7 +90,7 @@ public class CampTile : MonoBehaviour
             }
         }
 
-        // No components found, spawn all construction tiles
+        // No components found, spawn both construction tiles
         if ( subtileA != null ) subtileA.SetActive(true);
         if ( subtileB != null ) subtileB.SetActive(true);
 
@@ -98,6 +98,25 @@ public class CampTile : MonoBehaviour
         ghostTree.SetActive(true);
         campComplete.SetActive(false);
         campIncomplete.SetActive(true);
+
+        // Rotate for edge tile camp placement
+        bool edgeCheck = false;
+        foreach (GridTile tile in nTiles) { if (tile == null) {edgeCheck = true; break;}}
+        if ( edgeCheck )
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                int a = clockwiseCardinals[i];
+                int b = clockwiseCardinals[i+1];
+
+                if ( nTiles[a] != null && nTiles[b] != null )
+                {
+                    campIncomplete.transform.localEulerAngles = new Vector3(0, 0, 60 * (i+3));
+                    return;
+                }
+            }
+        }
+
     }
 
     private void OnDisable()
