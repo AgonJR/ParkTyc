@@ -12,6 +12,9 @@ public class CameraController : MonoBehaviour
     public float maxZoom   = 31.0f;      
     public float minZoom   = 11.0f;
     public bool invrseZoom = false;
+    [Space]
+    public float tiltSpeed =  3.0f;
+    public float tiltAngle = 45.0f;
 
     [Header("Alternate Cameras")]
     public KeyCode CameraToggle = KeyCode.C;
@@ -40,6 +43,7 @@ public class CameraController : MonoBehaviour
     {
         processPAN();
         processWASD();
+        processTilt();
         processDebug();
         processScroll();
         processAltToggle();
@@ -61,6 +65,16 @@ public class CameraController : MonoBehaviour
 
             transform.position = newPosition;
         }
+    }
+
+    private void processTilt()
+    {
+        float tiltDir = 0;
+        tiltDir += Input.GetKey(KeyCode.E) ?  1 : 0;
+        tiltDir += Input.GetKey(KeyCode.Q) ? -1 : 0;
+
+        Quaternion targetRotation = Quaternion.Euler(50, tiltAngle * tiltDir, 0);
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, Time.deltaTime * tiltSpeed);
     }
 
     private void processScroll()

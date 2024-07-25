@@ -3126,6 +3126,8 @@ MonoBehaviour:
   maxZoom: 50
   minZoom: 10
   invrseZoom: 0
+  tiltSpeed: 3
+  tiltAngle: 35
   CameraToggle: 99
   OverheadCamera: {fileID: 546728876}
   debugUIPanel: {fileID: 1100923368}
