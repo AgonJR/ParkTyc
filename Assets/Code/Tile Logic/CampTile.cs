@@ -55,8 +55,11 @@ public class CampTile : MonoBehaviour
 
                 campIncomplete.SetActive(false);
 
-                nTiles[a].state = GridTile.TileState.Grass;
-                nTiles[b].state = GridTile.TileState.Grass;
+                GridManager.instance.RemoveFromUndo(new TileStateHistory(nTiles[a].GetCoordinates(), GridTile.TileState.Base, nTiles[a].state));
+                GridManager.instance.RemoveFromUndo(new TileStateHistory(nTiles[b].GetCoordinates(), GridTile.TileState.Base, nTiles[b].state));
+
+                nTiles[a].SwapTile(GridTile.TileState.Grass, false);
+                nTiles[b].SwapTile(GridTile.TileState.Grass, false);
 
                 nTiles[a].gameObject.SetActive(false);
                 nTiles[b].gameObject.SetActive(false);

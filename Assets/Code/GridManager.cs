@@ -337,6 +337,31 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    public void RemoveFromUndo(TileStateHistory tileSwapData)
+    {
+        // Currently used to remove tree/rock swaps when a Camp is completed
+
+        TileStateHistory[] undoHistory = _undoStack.ToArray();
+
+        for ( int i = 0; i < undoHistory.Length; i++ )
+        {
+            if (undoHistory[i].coordinates == tileSwapData.coordinates && undoHistory[i].endState == tileSwapData.endState )
+            {
+                _undoStack = new Stack<TileStateHistory>();
+
+                for ( int j = 0; j < undoHistory.Length; j++ )
+                {
+                    if ( i != j )
+                    {
+                        _undoStack.Push(undoHistory[j]);
+                    }
+                }
+
+                return;
+            }
+        }
+    }
+
     public void DoUndo()
     {
         if (GridManager._undoStack.Count == 0)
