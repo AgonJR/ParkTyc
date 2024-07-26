@@ -50,7 +50,6 @@ MonoBehaviour:
   campComplete: {fileID: 4341088054553178828}
   ghostTree: {fileID: 6365258175223934973}
   ghostRock: {fileID: 3698696822678001825}
-  ghostTreeAtRock: {fileID: 0}
 --- !u!1001 &8250311383090542874
 PrefabInstance:
   m_ObjectHideFlags: 0
