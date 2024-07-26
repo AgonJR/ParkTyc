@@ -213,6 +213,12 @@ public class GridTile : MonoBehaviour
         {
             Transform tileT = _activeTileGO.transform;
             tileT.localEulerAngles = new Vector3(tileT.localEulerAngles.x, tileT.localEulerAngles.y, tileT.localEulerAngles.z + (60 * times));
+
+            if ( state == TileState.Bench )
+            {
+                GetComponentInChildren<BenchTile>().TurnSitRotation(times);
+            }
+
             return;
         }
 

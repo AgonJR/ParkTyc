@@ -33,6 +33,7 @@ public class NPCBrain : MonoBehaviour
     private Vector2 _outroCoordinates;
     private bool _outroStarted = false;
 
+    private bool _activitySpotted = false;
     private bool _activityStarted = false;
     private GridTile _activityTile = null;
     private Vector2 _activityCoordinates;
@@ -78,7 +79,7 @@ public class NPCBrain : MonoBehaviour
             SelectExitTarget(NPCManager.RequestExitTiles());
         }
 
-        if (nextTarget == null && _activityStarted == false)
+        if (nextTarget == null && _activitySpotted == false && _activityStarted == false)
         {
             SelectNextTargetTile();
         }
@@ -166,10 +167,9 @@ public class NPCBrain : MonoBehaviour
         if (_outroStarted == false) _gridVisited[q, r]++;
 
         // Activity Reached
-        if (_activityStarted && _activityCoordinates == _coordinates)
+        if (_activitySpotted && _activityCoordinates == _coordinates)
         {
-            // _animatorRef.SetTrigger("Bench_Sit");
-            _animatorRef.SetInteger("animState", 0); // Idle, until we figure out sit/stand
+            _activityStarted = true;
         }
 
         return;
@@ -190,7 +190,7 @@ public class NPCBrain : MonoBehaviour
             
             if ( nextNTile.isActivity && nextNTile.curOccupancy < nextNTile.maxCapacity && _gridVisited[nextNTile.GetColumn(), nextNTile.GetRow()] == 0)
             {
-                _activityStarted = true;
+                _activitySpotted = true;
 
                 _activityTile = nextNTile;
                 _activityTile.curOccupancy++;
@@ -278,26 +278,45 @@ public class NPCBrain : MonoBehaviour
         }
     }
 
-    private int activityCounter =  0; // Temporary
+    private int _activityFrames =  0; // Temporary, keep track of how many frames since started activity interaction
+    private int _sitFrames = 300;
     private void ProcessActivity()
     {
         if ( _activityStarted && _activityTile != null )
         {
-            activityCounter++;
+            _activityFrames++;
 
-            if (activityCounter > 300 )
+            if ( _activityTile.state == GridTile.TileState.Bench )
             {
-                _activityStarted = false;
-                _activityTile.curOccupancy--;
-                _activityTile = null;
+                if ( _activitySpotted )
+                {
+                    Transform mark = _activityTile.GetComponentInChildren<BenchTile>().actMark;
+                    transform.position = new Vector3(mark.position.x, transform.position.y, mark.position.z);
 
+                    int sitRotation = _activityTile.GetComponentInChildren<BenchTile>().getSitRotation();
+                    transform.localEulerAngles = new Vector3(0, sitRotation, 0);
 
-                // _animatorRef.SetTrigger("Bench_Stand");
-                _animatorRef.SetInteger("animState", 1); // Walk
+                    _activitySpotted = false;
+                    _animatorRef.Play("Bench_Sit");
+                    _animatorRef.SetInteger("animState", 2); // Bench Idle
+                }
 
-                activityCounter = 0;
+                if (_activityFrames > _sitFrames )
+                {
+                    if ( _animatorRef.GetCurrentAnimatorStateInfo(0).IsName("Bench_Idle") )
+                    {
+                        _animatorRef.Play("Bench_Stand");
+                        _animatorRef.SetInteger("animState", 1); // Walk
+                    }
+                    else if ( _animatorRef.GetCurrentAnimatorStateInfo(0).IsName("Walk01") )
+                    {
+                        _activityTile.curOccupancy--;
+                        _activityStarted = false;
+                        _activityTile = null;
+                        _activityFrames = 0;
+                    }
+                }
             }
-
         }
     }
 }
