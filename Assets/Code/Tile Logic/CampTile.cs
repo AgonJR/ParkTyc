@@ -125,4 +125,14 @@ public class CampTile : MonoBehaviour
         if ( subtileB != null ) subtileB.SetActive(true);
     }
 
+    public bool IsComplete()
+    {
+        return campComplete.activeInHierarchy;
+    }
+
+    public bool IsHalfComplete()
+    {
+        return subtileA != null || subtileB != null;
+    }
+
 }

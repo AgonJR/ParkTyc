@@ -211,6 +211,11 @@ public class GridTile : MonoBehaviour
     {
         if ( _activeTileGO != null )
         {
+            if ( state == TileState.Camp )
+            {
+                if ( GetComponentInChildren<CampTile>().IsComplete() || GetComponentInChildren<CampTile>().IsHalfComplete()) return;
+            }
+
             Transform tileT = _activeTileGO.transform;
             tileT.localEulerAngles = new Vector3(tileT.localEulerAngles.x, tileT.localEulerAngles.y, tileT.localEulerAngles.z + (60 * times));
 
