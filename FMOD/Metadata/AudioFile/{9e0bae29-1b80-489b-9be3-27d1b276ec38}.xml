@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{9e0bae29-1b80-489b-9be3-27d1b276ec38}">
+		<property name="assetPath">
+			<value>SFX/NPC/Footsteps/Dirt/SFX_NPC_Footstep_Dirt_03.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>96</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.43804166666666666</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{f18b0020-a1ed-4282-b50e-a0280a15628f}</destination>
+		</relationship>
+	</object>
+</objects>

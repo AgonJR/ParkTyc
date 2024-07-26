@@ -5758,6 +5758,7 @@ GameObject:
   - component: {fileID: 4728548607188439126}
   - component: {fileID: 4521793763447371183}
   - component: {fileID: 5558844263895775037}
+  - component: {fileID: 1773446675438063887}
   m_Layer: 0
   m_Name: NPC_Male_Animation
   m_TagString: Untagged
@@ -5872,6 +5873,26 @@ MonoBehaviour:
     - {fileID: 8614157482216667309}
     - {fileID: 4059445124510903183}
     - {fileID: 985304256472197096}
+--- !u!114 &1773446675438063887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8858806757441408402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03d55335492b36b47a60e7a4aacfd342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentTerrain: 0
+  footstepSFX:
+    Guid:
+      Data1: -1539388436
+      Data2: 1265460889
+      Data3: -1556227682
+      Data4: -207168617
+    Path: event:/SFX/NPC/SFX_NPC_Footstep
 --- !u!1 &9066844608668572551
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{6b36da1c-b348-4efc-a5b3-601446bfacbe}">
+		<property name="assetPath">
+			<value>SFX/NPC/Footsteps/Grass/SFX_NPC_Footstep_Grass_03.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>96</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.98808333333333331</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{f18b0020-a1ed-4282-b50e-a0280a15628f}</destination>
+		</relationship>
+	</object>
+</objects>
