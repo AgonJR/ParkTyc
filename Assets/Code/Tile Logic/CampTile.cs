@@ -26,6 +26,8 @@ public class CampTile : MonoBehaviour
 
     public void RecalculateStatus()
     {
+        if (campComplete.activeInHierarchy) return;
+
         List<GameObject> neighbours = GridManager.instance.GetNeighbouringTilesConst(tileRef.GetColumn(), tileRef.GetRow());
 
         GridTile[] nTiles = new GridTile[6];
