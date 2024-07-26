@@ -61,10 +61,10 @@
 	</object>
 	<object class="EventAutomatableProperties" id="{cfe94035-6abb-4c04-97bb-37da34e452e5}">
 		<property name="minimumDistance">
-			<value>5</value>
+			<value>10</value>
 		</property>
 		<property name="maximumDistance">
-			<value>50</value>
+			<value>65</value>
 		</property>
 	</object>
 	<object class="MarkerTrack" id="{0d852c12-f8fa-46e2-bb87-7ba12ff1ac8d}" />
@@ -168,7 +168,6 @@
 		</property>
 		<relationship name="sounds">
 			<destination>{a490d900-1448-4964-90cd-4ac56cb1c94a}</destination>
-			<destination>{ef94f185-c5c0-4940-9870-9f3f44e62404}</destination>
 			<destination>{c5a9c2db-7814-4c0e-8144-763fd6dc5631}</destination>
 			<destination>{df42617b-75f0-4eb2-aa91-399d13f5e829}</destination>
 		</relationship>
@@ -225,11 +224,6 @@
 	<object class="SingleSound" id="{a490d900-1448-4964-90cd-4ac56cb1c94a}">
 		<relationship name="audioFile">
 			<destination>{323e7408-1490-48c0-8d1f-ac3cef5e2cec}</destination>
-		</relationship>
-	</object>
-	<object class="SingleSound" id="{ef94f185-c5c0-4940-9870-9f3f44e62404}">
-		<relationship name="audioFile">
-			<destination>{6b36da1c-b348-4efc-a5b3-601446bfacbe}</destination>
 		</relationship>
 	</object>
 	<object class="SingleSound" id="{c5a9c2db-7814-4c0e-8144-763fd6dc5631}">

@@ -3123,7 +3123,7 @@ MonoBehaviour:
   wasdSpeed: 42
   pannSpeed: 0.5
   zoomSpeed: 5
-  maxZoom: 50
+  maxZoom: 100
   minZoom: 10
   invrseZoom: 0
   tiltSpeed: 3
