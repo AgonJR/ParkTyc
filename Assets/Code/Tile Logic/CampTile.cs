@@ -54,6 +54,10 @@ public class CampTile : MonoBehaviour
                 subtileB = nTiles[b].gameObject;
 
                 campIncomplete.SetActive(false);
+
+                nTiles[a].state = GridTile.TileState.Grass;
+                nTiles[b].state = GridTile.TileState.Grass;
+
                 nTiles[a].gameObject.SetActive(false);
                 nTiles[b].gameObject.SetActive(false);
 
