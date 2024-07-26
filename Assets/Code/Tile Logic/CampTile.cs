@@ -43,6 +43,7 @@ public class CampTile : MonoBehaviour
             if (( nTiles[a].state == GridTile.TileState.Rock && nTiles[b].state == GridTile.TileState.Tree )
              || ( nTiles[a].state == GridTile.TileState.Tree && nTiles[b].state == GridTile.TileState.Rock ))
             {
+                transform.localEulerAngles = Vector3.zero;
 
                 campComplete.SetActive(true);
                 campComplete.transform.localEulerAngles = new Vector3(0, 0, 60 * (i+3));
@@ -66,6 +67,8 @@ public class CampTile : MonoBehaviour
             if ( nTiles[a] == null ) { continue; }
             if ( nTiles[a].state == GridTile.TileState.Rock )
             {
+                transform.localEulerAngles = Vector3.zero;
+
                 campIncomplete.SetActive(true);
                 campIncomplete.transform.localEulerAngles = new Vector3(0, 0, 60 * (i+3));
 
@@ -78,6 +81,8 @@ public class CampTile : MonoBehaviour
             }
             if ( nTiles[a].state == GridTile.TileState.Tree )
             {
+                transform.localEulerAngles = Vector3.zero;
+                
                 campIncomplete.SetActive(true);
                 campIncomplete.transform.localEulerAngles = new Vector3(0, 0, 60 * (i+2));
 
