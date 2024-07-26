@@ -26,6 +26,7 @@ public class NPCBrain : MonoBehaviour
     private GameObject _exitTarget;
     private GridTile _exitTile;
     private int _stepCount = 0;
+    private int _exitScore = 5;
 
     private Vector2 _coordinates;
     private Vector2 _exitCoordinates;
@@ -160,7 +161,7 @@ public class NPCBrain : MonoBehaviour
         // Left Grid
         if (_outroStarted && _outroCoordinates == _coordinates)
         {
-            GameManager.instance.AddToScore(5);
+            GameManager.instance.AddToScore(_exitScore);
             NPCManager.instance.ClearNPC(gameObject);
         }
 
@@ -314,6 +315,7 @@ public class NPCBrain : MonoBehaviour
                         _activityStarted = false;
                         _activityTile = null;
                         _activityFrames = 0;
+                        _exitScore += 5;
                     }
                 }
             }
