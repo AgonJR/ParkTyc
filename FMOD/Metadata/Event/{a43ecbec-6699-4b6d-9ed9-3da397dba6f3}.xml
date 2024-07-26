@@ -109,15 +109,15 @@
 	</object>
 	<object class="MixerBusPanner" id="{9a06774c-0a10-47be-a254-73b6882e13d8}" />
 	<object class="MultiSound" id="{2529afe7-6fda-4dfb-957a-ec6b0d0fc8e3}">
+		<property name="start">
+			<value>1</value>
+		</property>
 		<relationship name="sounds">
 			<destination>{a55b82ed-f82f-4fa8-80ab-bb70609d6295}</destination>
 			<destination>{02a4562a-4b40-48aa-9586-c63792417dc4}</destination>
 		</relationship>
 	</object>
 	<object class="MultiSound" id="{6f2f36fc-da47-4ae5-8a59-f1f03d205f7d}">
-		<property name="start">
-			<value>1</value>
-		</property>
 		<relationship name="sounds">
 			<destination>{56243980-b3e3-4c66-a9b6-ea0068395c84}</destination>
 			<destination>{0bb1831d-f921-43a1-9a03-7910a473670b}</destination>

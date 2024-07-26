@@ -1,4 +1,6 @@
 using UnityEngine;
+using FMODUnity;
+using UnityEngine.UIElements;
 
 public class CameraController : MonoBehaviour
 {
@@ -33,6 +35,8 @@ public class CameraController : MonoBehaviour
     private float minZ = 0.0f;
     private float maxZ = 0.0f;
 
+    private float currentY;
+
     void Start()
     {
         // Assume Controller's On Main Camera
@@ -47,6 +51,9 @@ public class CameraController : MonoBehaviour
         processDebug();
         processScroll();
         processAltToggle();
+
+        currentY = transform.position.y;
+        FMODUnity.RuntimeManager.StudioSystem.setParameterByName("CameraHeight", currentY);
     }
 
     private void processWASD()
