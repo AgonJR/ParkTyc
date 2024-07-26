@@ -228,6 +228,15 @@ MonoBehaviour:
   tileChunkCenter: {fileID: 2879810655188111891}
   tileChunkEdgeEnd: {fileID: 4159471301461318263}
   tileChunkEdgeContinue: {fileID: 7096013592609063718}
+  tileTripleA: {fileID: 0}
+  tileTripleB: {fileID: 0}
+  tileTripleC: {fileID: 0}
+  tileTripleD: {fileID: 0}
+  tileQuadA: {fileID: 0}
+  tileQuadB: {fileID: 0}
+  tileQuadC: {fileID: 0}
+  tileQuadD: {fileID: 0}
+  tileQuint: {fileID: 0}
 --- !u!1 &1641035299689557860
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,13 +628,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4419158642908629310}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 311488991728687160}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
 --- !u!33 &121608626901474337
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -654,7 +663,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8d2327d89ceba8b4c9df68ceaaf59f6f, type: 2}
+  - {fileID: 2100000, guid: d2e6504dd87bfdd478871acb93206c02, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
