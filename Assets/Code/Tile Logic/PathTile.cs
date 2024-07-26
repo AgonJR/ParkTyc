@@ -9,6 +9,7 @@ public class PathTile : MonoBehaviour
     [Space]
     public GameObject tilePathCurveSharp;
     public GameObject tilePathCurveSmooth;
+    public GameObject tileDoubleA;
     public GameObject tilePathStraight;
     public GameObject tilePathEnd;
     [Space]
@@ -244,8 +245,7 @@ public class PathTile : MonoBehaviour
 
         if (adjacent)
         {
-            tileGrass.SetActive(true);
-            tilePathCurveSharp.SetActive(true);
+            tileDoubleA.SetActive(true);
             transform.localEulerAngles = new Vector3(0, 0, 60 * adjCombo);
         }
         else
@@ -509,6 +509,7 @@ public class PathTile : MonoBehaviour
         tilePathCurveSmooth.SetActive(enable);
         tilePathStraight.SetActive(enable);
         tilePathEnd.SetActive(enable);
+        tileDoubleA.SetActive(enable);
 
         tileChunkCenter.SetActive(enable);
         tileChunkEdgeEnd.SetActive(enable);

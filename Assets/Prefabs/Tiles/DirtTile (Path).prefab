@@ -1239,6 +1239,7 @@ MonoBehaviour:
   tileSolid: {fileID: 1721182459786530073}
   tilePathCurveSharp: {fileID: 7836208179514353253}
   tilePathCurveSmooth: {fileID: 3142330090150719051}
+  tileDoubleA: {fileID: 993656702357739332}
   tilePathStraight: {fileID: 1084198386656809348}
   tilePathEnd: {fileID: 8480523705705826843}
   tileChunkCenter: {fileID: 2987918832102773289}
