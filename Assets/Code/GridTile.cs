@@ -55,15 +55,15 @@ public class GridTile : MonoBehaviour
 
     public static readonly Dictionary<TileState, int> stateUnlockCost = new()
     {
-        { TileState.Base,  0  },
-        { TileState.Grass, 0  },
-        { TileState.Dirt,  0  },
-        { TileState.Tree,  5  },
-        { TileState.Bush,  0  },
-        { TileState.Rock,  20 },
-        { TileState.Water, 35 },
-        { TileState.Bench, 0  }, // Zero for Testing,
-        { TileState.Camp,  0  }  // Zero for Testing
+        { TileState.Base,   0 },
+        { TileState.Grass,  0 },
+        { TileState.Dirt,   0 },
+        { TileState.Tree,  15 },
+        { TileState.Bush,   5 },
+        { TileState.Rock,  10 },
+        { TileState.Water,  5 },
+        { TileState.Bench, 25 },
+        { TileState.Camp,  50 }
     };
 
     [Header("Tile Status")]
@@ -149,11 +149,19 @@ public class GridTile : MonoBehaviour
 
     public void SwapTile(GridTile.TileState targetState, bool addToUndo = true)
     {
+        if ( state == targetState ) return;
+        if ( addToUndo && GameManager.Score < stateUnlockCost[targetState] ) return;
+
         if ( addToUndo ) GridManager.AddToUndoHistory(new TileStateHistory(_coordinates, state, targetState));
 
+        // Update Score
+        int sDelta = addToUndo ? -1 : 1;
+        sDelta *= stateUnlockCost[addToUndo ? targetState : state]; // Refund current state if undo
+        GameManager.instance.AddToScore(sDelta);
+
+        // Set State & Toggle Tile
         state = targetState;
 
-        // Set State
         if (tileBase  != null)  tileBase.SetActive(TileState.Base  == state);
         if (tileGrass != null) tileGrass.SetActive(TileState.Grass == state);
         if (tileDirt  != null)  tileDirt.SetActive(TileState.Dirt  == state);

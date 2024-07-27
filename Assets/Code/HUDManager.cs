@@ -17,7 +17,9 @@ public class HUDManager : MonoBehaviour
     [Header("Labels")]
     public TMP_Text ScoreText;
     public TMP_Text DeltaText;
-    public Animator ScoreAnimator;
+    public TMP_Text NegDtText;
+    public Animator deltaAnimator;
+    public Animator negDtAnimator;
     [Space]
     public TMP_Text VisitorText;
     [Header("Custom Cursor")]
@@ -42,7 +44,6 @@ public class HUDManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Alpha0)) SelectTileType(GridTile.TileState.Base );
         if (Input.GetKey(KeyCode.Alpha1)) SelectTileType(GridTile.TileState.Grass);
         if (Input.GetKey(KeyCode.Alpha2)) SelectTileType(GridTile.TileState.Dirt );
         if (Input.GetKey(KeyCode.Alpha3)) SelectTileType(GridTile.TileState.Tree );
@@ -50,7 +51,7 @@ public class HUDManager : MonoBehaviour
         if (Input.GetKey(KeyCode.Alpha5)) SelectTileType(GridTile.TileState.Rock );
         if (Input.GetKey(KeyCode.Alpha6)) SelectTileType(GridTile.TileState.Water);
         if (Input.GetKey(KeyCode.Alpha7)) SelectTileType(GridTile.TileState.Bench);
-        if (Input.GetKey(KeyCode.Alpha8)) SelectTileType(GridTile.TileState.Camp);
+        if (Input.GetKey(KeyCode.Alpha8)) SelectTileType(GridTile.TileState.Camp );
     }
 
     public void SelectTileType(GridTile.TileState newType)
@@ -85,15 +86,17 @@ public class HUDManager : MonoBehaviour
 
     public void DisplayScoreChange(int amount)
     {
-        string deltaString = (amount >= 0 ? "+" : "-") + amount;
-        string scoreString = "Score: " + GameManager.Score.ToString("000");
+        string deltaString = (amount > 0 ? "+" : "-") + amount;
+        string scoreString = "Kash £ " + GameManager.Score;
 
         ScoreText.text = scoreString;
-        DeltaText.text = deltaString;
+        DeltaText.text = amount > 0 ? deltaString : string.Empty;
+        NegDtText.text = amount < 0 ? deltaString : string.Empty;
 
         ReviewUnlockedButtons();
 
-        ScoreAnimator.Play("UI_ScoreIncreaseAnim");
+        deltaAnimator.Play("UI_ScoreIncreaseAnim");
+        negDtAnimator.Play("UI_ScoreIncreaseAnim");
     }
 
     public void DisplayVisitorCount()

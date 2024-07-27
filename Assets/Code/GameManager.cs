@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
     {
         Score += amount;
 
+        if (Score < 0) Score = 0;
+
         hudManagerRef.DisplayScoreChange(amount);
     }
 
