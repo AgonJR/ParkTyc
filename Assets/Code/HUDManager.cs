@@ -82,15 +82,18 @@ public class HUDManager : MonoBehaviour
     public void SelectTileType(GridTile.TileState newType)
     {
         SelectTileType((int)newType);
+        
     }
 
     public void SelectTileType(int tile)
     {
+        
         int index = (int)tile - 1;
 
         if (tileButts[index].interactable)
         {
             selectedType = (GridTile.TileState)tile;
+            Debug.Log(selectedType);
 
             for (int i = 0; i < tileButts.Length; i++)
             {
