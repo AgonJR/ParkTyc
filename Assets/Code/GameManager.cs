@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
         instance = this;
-        Score = startingScore;
     }
 
     // For Debug / Pause Menu
@@ -38,7 +37,7 @@ public class GameManager : MonoBehaviour
 
     public void ResetScore()
     {
-        Score = 0;
+        Score = startingScore;
         
         hudManagerRef.DisplayScoreChange(0);
     }
