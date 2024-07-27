@@ -2020,7 +2020,7 @@ MonoBehaviour:
   npcManagerRef: {fileID: 1641841349}
   gridManagerRef: {fileID: 2059049827}
   hudManagerRef: {fileID: 1499271318}
-  startingScore: 0
+  startingScore: 50
 --- !u!4 &421558203
 Transform:
   m_ObjectHideFlags: 0
