@@ -8,6 +8,9 @@ public class HUDManager : MonoBehaviour
 {
     static public GridTile.TileState selectedType;
 
+    [Header("Panels")]
+    public GameObject BuildBlocker;
+    public GameObject BuildMenu;
     [Header("Tile Buttons")]
     public Color defaultColour;
     public Color selectdColour;
@@ -30,10 +33,21 @@ public class HUDManager : MonoBehaviour
     public TMP_InputField regenSizeField;
     public TMP_Dropdown loadGridDropdown;
 
+    private BuildMode currentMode = BuildMode.None;
+
+    private enum BuildMode
+    {
+        None, //null?
+        Nature,
+        Menu,
+        Amenities
+    }
+
 
     void Start()
     {
         SelectTileType(GridTile.TileState.Bush);
+        BuildMenu.SetActive(false);
 
         ReviewUnlockedButtons();
 
@@ -52,6 +66,17 @@ public class HUDManager : MonoBehaviour
         if (Input.GetKey(KeyCode.Alpha6)) SelectTileType(GridTile.TileState.Water);
         if (Input.GetKey(KeyCode.Alpha7)) SelectTileType(GridTile.TileState.Bench);
         if (Input.GetKey(KeyCode.Alpha8)) SelectTileType(GridTile.TileState.Camp );
+
+        if (currentMode == BuildMode.Menu)
+        {
+            BuildMenu.SetActive(true);
+            BuildBlocker.SetActive(true);
+        }
+        else
+        {
+            BuildMenu.SetActive(false);
+            BuildBlocker.SetActive(false);
+        }        
     }
 
     public void SelectTileType(GridTile.TileState newType)
@@ -74,6 +99,11 @@ public class HUDManager : MonoBehaviour
                 tileButts[i].colors = colors;
             }
         }
+    }
+
+    public void SelectBuildMode(int mode)
+    {
+        currentMode = (BuildMode)mode;
     }
 
     private void ReviewUnlockedButtons()
