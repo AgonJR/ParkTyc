@@ -9,13 +9,16 @@ public class GameManager : MonoBehaviour
     public GridManager gridManagerRef;
     public HUDManager  hudManagerRef ;
 
+    [Header("Dev. Tools")]
+    public int startingScore = 0;
+
     public static int Score;
 
 
     public void Start()
     {
         instance = this;
-        Score = 0;
+        Score = startingScore;
     }
 
     // For Debug / Pause Menu
