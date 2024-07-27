@@ -37,6 +37,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Emission:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Texture2D:
         m_Texture: {fileID: 2800000, guid: 1d49d1e2d8a2b97478e3e0355dbf3a07, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -68,6 +72,8 @@ Material:
     - _Windscale: 0.1
     - _Windspeed: 2
     m_Colors:
+    - _EmissionTint: {r: 1, g: 1, b: 1, a: 1}
+    - _ScrollingDirection: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0, g: 0, b: 0, a: 0}
     - _WindCosMaping: {r: 0, g: 0, b: 1, a: 0}
     - _WindSinMaping: {r: 1, g: 0, b: 0, a: 0}
