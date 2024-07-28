@@ -91,7 +91,10 @@ public class GridManager : MonoBehaviour
 
                 tile.Initialize(q, r);
                 tileGO.transform.parent = gridParent.transform;
-                tile.SwapTile(_loadedTiles == null ? GridTile.TileState.Grass : _loadedTiles[q, r], addToUndo: false);
+
+                
+
+                tile.SwapTile(_loadedTiles == null ? ChooseRandomStarterTile() : _loadedTiles[q, r], addToUndo: false);
 
                 _gridGOs[q,r] = tileGO;
                 _gridTiles[q,r] = tile;
@@ -104,6 +107,19 @@ public class GridManager : MonoBehaviour
         mCam.FrameGrid(_gridGOs[0, 0].transform, _gridGOs[gridSizeQ - 1, gridSizeR - 1].transform);
 
         GameManager.instance.ResetScore();
+    }
+
+    public GridTile.TileState ChooseRandomStarterTile()
+    {
+        GridTile.TileState chosenState = GridTile.TileState.Grass;
+
+        int roll = Random.Range(0, 100);
+
+             if ( roll > 90 ) chosenState = GridTile.TileState.Tree;
+        else if ( roll > 75 ) chosenState = GridTile.TileState.Rock;
+        else if ( roll > 50 ) chosenState = GridTile.TileState.Bush;
+
+        return chosenState;
     }
 
 
