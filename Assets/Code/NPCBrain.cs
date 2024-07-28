@@ -46,17 +46,18 @@ public class NPCBrain : MonoBehaviour
 
         _entryCoordinates = new Vector2(spawnQ, spawnR);
 
-        int gridSize = GridManager.instance.gridSize;
+        int gridSizeQ = GridManager.instance.gridSizeQ;
+        int gridSizeR = GridManager.instance.gridSizeR;
 
         _coordinates = new Vector2(spawnQ, spawnR);
 
-        _gridVisited = new int[gridSize, gridSize];
-        _exitHeurstx = new float[gridSize, gridSize];
+        _gridVisited = new int[gridSizeQ, gridSizeR];
+        _exitHeurstx = new float[gridSizeQ, gridSizeR];
 
 
-        for (int q = 0; q < gridSize; q++) //column
+        for (int q = 0; q < gridSizeQ; q++) //column
         {
-            for (int r = 0; r < gridSize; r++) //row
+            for (int r = 0; r < gridSizeR; r++) //row
             {
                 _gridVisited[q, r] = 0;
                 _exitHeurstx[q, r] = 1;
@@ -144,8 +145,8 @@ public class NPCBrain : MonoBehaviour
 
             if (q == 0) { oQ -= 1; }
             else if (r == 0) { oR -= 1; }
-            else if (q == GridManager.instance.GetGridSize() - 1) { oQ += 1; }
-            else if (r == GridManager.instance.GetGridSize() - 1) { oR += 1; }
+            else if (q == GridManager.instance.GetGridSizeQ() - 1) { oQ += 1; }
+            else if (r == GridManager.instance.GetGridSizeR() - 1) { oR += 1; }
 
             _outroStarted = true;
             _outroCoordinates = new Vector2(oQ, oR);
@@ -262,15 +263,15 @@ public class NPCBrain : MonoBehaviour
 
     private void GenerateExitHeuristics()
     {
-
-        int gridSize = GridManager.instance.gridSize;
+        int gridSizeQ = GridManager.instance.gridSizeQ;
+        int gridSizeR = GridManager.instance.gridSizeR;
 
         int eQ = (int) _exitCoordinates.x;
         int eR = (int) _exitCoordinates.y;
 
-        for (int q = 0; q < gridSize; q++) //column
+        for (int q = 0; q < gridSizeQ; q++) //column
         {
-            for (int r = 0; r < gridSize; r++) //row
+            for (int r = 0; r < gridSizeR; r++) //row
             {
                 float distanceToExit = GridManager.CalculateDistance(q, r, eQ, eR);
 

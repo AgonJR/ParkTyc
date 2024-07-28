@@ -155,12 +155,13 @@ public class CameraController : MonoBehaviour
 
     public void CalculateXZMinMax()
     {
-        int gridSize = GridManager.instance.GetGridSize();
+        int gridQ = GridManager.instance.GetGridSizeQ();
+        int gridR = GridManager.instance.GetGridSizeR();
 
         minX = 5.0f;
-        maxX = (gridSize - 1) * 7.535f;
+        maxX = (gridQ - 1) * 7.535f;
 
-        minZ = (gridSize * -8.70f) - (transform.position.y / 10.0f) - 5.0f;
+        minZ = (gridR * -8.70f) - (transform.position.y / 10.0f) - 5.0f;
         maxZ = -20.0f;
     }
 

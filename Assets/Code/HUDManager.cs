@@ -30,7 +30,8 @@ public class HUDManager : MonoBehaviour
     public Texture2D cursorTexture;
 
     [Header("Debug Panels")]
-    public TMP_InputField regenSizeField;
+    public TMP_InputField regenSizeQField;
+    public TMP_InputField regenSizeRField;
     public TMP_Dropdown loadGridDropdown;
 
     private BuildMode currentMode = BuildMode.None;
@@ -86,14 +87,12 @@ public class HUDManager : MonoBehaviour
     }
 
     public void SelectTileType(int tile)
-    {
-        
+    {   
         int index = (int)tile - 1;
 
         if (tileButts[index].interactable)
         {
             selectedType = (GridTile.TileState)tile;
-            Debug.Log(selectedType);
 
             for (int i = 0; i < tileButts.Length; i++)
             {
@@ -143,9 +142,10 @@ public class HUDManager : MonoBehaviour
     // DEBUG Panel
     //
 
-    public void DebugPanel_SetUITextGridSize(int newSize)
+    public void DebugPanel_SetUITextGridSize(int newSizeQ, int newSizeR)
     {
-        regenSizeField.text = newSize + "";
+        regenSizeQField.text = newSizeQ + "";
+        regenSizeRField.text = newSizeR + "";
     }
 
     public void DebugPanel_FillGridLoadDropdown()
@@ -180,7 +180,8 @@ public class HUDManager : MonoBehaviour
 
     public void DebugPanel_HandleRegenClick()
     {
-        int newSize = int.Parse(regenSizeField.text);
-        GridManager.instance.ExternalRegenerate(newSize);
+        int newQ = int.Parse(regenSizeQField.text);
+        int newR = int.Parse(regenSizeRField.text);
+        GridManager.instance.ExternalRegenerate(newQ, newR);
     }
 }

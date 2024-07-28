@@ -15,8 +15,9 @@ public class GridManager : MonoBehaviour
     public EventReference undoSFX;
 
     [Header("Dev Tools")]
-    public int gridSize = 3; //Assuming Square Grid
-    public int outerSize= 3;
+    public int gridSizeQ = 9;
+    public int gridSizeR = 6;
+    public int outerSize = 3;
     public bool regenerateGrid = true;
     public bool shrnkOutrTiles = true;
 
@@ -65,9 +66,9 @@ public class GridManager : MonoBehaviour
         if (_bordrGOs != null ) { foreach (GameObject tile in _bordrGOs) { Destroy(tile); } }
 
         _undoStack    = new Stack<TileStateHistory>();
-        _gridTiles    = new GridTile[gridSize, gridSize];
-        _gridGOs      = new GameObject[gridSize, gridSize];
-        _bordrGOs     = new GameObject[((gridSize + outerSize*2) * (gridSize + outerSize*2)) - (gridSize * gridSize)];
+        _gridTiles    = new GridTile[gridSizeQ, gridSizeR];
+        _gridGOs      = new GameObject[gridSizeQ, gridSizeR];
+        _bordrGOs     = new GameObject[((gridSizeQ + outerSize*2) * (gridSizeR + outerSize*2)) - (gridSizeQ * gridSizeR)];
         _borderGoDict = new Dictionary<KeyValuePair<int, int>, GameObject>();
     }
 
@@ -79,9 +80,9 @@ public class GridManager : MonoBehaviour
             gridParent.transform.parent = this.transform;
         }
 
-        for (int q = 0; q < gridSize; q++) //column
+        for (int q = 0; q < gridSizeQ; q++) //column
         {
-            for (int r = 0; r < gridSize; r++) //row
+            for (int r = 0; r < gridSizeR; r++) //row
             {
                 Vector3 position = CalculateTilePosition(q, r);
 
@@ -100,7 +101,7 @@ public class GridManager : MonoBehaviour
         _loadedTiles = null;
 
         mCam.CalculateXZMinMax();
-        mCam.FrameGrid(_gridGOs[0, 0].transform, _gridGOs[gridSize - 1, gridSize - 1].transform);
+        mCam.FrameGrid(_gridGOs[0, 0].transform, _gridGOs[gridSizeQ - 1, gridSizeR - 1].transform);
 
         GameManager.instance.ResetScore();
     }
@@ -117,11 +118,11 @@ public class GridManager : MonoBehaviour
 
         int i = 0;
 
-        for (int q = outerSize * -1; q < gridSize + outerSize; q++)
+        for (int q = outerSize * -1; q < gridSizeQ + outerSize; q++)
         {
-            for (int r = outerSize * -1; r < gridSize + outerSize; r++)
+            for (int r = outerSize * -1; r < gridSizeR + outerSize; r++)
             {
-                if ((q >= 0 && q < gridSize) && (r >= 0 && r < gridSize))
+                if ((q >= 0 && q < gridSizeQ) && (r >= 0 && r < gridSizeR))
                 {
                     continue;
                 }
@@ -142,17 +143,17 @@ public class GridManager : MonoBehaviour
                     {
                         sizeModifier = 1.0f / (q * -1);
                     }
-                    else if (q > gridSize)
+                    else if (q > gridSizeQ)
                     {
-                        sizeModifier = 1.0f / (q - gridSize + 1);
+                        sizeModifier = 1.0f / (q - gridSizeQ + 1);
                     }
                     else if (r < 0)
                     {
                         sizeModifier = 1.0f / (r * -1.0f);
                     }
-                    else if (r > gridSize)
+                    else if (r > gridSizeR)
                     {
-                        sizeModifier = 1.0f / (r - gridSize + 1);
+                        sizeModifier = 1.0f / (r - gridSizeR + 1);
                     }
 
                     tileGO.transform.localScale = new Vector3(tileGO.transform.localScale.x * sizeModifier, tileGO.transform.localScale.y * sizeModifier, tileGO.transform.localScale.z);
@@ -170,14 +171,21 @@ public class GridManager : MonoBehaviour
         return _borderGoDict[new KeyValuePair<int, int>(q, r)];
     }
 
-    public int GetGridSize()
+    public int GetGridSizeQ()
     {
-        return gridSize;
+        return gridSizeQ;
     }
 
-    public void ExternalRegenerate(int newSize = -1)
+    public int GetGridSizeR()
     {
-        gridSize = newSize > 0 ? newSize : gridSize;
+        return gridSizeR;
+    }
+
+    public void ExternalRegenerate(int newQ, int newR)
+    {
+        gridSizeQ = newQ > 0 ? newQ : gridSizeQ;
+        gridSizeR = newR > 0 ? newR : gridSizeR;
+
         regenerateGrid = true;
     }
 
@@ -268,15 +276,18 @@ public class GridManager : MonoBehaviour
 
         if (_gridGOs != null)
         {
-            int s = (int) Mathf.Sqrt(_gridGOs.Length);
+            // int s = (int) Mathf.Sqrt(_gridGOs.Length);
 
-            for (int q = 0; q < s; q++) //column
+            int sQ = gridSizeQ;
+            int sR = gridSizeR;
+
+            for (int q = 0; q < sQ; q++) // column
             {
-                for (int r = 0; r < s; r++) //row
+                for (int r = 0; r < sR; r++) // row
                 {
                     if (direction == Direction.Any)
                     {
-                        if (q == 0 || q == s - 1 || r == 0 || r == s - 1)
+                        if (q == 0 || q == sQ - 1 || r == 0 || r == sR - 1)
                         {
                             if (_gridTiles[q, r].state == tileType)
                             {
@@ -288,7 +299,7 @@ public class GridManager : MonoBehaviour
                     {
                         if (_gridTiles[q, r].state == tileType) { edgeTiles.Add(_gridGOs[q, r]); }
                     }
-                    else if (direction == Direction.East && q == s - 1)
+                    else if (direction == Direction.East && q == sQ - 1)
                     {
                         if (_gridTiles[q, r].state == tileType) { edgeTiles.Add(_gridGOs[q, r]); }
                     }
@@ -296,7 +307,7 @@ public class GridManager : MonoBehaviour
                     {
                         if (_gridTiles[q, r].state == tileType) { edgeTiles.Add(_gridGOs[q, r]); }
                     }
-                    else if (direction == Direction.South && r == s - 1 && q > 0)
+                    else if (direction == Direction.South && r == sR - 1 && q > 0)
                     {
                         if (_gridTiles[q, r].state == tileType) { edgeTiles.Add(_gridGOs[q, r]); }
                     }
@@ -390,11 +401,11 @@ public class GridManager : MonoBehaviour
 
         string filePath = Path.Combine(directoryPath, fileName + ".json");
 
-        string txtToSave = gridSize + ",\n";
+        string txtToSave = gridSizeQ + "x" + gridSizeR + ",\n";
 
-        for (int r = 0; r < gridSize; r++)
+        for (int r = 0; r < gridSizeR; r++)
         {
-            for (int q = 0; q < gridSize; q++)
+            for (int q = 0; q < gridSizeQ; q++)
             {
                 txtToSave += (int)_gridTiles[q, r].state + ",";
             }
@@ -420,24 +431,26 @@ public class GridManager : MonoBehaviour
 
             string[] jsonData = jsonTxt.Split(',');
 
-            int loadedGridSize = int.Parse(jsonData[0]);
+            int loadedGridSizeQ = int.Parse(jsonData[0].Split('x')[0]);
+            int loadedGridSizeR = int.Parse(jsonData[0].Split('x')[1]);
 
-            _loadedTiles = new GridTile.TileState[loadedGridSize, loadedGridSize];
+            _loadedTiles = new GridTile.TileState[loadedGridSizeQ, loadedGridSizeR];
 
             int i = 1;
-            for (int r = 0; r < loadedGridSize; r++)
+            for (int r = 0; r < loadedGridSizeR; r++)
             {
-                for (int q = 0; q < loadedGridSize; q++)
+                for (int q = 0; q < loadedGridSizeQ; q++)
                 {
                     _loadedTiles[q, r] = (GridTile.TileState) int.Parse(jsonData[i++]);
                 }
             }
 
-            gridSize = loadedGridSize;
+            gridSizeQ = loadedGridSizeQ;
+            gridSizeR = loadedGridSizeR;
 
             regenerateGrid = true;
 
-            GameManager.instance.hudManagerRef.DebugPanel_SetUITextGridSize(loadedGridSize);
+            GameManager.instance.hudManagerRef.DebugPanel_SetUITextGridSize(loadedGridSizeQ, loadedGridSizeR);
         }
         else
         {
