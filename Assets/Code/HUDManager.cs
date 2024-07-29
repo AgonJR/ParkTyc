@@ -9,8 +9,9 @@ public class HUDManager : MonoBehaviour
     static public GridTile.TileState selectedType;
 
     [Header("Panels")]
-    public GameObject BuildBlocker;
+    //public GameObject BuildBlocker;
     public GameObject BuildMenu;
+    public GameObject NatureMenu;
     [Header("Tile Buttons")]
     public Color defaultColour;
     public Color selectdColour;
@@ -40,7 +41,7 @@ public class HUDManager : MonoBehaviour
     {
         None, //null?
         Nature,
-        Menu,
+        //Menu,
         Amenities
     }
 
@@ -60,34 +61,43 @@ public class HUDManager : MonoBehaviour
     private void Update()
     {
         if (Input.GetKey(KeyCode.Alpha1)) SelectTileType(GridTile.TileState.Grass);
-        if (Input.GetKey(KeyCode.Alpha2)) SelectTileType(GridTile.TileState.Dirt );
-        if (Input.GetKey(KeyCode.Alpha3)) SelectTileType(GridTile.TileState.Tree );
-        if (Input.GetKey(KeyCode.Alpha4)) SelectTileType(GridTile.TileState.Bush );
-        if (Input.GetKey(KeyCode.Alpha5)) SelectTileType(GridTile.TileState.Rock );
+        if (Input.GetKey(KeyCode.Alpha2)) SelectTileType(GridTile.TileState.Dirt);
+        if (Input.GetKey(KeyCode.Alpha3)) SelectTileType(GridTile.TileState.Tree);
+        if (Input.GetKey(KeyCode.Alpha4)) SelectTileType(GridTile.TileState.Bush);
+        if (Input.GetKey(KeyCode.Alpha5)) SelectTileType(GridTile.TileState.Rock);
         if (Input.GetKey(KeyCode.Alpha6)) SelectTileType(GridTile.TileState.Water);
         if (Input.GetKey(KeyCode.Alpha7)) SelectTileType(GridTile.TileState.Bench);
-        if (Input.GetKey(KeyCode.Alpha8)) SelectTileType(GridTile.TileState.Camp );
+        if (Input.GetKey(KeyCode.Alpha8)) SelectTileType(GridTile.TileState.Camp);
 
-        if (currentMode == BuildMode.Menu)
+        if (currentMode == BuildMode.Amenities)
         {
             BuildMenu.SetActive(true);
-            BuildBlocker.SetActive(true);
+            //BuildBlocker.SetActive(true);
         }
         else
         {
             BuildMenu.SetActive(false);
-            BuildBlocker.SetActive(false);
-        }        
+            //BuildBlocker.SetActive(false);
+        }
+
+        if (currentMode == BuildMode.Nature)
+        {
+            NatureMenu.SetActive(true);
+        }
+        else
+        {
+            NatureMenu.SetActive(false);
+        }
     }
 
     public void SelectTileType(GridTile.TileState newType)
     {
         SelectTileType((int)newType);
-        
+
     }
 
     public void SelectTileType(int tile)
-    {   
+    {
         int index = (int)tile - 1;
 
         if (tileButts[index].interactable)
