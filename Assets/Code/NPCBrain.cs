@@ -195,7 +195,7 @@ public class NPCBrain : MonoBehaviour
                 _activitySpotted = true;
 
                 _activityTile = nextNTile;
-                _activityTile.curOccupancy++;
+                _activityTile.Occupy(this);
                 nextTarget = _activityTile.gameObject;
 
                 _activityCoordinates = _activityTile.GetCoordinates();
@@ -321,5 +321,19 @@ public class NPCBrain : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void EndActivity()
+    {
+        if (_activityStarted)
+        {
+            _animatorRef.Play("Idle01");
+            _animatorRef.SetInteger("animState", 1); // Walk
+        }
+
+        _activitySpotted = false;
+        _activityStarted = false;
+        _activityTile = null;
+        _activityFrames = 0;
     }
 }

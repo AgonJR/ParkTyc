@@ -77,6 +77,7 @@ public class GridTile : MonoBehaviour
     private Vector3 _highlightPos;
     private GameObject _activeTileGO;
     private GridTile[] _neighbourTiles;
+    private List<NPCBrain> _activeNPCs = new();
 
     private static GameObject _highlightTileObject;
 
@@ -195,9 +196,11 @@ public class GridTile : MonoBehaviour
             default: isActivity = false; break;
         }
 
+        ClearOccupants();
         InitializeActiveTile();
         
         if ( addToUndo ) PingNeighbours();
+        if ( addToUndo ) PingObjectives();
     }
 
     public int GetColumn()
@@ -284,11 +287,41 @@ public class GridTile : MonoBehaviour
         }
     }
 
+    public void PingObjectives()
+    {
+        // ObjectiveSystem.instance.Ping_TileBuilt(state);
+    }
+
     public void PingActiveTile()
     {
         if ( state == TileState.Camp ) 
         {
             _activeTileGO.GetComponent<CampTile>().RecalculateStatus();
+        }
+    }
+
+    public void Occupy(NPCBrain npc)
+    {
+        curOccupancy++;
+        _activeNPCs.Add(npc);
+    }
+
+    public void UnOccupy(NPCBrain npc)
+    {
+        curOccupancy--;
+        _activeNPCs.Remove(npc);
+    }
+
+    public void ClearOccupants()
+    {
+        if (_activeNPCs != null && _activeNPCs.Count > 0)
+        {
+            foreach (NPCBrain npc in _activeNPCs)
+            {
+                npc.EndActivity();
+            }
+
+            curOccupancy = 0;
         }
     }
 }
