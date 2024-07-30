@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PathTile : MonoBehaviour
 {
+    public GridTile.TileState pathType = GridTile.TileState.Dirt;
+    [Space]
     public GameObject tileGrass;
     public GameObject tileSolid;
     [Space]
@@ -38,7 +40,7 @@ public class PathTile : MonoBehaviour
     private int n; // neighbour count
 
     private List<PathTile> neighbourPaths = new List<PathTile>();
-    private int d; // dirt neighbour count
+    private int d; // similar neighbour count
 
 
 
@@ -67,11 +69,11 @@ public class PathTile : MonoBehaviour
 
     public void RecalculateShape(bool pingNeighbours = false)
     {
-        d = 0; // Count Neighbour Dirt Tiles
+        d = 0; // Count Neighbour Tiles of the same Type
         neighbourPaths.Clear();
         foreach (GridTile nT in neighbourTiles)
         {
-            if (nT != null && nT.state == GridTile.TileState.Dirt)
+            if (nT != null && nT.state == pathType)
             {
                 d++;
                 neighbourPaths.Add(nT.GetComponentInChildren<PathTile>());
@@ -135,8 +137,8 @@ public class PathTile : MonoBehaviour
     private void ModifyPath_End()
     {
         ToggleAllSubTiles(false);
-        tileGrass.SetActive(true);
         tilePathEnd.SetActive(true);
+        tileGrass.SetActive(pathType == GridTile.TileState.Dirt);
 
         //
         // Rotate - - - 0 N, 1 S, 2 SE, 3 SW, 4 NE, 5 NW - - -
