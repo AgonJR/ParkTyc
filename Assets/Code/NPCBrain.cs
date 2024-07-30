@@ -292,11 +292,7 @@ public class NPCBrain : MonoBehaviour
             {
                 if ( _activitySpotted )
                 {
-                    Transform mark = _activityTile.GetComponentInChildren<BenchTile>().actMark;
-                    transform.position = new Vector3(mark.position.x, transform.position.y, mark.position.z);
-
-                    int sitRotation = _activityTile.GetComponentInChildren<BenchTile>().getSitRotation();
-                    transform.localEulerAngles = new Vector3(0, sitRotation, 0);
+                    RotateOnBench();
 
                     _activitySpotted = false;
                     _animatorRef.Play("Bench_Sit");
@@ -335,5 +331,14 @@ public class NPCBrain : MonoBehaviour
         _activityStarted = false;
         _activityTile = null;
         _activityFrames = 0;
+    }
+
+    public void RotateOnBench()
+    {
+        Transform mark = _activityTile.GetComponentInChildren<BenchTile>().actMark;
+        transform.position = new Vector3(mark.position.x, transform.position.y, mark.position.z);
+
+        int sitRotation = _activityTile.GetComponentInChildren<BenchTile>().getSitRotation();
+        transform.localEulerAngles = new Vector3(0, sitRotation, 0);
     }
 }
