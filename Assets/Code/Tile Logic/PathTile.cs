@@ -7,6 +7,8 @@ public class PathTile : MonoBehaviour
     public GameObject tileGrass;
     public GameObject tileSolid;
     [Space]
+    public GameObject tileSingle;
+    [Space]
     public GameObject tilePathCurveSharp;
     public GameObject tilePathCurveSmooth;
     public GameObject tileDoubleA;
@@ -57,39 +59,6 @@ public class PathTile : MonoBehaviour
 
         RecalculateShape(true);
     }
-
-    /*
-
-    Configurations:
-
-        Notes: 
-            - Water is considered Grass/Water type, so dirt tiles should not blend into it. 
-              Later on Water tiles will have a grassy shoreline that completes the connection.
-
-                    1. Solid Dirt -> Every neighbour is Dirt
-                        - Use tileSolid and change material to altMaterial
-                        - Hide all tileChunk types
-                        - Hide all tilePath types
-
-                    2. Path End -> Single Dirt neighbour.
-                        - Use tileSolid                
-                        - Hide all tileChunk types
-                        - Use tilePathEnd and hide all other path types
-
-                    3. Line Path -> Two neighbours are Dirt type and those neighbours are not adjacent to one another
-                        - Use tileSolid
-                        - Hide all tileChunk types
-                        - Use either tilePathStraight or tilePathCurveSmooth and rotate the tile to finish connection (flipping the tile will work but shouldn't be nessecary)
-                        - Hide all remaining tilePath types
-
-        4. Dirt Area -> Brute force edge connections until every edge chunk is filled (2 chunks per edge (L, R), 12 chunks in total)
-            - Hide tileSolid
-            - 2 Chunks per side (left and right, left being a copy of right that's been mirrored on the x axis)
-            - use tileChunkEdgeEnd when two adjacent neighbour tiles are of different types (Grass/Water type or Dirt type)
-            - use tileChunkEdgeContinue when both tiles are Grass/Water types
-            - use use tileChunkEdgeEnd or tileChunkEdgeContinue when both tiles are Dirt types (change material to altMaterial, will work for either tile)
-    */
-
 
     void OnEnable()
     {
@@ -154,8 +123,7 @@ public class PathTile : MonoBehaviour
     private void ModifyPath_Center()
     {
         ToggleAllSubTiles(false);
-        tileGrass.SetActive(true);
-        tileChunkCenter.SetActive(true);
+        tileSingle.SetActive(true);
     }
 
     private void ModifyPath_Solid()
@@ -504,6 +472,8 @@ public class PathTile : MonoBehaviour
     {
         tileGrass.SetActive(enable);
         tileSolid.SetActive(enable);
+
+        tileSingle.SetActive(enable);
 
         tilePathCurveSharp.SetActive(enable);
         tilePathCurveSmooth.SetActive(enable);

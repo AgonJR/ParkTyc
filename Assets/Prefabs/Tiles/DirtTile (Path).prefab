@@ -1237,6 +1237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileGrass: {fileID: 921742647498011169}
   tileSolid: {fileID: 1721182459786530073}
+  tileSingle: {fileID: 1309224754713132651}
   tilePathCurveSharp: {fileID: 7836208179514353253}
   tilePathCurveSmooth: {fileID: 3142330090150719051}
   tileDoubleA: {fileID: 993656702357739332}
