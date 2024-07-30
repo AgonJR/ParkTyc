@@ -35,7 +35,7 @@ public class HUDManager : MonoBehaviour
     public TMP_InputField regenSizeRField;
     public TMP_Dropdown loadGridDropdown;
 
-    private BuildMode currentMode = BuildMode.None;
+    private BuildMode currentMode = BuildMode.Nature;
 
     private enum BuildMode
     {
