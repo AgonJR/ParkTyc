@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEditor;
 using System.Collections.Generic;
 using FMODUnity;
 
@@ -53,7 +54,7 @@ public class GridTile : MonoBehaviour
         { TileState.Camp, -1 }
     };
 
-    public static readonly Dictionary<TileState, int> stateUnlockCost = new()
+    public static Dictionary<TileState, int> stateUnlockCost = new()
     {
         { TileState.Base,   0 },
         { TileState.Grass,  0 },
@@ -77,6 +78,7 @@ public class GridTile : MonoBehaviour
     private Vector3 _highlightPos;
     private GameObject _activeTileGO;
     private GridTile[] _neighbourTiles;
+    private List<NPCBrain> _activeNPCs = new();
 
     private static GameObject _highlightTileObject;
 
@@ -195,9 +197,11 @@ public class GridTile : MonoBehaviour
             default: isActivity = false; break;
         }
 
+        ClearOccupants();
         InitializeActiveTile();
         
         if ( addToUndo ) PingNeighbours();
+        if ( addToUndo ) PingObjectives();
     }
 
     public int GetColumn()
@@ -230,6 +234,7 @@ public class GridTile : MonoBehaviour
             if ( state == TileState.Bench )
             {
                 GetComponentInChildren<BenchTile>().TurnSitRotation(times);
+                if ( curOccupancy > 0 ) { foreach(NPCBrain npc in _activeNPCs) { npc.RotateOnBench(); } }
             }
 
             return;
@@ -284,11 +289,37 @@ public class GridTile : MonoBehaviour
         }
     }
 
+    public void PingObjectives()
+    {
+        // ObjectiveSystem.instance.Ping_TileBuilt(state);
+    }
+
     public void PingActiveTile()
     {
         if ( state == TileState.Camp ) 
         {
             _activeTileGO.GetComponent<CampTile>().RecalculateStatus();
+        }
+    }
+
+    public void Occupy(NPCBrain npc)
+    {
+        curOccupancy++;
+        _activeNPCs.Add(npc);
+    }
+
+    public void UnOccupy(NPCBrain npc)
+    {
+        curOccupancy--;
+        _activeNPCs.Remove(npc);
+    }
+
+    public void ClearOccupants()
+    {
+        if (_activeNPCs != null && _activeNPCs.Count > 0)
+        {
+            foreach (NPCBrain npc in _activeNPCs) { npc.EndActivity(); }
+            curOccupancy = 0;
         }
     }
 }
@@ -305,5 +336,29 @@ public struct TileStateHistory
         coordinates = coords;
         startState  = start;
         endState    = end;
+    }
+}
+
+[CustomEditor(typeof(GridTile))]
+public class GridTileInspector : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+
+        GUILayout.Space(10);
+        GUILayout.Label("Unlock Costs", EditorStyles.boldLabel);
+
+        for ( int i = 1; i < GridTile.stateUnlockCost.Count; i++)
+        {
+            GridTile.TileState tileState = (GridTile.TileState) i;
+
+            GUILayout.BeginHorizontal();
+                GUILayout.Label(tileState.ToString(), GUILayout.MinWidth(100));
+                GridTile.stateUnlockCost[tileState] = EditorGUILayout.IntField(GridTile.stateUnlockCost[tileState]);
+            GUILayout.EndHorizontal();
+        }
+
+        EditorUtility.SetDirty(target);
     }
 }

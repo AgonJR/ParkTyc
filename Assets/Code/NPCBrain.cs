@@ -195,7 +195,7 @@ public class NPCBrain : MonoBehaviour
                 _activitySpotted = true;
 
                 _activityTile = nextNTile;
-                _activityTile.curOccupancy++;
+                _activityTile.Occupy(this);
                 nextTarget = _activityTile.gameObject;
 
                 _activityCoordinates = _activityTile.GetCoordinates();
@@ -292,11 +292,7 @@ public class NPCBrain : MonoBehaviour
             {
                 if ( _activitySpotted )
                 {
-                    Transform mark = _activityTile.GetComponentInChildren<BenchTile>().actMark;
-                    transform.position = new Vector3(mark.position.x, transform.position.y, mark.position.z);
-
-                    int sitRotation = _activityTile.GetComponentInChildren<BenchTile>().getSitRotation();
-                    transform.localEulerAngles = new Vector3(0, sitRotation, 0);
+                    RotateOnBench();
 
                     _activitySpotted = false;
                     _animatorRef.Play("Bench_Sit");
@@ -321,5 +317,28 @@ public class NPCBrain : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void EndActivity()
+    {
+        if (_activityStarted)
+        {
+            _animatorRef.Play("Idle01");
+            _animatorRef.SetInteger("animState", 1); // Walk
+        }
+
+        _activitySpotted = false;
+        _activityStarted = false;
+        _activityTile = null;
+        _activityFrames = 0;
+    }
+
+    public void RotateOnBench()
+    {
+        Transform mark = _activityTile.GetComponentInChildren<BenchTile>().actMark;
+        transform.position = new Vector3(mark.position.x, transform.position.y, mark.position.z);
+
+        int sitRotation = _activityTile.GetComponentInChildren<BenchTile>().getSitRotation();
+        transform.localEulerAngles = new Vector3(0, sitRotation, 0);
     }
 }
