@@ -25,6 +25,8 @@ public class HUDManager : MonoBehaviour
     public Animator deltaAnimator;
     public Animator negDtAnimator;
     [Space]
+    public TMP_Text ObjectiveText;
+    [Space]
     public TMP_Text VisitorText;
     [Header("Custom Cursor")]
     public bool useCustomCursor;
@@ -146,6 +148,11 @@ public class HUDManager : MonoBehaviour
         string visitorString = "Visitors: " + NPCManager.GetNPCCount();
         VisitorText.text = visitorString;
     }
+    
+    public void UpdateObjectiveText()
+    {
+        ObjectiveText.text = ObjectiveSystem.FullStatusText();
+    }
 
 
     // ---
@@ -193,5 +200,6 @@ public class HUDManager : MonoBehaviour
         int newQ = int.Parse(regenSizeQField.text);
         int newR = int.Parse(regenSizeRField.text);
         GridManager.instance.ExternalRegenerate(newQ, newR);
+        ObjectiveSystem.instance.ResetObjectives();
     }
 }

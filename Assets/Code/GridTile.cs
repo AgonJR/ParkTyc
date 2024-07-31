@@ -291,7 +291,7 @@ public class GridTile : MonoBehaviour
 
     public void PingObjectives()
     {
-        // ObjectiveSystem.instance.Ping_TileBuilt(state);
+        ObjectiveSystem.Ping_TileBuilt(state);
     }
 
     public void PingActiveTile()

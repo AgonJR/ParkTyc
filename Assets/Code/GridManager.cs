@@ -243,6 +243,11 @@ public class GridManager : MonoBehaviour
     public List<GameObject> GetNeighbouringTilesConst(GridTile tile)
     {
         return GetNeighbouringTilesConst(tile.GetColumn(), tile.GetRow());
+    } 
+
+    public List<GridTile> GetNeighbouringGridTilesData(GridTile tile)
+    {
+        return GetNeighbouringGridTilesData(tile.GetColumn(), tile.GetRow());
     }
 
     private bool IsValidHexCoordinate(int q, int r)
@@ -284,6 +289,21 @@ public class GridManager : MonoBehaviour
         return neighbours;
     }
 
+    //Returns a list of up to 6 non-null GridTile References
+    public List<GridTile> GetNeighbouringGridTilesData(int q, int r)
+    {
+        List<GridTile> neighbours = new List<GridTile>();
+
+        if (IsValidHexCoordinate(q + 0, r - 1)) { neighbours.Add(_gridTiles[q + 0, r - 1]); } // North
+        if (IsValidHexCoordinate(q + 0, r + 1)) { neighbours.Add(_gridTiles[q + 0, r + 1]); } // South
+        if (IsValidHexCoordinate(q + 1, r + (q % 2 == 0 ? 0 : 1))) { neighbours.Add(_gridTiles[q + 1, r + (q % 2 == 0 ? 0 : 1)]); } // South East
+        if (IsValidHexCoordinate(q - 1, r + (q % 2 == 0 ? 0 : 1))) { neighbours.Add(_gridTiles[q - 1, r + (q % 2 == 0 ? 0 : 1)]); } // South West
+        if (IsValidHexCoordinate(q + 1, r - (q % 2 == 0 ? 1 : 0))) { neighbours.Add(_gridTiles[q + 1, r - (q % 2 == 0 ? 1 : 0)]); } // North East
+        if (IsValidHexCoordinate(q - 1, r - (q % 2 == 0 ? 1 : 0))) { neighbours.Add(_gridTiles[q - 1, r - (q % 2 == 0 ? 1 : 0)]); } // North West
+
+
+        return neighbours;
+    }
 
     // Finds and returns an edge tile of a specific type
     public List<GameObject> ScanEdgeTiles(GridTile.TileState tileType, Direction direction = Direction.Any)
@@ -333,6 +353,28 @@ public class GridManager : MonoBehaviour
     
 
         return edgeTiles;
+    }
+
+    // Returns true if 'start' and 'end' have a direct connection of a specific type (eg. Dirt Path)
+    public bool CheckTileConnection(GridTile start, GridTile end, GridTile.TileState connectionType, int[,] visited = null)
+    {
+        if ( visited == null )
+        {
+            visited = new int[gridSizeQ, gridSizeR]; 
+            for (int q = 0; q < gridSizeQ; q++) { for (int r = 0; r < gridSizeR; r++) { visited[q, r] = 0; } }
+        }
+
+        if ( visited[start.GetColumn(), start.GetRow()] > 0 ) return false;
+
+        visited[start.GetColumn(), start.GetRow()] = 1;
+        List<GridTile> neighbours = GetNeighbouringGridTilesData(start);
+        foreach ( GridTile nTile in neighbours )
+        {
+            if (nTile.GetCoordinates() == end.GetCoordinates()) { return true; }
+            if ( nTile.state == connectionType ) { if ( CheckTileConnection(nTile, end, connectionType, visited) ) { return true; } }
+        }
+
+        return false;
     }
 
 

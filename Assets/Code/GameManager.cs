@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public static int Score;
 
 
-    public void Start()
+    public void Awake()
     {
         instance = this;
     }

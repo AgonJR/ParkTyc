@@ -55,6 +55,12 @@ public class NPCManager : MonoBehaviour
         }
     }
 
+    public static void ForceScan()
+    {
+        instance.spawnCheckCount--;
+        instance.ScanTiles();
+    }
+
     private void Update()
     {
         SpawnCheck();
@@ -93,6 +99,11 @@ public class NPCManager : MonoBehaviour
     public static List<GameObject> RequestExitTiles()
     {
         return instance._exitTiles;
+    }
+
+    public static List<GameObject> RequestEntryTiles()
+    {
+        return instance._spwnTiles;
     }
 
     private void SpawnCheck()
