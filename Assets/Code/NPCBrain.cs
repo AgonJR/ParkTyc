@@ -192,6 +192,11 @@ public class NPCBrain : MonoBehaviour
             
             if ( nextNTile.isActivity && nextNTile.curOccupancy < nextNTile.maxCapacity && _gridVisited[nextNTile.GetColumn(), nextNTile.GetRow()] == 0)
             {
+                if( nextNTile.state == GridTile.TileState.Bench && _sitCooldown > 0 )
+                {
+                    continue;
+                }
+
                 _activitySpotted = true;
 
                 _activityTile = nextNTile;
@@ -204,6 +209,7 @@ public class NPCBrain : MonoBehaviour
                 return;
             }
         }
+        _sitCooldown--;
 
         //
         // Move Towards Exit
@@ -284,6 +290,7 @@ public class NPCBrain : MonoBehaviour
 
     private int _activityFrames =  0; // Temporary, keep track of how many frames since started activity interaction
     private int _sitFrames = 300;
+    private int _sitCooldown = 0;
     private void ProcessActivity()
     {
         if ( _activityStarted && _activityTile != null )
@@ -307,6 +314,7 @@ public class NPCBrain : MonoBehaviour
                     {
                         _animatorRef.Play("Bench_Stand");
                         _animatorRef.SetInteger("animState", 1); // Walk
+                        _sitCooldown = 3;
                     }
                     else if ( _animatorRef.GetCurrentAnimatorStateInfo(0).IsName("Walk01") )
                     {
