@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
-using System.Xml.Linq;
 
 public class ObjectiveSystem : MonoBehaviour
 {
     public static ObjectiveSystem instance;
 
+    [HideInInspector]
     public List<ObjectiveData> Objectives = new();
     
     void Start()
@@ -17,33 +17,13 @@ public class ObjectiveSystem : MonoBehaviour
 
     public void ResetObjectives()
     {
-        Objectives = new();
-        SetUpDemoObjectives();
+        foreach ( ObjectiveData O in Objectives)
+        {
+            O.repeatCount = 0;
+            O.Complete = false;
+        }
+        
         GameManager.instance.hudManagerRef.UpdateObjectiveText();
-    }
-
-    private void SetUpDemoObjectives()
-    {
-        ObjectiveData O1 = new();
-        O1.Description   = "Draw a Path!";
-        O1.objectiveType = ObjectiveData.Type.Connect;
-        O1.target1       = GridTile.TileState.Dirt;
-        O1.target2       = GridTile.TileState.Dirt;
-
-        ObjectiveData O2 = new();
-        O2.Description   = "Build a Bench!";
-        O2.target1       = GridTile.TileState.Bench;
-        O2.objectiveType = ObjectiveData.Type.Build;
-
-        ObjectiveData O3 = new();
-        O3.Description   = "Place 3 Rocks!";
-        O3.target1       = GridTile.TileState.Rock;
-        O3.objectiveType = ObjectiveData.Type.Build;
-        O3.buildCount    = 3;
-
-        Objectives.Add(O1);
-        Objectives.Add(O2);
-        Objectives.Add(O3);
     }
 
     public static void Ping_TileBuilt(GridTile.TileState tile)
@@ -56,7 +36,11 @@ public class ObjectiveSystem : MonoBehaviour
             {
                 if (O.target1 == tile)
                 {
-                    O.Complete = ++O.repeatCount >= O.buildCount;
+                    if ( ++O.repeatCount >= O.buildCount )
+                    {
+                        O.Complete = true;
+                        NPCManager.instance.exitScore += O.npcScoreInc;
+                    }
                 }
             }
 
@@ -92,6 +76,7 @@ public class ObjectiveSystem : MonoBehaviour
                     if ( GridManager.instance.CheckTileConnection(entryTile, exitTile, GridTile.TileState.Dirt, null) )
                     {
                         pathObjective.Complete = true;
+                        NPCManager.instance.exitScore += pathObjective.npcScoreInc;
                         return;
                     }
                 }
@@ -113,11 +98,13 @@ public class ObjectiveSystem : MonoBehaviour
     }
 }
 
+[System.Serializable]
 public class ObjectiveData
 {
     public bool Complete = false;
-    public int buildCount = 1;
+    public int buildCount  = 1;
     public int repeatCount = 0;
+    public int npcScoreInc = 0;
     public string Description = "[notSET]";
     public Type objectiveType = Type.Build;
     public ObjectiveData preRequisite = null;
@@ -149,11 +136,19 @@ public class ObjectiveSystemEditorOverride : Editor
             GUI.enabled = false;
             GUILayout.Toggle(OS.Objectives[i].Complete, "✓");
             GUI.enabled = true;
-            OS.Objectives[i].objectiveType = (ObjectiveData.Type) EditorGUILayout.EnumPopup("Objective Type", OS.Objectives[i].objectiveType);
+            OS.Objectives[i].objectiveType = (ObjectiveData.Type) EditorGUILayout.EnumPopup(OS.Objectives[i].objectiveType);
             if ( OS.Objectives[i].objectiveType == ObjectiveData.Type.Build ) 
             {
                 GUILayout.Label("#", GUILayout.Width(10.0f)); 
                 OS.Objectives[i].buildCount = EditorGUILayout.IntField(OS.Objectives[i].buildCount, GUILayout.Width(50.0f));
+                OS.Objectives[i].target1 = (GridTile.TileState) EditorGUILayout.EnumPopup(OS.Objectives[i].target1, GUILayout.Width(70.0f));
+            }
+            else if ( OS.Objectives[i].objectiveType == ObjectiveData.Type.Connect ) 
+            {
+                GUI.enabled = false;
+                OS.Objectives[i].target1 = GridTile.TileState.Dirt;
+                OS.Objectives[i].target1 = (GridTile.TileState) EditorGUILayout.EnumPopup(OS.Objectives[i].target1, GUILayout.Width(70.0f));
+                GUI.enabled = true;
             }
             GUILayout.EndHorizontal();
 
@@ -161,6 +156,11 @@ public class ObjectiveSystemEditorOverride : Editor
             GUILayout.Label("Description: ", GUILayout.Width(70.0f)); 
             OS.Objectives[i].Description = GUILayout.TextField(OS.Objectives[i].Description);
             GUILayout.Space(3.0f); if (GUILayout.Button("- Delete", GUILayout.Width(60))) { OS.Objectives.RemoveAt(i--); continue; }
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("npcScore+ ", GUILayout.Width(70.0f)); 
+            OS.Objectives[i].npcScoreInc = EditorGUILayout.IntField(OS.Objectives[i].npcScoreInc, GUILayout.Width(50.0f));
             GUILayout.EndHorizontal();
 
             GUILayout.Space(10.0f);
@@ -171,6 +171,6 @@ public class ObjectiveSystemEditorOverride : Editor
         if ( GUILayout.Button(" + Add Objective ")  ) { OS.Objectives.Add(new ObjectiveData()); }
         GUILayout.EndHorizontal();
 
-        EditorUtility.SetDirty(target);
+        EditorUtility.SetDirty(OS);
     }
 }

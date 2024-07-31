@@ -13,6 +13,7 @@ public class NPCManager : MonoBehaviour
     [Space]
     [Range(0, 30)] public float maxSpawns = 5;
     [Space]
+    public int exitScore = 5;
 
     [Header("Dev Tools")]
     [SerializeField] private List<GameObject> _spwnTiles;

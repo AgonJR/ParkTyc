@@ -1234,6 +1234,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cea70def044114d2aad881ca69c9ab7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Objectives:
+  - Complete: 0
+    buildCount: 1
+    repeatCount: 0
+    npcScoreInc: 0
+    Description: Draw a Path
+    objectiveType: 1
+    target1: 2
+    target2: 0
+  - Complete: 0
+    buildCount: 1
+    repeatCount: 0
+    npcScoreInc: 0
+    Description: Build a Bench
+    objectiveType: 0
+    target1: 7
+    target2: 0
+  - Complete: 0
+    buildCount: 3
+    repeatCount: 0
+    npcScoreInc: 5
+    Description: Place 3 Rocks
+    objectiveType: 0
+    target1: 5
+    target2: 0
 --- !u!1 &423991871
 GameObject:
   m_ObjectHideFlags: 0
@@ -2085,7 +2110,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -50, y: -30}
-  m_SizeDelta: {x: 700, y: 300}
+  m_SizeDelta: {x: 700, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &958984480
 MonoBehaviour:
@@ -2100,7 +2125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 0.27058825}
+  m_Color: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 0.7058824}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4265,6 +4290,7 @@ MonoBehaviour:
   spawnWait: 3
   wVariance: 1
   maxSpawns: 6
+  exitScore: 5
   _spwnTiles: []
   _exitTiles: []
   _spawnedNPCs: []
@@ -4554,7 +4580,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 950, y: -300}
+  m_AnchoredPosition: {x: 950, y: -400}
   m_SizeDelta: {x: 750, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1743747954
@@ -4617,13 +4643,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
