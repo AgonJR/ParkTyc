@@ -130,7 +130,7 @@ public class HUDManager : MonoBehaviour
 
     public void DisplayScoreChange(int amount)
     {
-        string deltaString = (amount > 0 ? "+" : "-") + amount;
+        string deltaString = (amount > 0 ? "+" : "") + amount;
         string scoreString = "Kash £ " + GameManager.Score;
 
         ScoreText.text = scoreString;
