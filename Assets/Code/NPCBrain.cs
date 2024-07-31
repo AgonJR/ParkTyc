@@ -257,7 +257,16 @@ public class NPCBrain : MonoBehaviour
 
         if (_exitTarget == null)
         {
-            _exitTarget = exitTiles[(int)Random.Range(0, exitTiles.Count)];
+            if ( exitTiles.Count == 1 )
+            {
+                if ( exitTiles[0].GetComponent<GridTile>().GetCoordinates() == _entryCoordinates ) return;
+            }
+
+            do
+            {
+                _exitTarget = exitTiles[(int)Random.Range(0, exitTiles.Count)];
+            } 
+            while (_exitTarget.GetComponent<GridTile>().GetCoordinates() == _entryCoordinates );
         }
 
         if (_exitTarget != null)

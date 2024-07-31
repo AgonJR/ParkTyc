@@ -37,10 +37,9 @@ public class NPCManager : MonoBehaviour
     void ScanTiles()
     {
         _spwnTiles = GridManager.instance.ScanEdgeTiles(GridTile.TileState.Dirt, GridManager.Direction.West);
+        _spwnTiles.AddRange(GridManager.instance.ScanEdgeTiles(GridTile.TileState.Dirt, GridManager.Direction.South));
 
-        _exitTiles = GridManager.instance.ScanEdgeTiles(GridTile.TileState.Dirt, GridManager.Direction.East);
-        _exitTiles.AddRange(GridManager.instance.ScanEdgeTiles(GridTile.TileState.Dirt, GridManager.Direction.North));
-        _exitTiles.AddRange(GridManager.instance.ScanEdgeTiles(GridTile.TileState.Dirt, GridManager.Direction.South));
+        _exitTiles = GridManager.instance.ScanEdgeTiles(GridTile.TileState.Dirt, GridManager.Direction.Any);
 
         if (_spwnTiles.Count == 0)
         {
@@ -121,8 +120,11 @@ public class NPCManager : MonoBehaviour
             GameObject entryTileGO = _spwnTiles[(int)Random.Range(0, _spwnTiles.Count)];
             GridTile spawnTile = entryTileGO.GetComponent<GridTile>();
 
-            // Assuming Left Column Only for Spawn !
-            Vector3 spawnTilePos = GridManager.instance.CalculateTilePosition(spawnTile.GetColumn() - 1, spawnTile.GetRow());
+            // Check if spawning West or South
+            int spawnQ = spawnTile.GetColumn() == 0 ? spawnTile.GetColumn() - 1 : spawnTile.GetColumn();
+            int spawnR = spawnTile.GetRow() == GridManager.instance.GetGridSizeR() - 1 ? spawnTile.GetRow() + 1 : spawnTile.GetRow();
+
+            Vector3 spawnTilePos = GridManager.instance.CalculateTilePosition(spawnQ, spawnR);
             Vector3 spawnPos = new Vector3(spawnTilePos.x, 2.0f, spawnTilePos.z);
 
             // Spawn Objects
