@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using FMODUnity;
+using System;
 
 public class GridTile : MonoBehaviour
 {
@@ -80,11 +81,15 @@ public class GridTile : MonoBehaviour
     private GridTile[] _neighbourTiles;
     private List<NPCBrain> _activeNPCs = new();
 
+    [HideInInspector]
+    public int ditherFlags = 0; 
+    private bool dithered = false;
+
     private static GameObject _highlightTileObject;
 
     void Awake()
     {
-        if (GridTile._highlightTileObject == null)
+        if (_highlightTileObject == null)
         {
             _highlightTileObject = Instantiate(highlightTile, Vector3.zero, highlightTile.transform.rotation);
             _highlightTileObject.name = "Highlight Tile";
@@ -109,7 +114,7 @@ public class GridTile : MonoBehaviour
         {
             ToggleTileState();
         }
-
+        
         _highlightTileObject.SetActive(true);
         _highlightTileObject.transform.position = _highlightPos;
         _highlightTileObject.name = "Highlight Tile (" + _coordinates.x + " ," + _coordinates.y + ")";
@@ -121,6 +126,9 @@ public class GridTile : MonoBehaviour
         {
             _highlightTileObject.SetActive(false);
         }
+
+        Dither(false);
+        DitherNeighbours(false);
     }
 
     private void OnMouseDown()
@@ -146,6 +154,30 @@ public class GridTile : MonoBehaviour
             }
             
             RotateTile(1);
+        }
+
+        Dither(Input.GetKey(KeyCode.LeftShift));
+        DitherNeighbours(Input.GetKey(KeyCode.LeftShift));
+        
+    }
+
+    public void DitherNeighbours(bool toggle)
+    {
+        if ( _neighbourTiles == null )
+        {
+            _neighbourTiles = new GridTile[6];
+
+            List<GameObject> neighbourGOs = GridManager.instance.GetNeighbouringTilesConst(GetColumn(), GetRow());
+
+            for ( int i = 0; i < 6; i++ )
+            {
+                _neighbourTiles[i] = neighbourGOs[i] == null ? null : neighbourGOs[i].GetComponent<GridTile>();
+            }
+        }
+
+        for ( int i = 0; i < 6; i++ )
+        {
+            if ( _neighbourTiles[i] != null ) _neighbourTiles[i].Dither(toggle);
         }
     }
 
@@ -302,6 +334,33 @@ public class GridTile : MonoBehaviour
         }
     }
 
+    public void Dither(bool toggle)
+    {
+        if ( dithered == toggle )
+        {
+            return;
+        }
+
+        if ( (ditherFlags & (1 << (int)state)) != 0 )
+        {
+            MeshRenderer[] ditherMeshes = _activeTileGO.GetComponentsInChildren<MeshRenderer>();
+            List<Material> ditherMaterials = new();
+            Array.ForEach(ditherMeshes, mesh => ditherMaterials.AddRange(mesh.materials));
+
+            for (int i = 0; i < ditherMaterials.Count; i++)
+            {
+                ditherMaterials[i].SetFloat("_Dither", toggle ? 1 : 0);
+            }
+
+            for (int i = 0; i < ditherMeshes.Length; i++)
+            {
+                ditherMeshes[i].shadowCastingMode = toggle ? UnityEngine.Rendering.ShadowCastingMode.Off : UnityEngine.Rendering.ShadowCastingMode.On;
+            }
+        }
+
+        dithered = toggle;
+    }
+
     public void Occupy(NPCBrain npc)
     {
         curOccupancy++;
@@ -346,6 +405,11 @@ public class GridTileInspector : Editor
     {
         base.OnInspectorGUI();
 
+        GridTile GT = (GridTile) target;
+
+        GUILayout.Space(10);
+        GT.ditherFlags = EditorGUILayout.MaskField("Dither Tiles", GT.ditherFlags, Enum.GetNames(typeof(GridTile.TileState)));
+
         GUILayout.Space(10);
         GUILayout.Label("Unlock Costs", EditorStyles.boldLabel);
 
@@ -359,6 +423,6 @@ public class GridTileInspector : Editor
             GUILayout.EndHorizontal();
         }
 
-        EditorUtility.SetDirty(target);
+        EditorUtility.SetDirty(GT);
     }
 }

@@ -125,6 +125,7 @@ MonoBehaviour:
   isActivity: 0
   maxCapacity: 0
   curOccupancy: 0
+  ditherFlags: 440
 --- !u!64 &-681877845930211764
 MeshCollider:
   m_ObjectHideFlags: 0
