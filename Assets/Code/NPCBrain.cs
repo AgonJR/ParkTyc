@@ -233,6 +233,8 @@ public class NPCBrain : MonoBehaviour
                 nextTarget = neighbourGOs[i];
             }
         }
+        
+        _animatorRef.SetInteger("animState", nextTarget == null ? 0 : 1); // Idle : Walk
     }
 
     public void SelectExitTarget(List<GameObject> exitTiles)
