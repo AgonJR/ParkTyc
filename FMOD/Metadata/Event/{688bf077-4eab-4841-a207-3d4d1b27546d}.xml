@@ -95,6 +95,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{b2cf3af0-6cea-4c5b-9b86-b02fea0db0b7}">
+		<property name="volume">
+			<value>3.5</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{1eae2f05-fd70-4835-bf7f-e6204821ff09}</destination>
 		</relationship>
@@ -113,7 +116,7 @@
 	<object class="MixerBusPanner" id="{8a3f09fc-e781-499f-b009-87ec0721cb82}" />
 	<object class="SingleSound" id="{f0c1b831-fa12-4b3c-b2ae-7969e801eba4}">
 		<property name="start">
-			<value>50</value>
+			<value>37.649999999999999</value>
 		</property>
 		<property name="length">
 			<value>37</value>
@@ -164,7 +167,7 @@
 			<value>34</value>
 		</property>
 		<property name="length">
-			<value>40</value>
+			<value>40.649360281968399</value>
 		</property>
 		<relationship name="fadeInCurve">
 			<destination>{fb8b465b-7156-4a3c-bf54-b64a503504f0}</destination>
@@ -188,6 +191,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{e7567800-a07c-4757-b1d6-7e99f7250513}">
+		<property name="volume">
+			<value>-2.5</value>
+		</property>
 		<property name="name">
 			<value>Birds</value>
 		</property>
@@ -356,7 +362,7 @@
 	<object class="MixerBusFader" id="{f149b791-5507-4a01-8faa-a2e3d2533728}" />
 	<object class="AutomationPoint" id="{b059ae1a-b63a-4711-a2e4-af8515a52109}">
 		<property name="position">
-			<value>50</value>
+			<value>37.649999999999999</value>
 		</property>
 		<property name="value">
 			<value>0</value>
@@ -375,7 +381,7 @@
 	</object>
 	<object class="AutomationPoint" id="{d818e01d-4cd0-4a45-9c2f-d252e6837c87}">
 		<property name="position">
-			<value>50</value>
+			<value>37.649999999999999</value>
 		</property>
 		<property name="value">
 			<value>1</value>
