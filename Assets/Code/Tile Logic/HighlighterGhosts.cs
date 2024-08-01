@@ -42,6 +42,16 @@ public class HighlighterGhosts : MonoBehaviour
         }
     }
 
+    public void HideIfMatch(GridTile.TileState tileState)
+    {
+        ToggleAllGhosts(false);
+        
+        if ( tileState != HUDManager.selectedType )
+        {
+            SetGhost(HUDManager.selectedType);
+        }
+    }
+
     private void ToggleAllGhosts(bool enable)
     {
         ghostDirt.SetActive(enable);

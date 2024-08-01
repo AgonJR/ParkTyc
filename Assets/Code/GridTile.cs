@@ -118,6 +118,8 @@ public class GridTile : MonoBehaviour
         _highlightTileObject.SetActive(true);
         _highlightTileObject.transform.position = _highlightPos;
         _highlightTileObject.name = "Highlight Tile (" + _coordinates.x + " ," + _coordinates.y + ")";
+
+        HighlighterGhosts.instance.HideIfMatch(state);
     }
 
     void OnMouseExit()
@@ -231,6 +233,7 @@ public class GridTile : MonoBehaviour
 
         ClearOccupants();
         InitializeActiveTile();
+        HighlighterGhosts.instance.HideIfMatch(state);
         
         if ( addToUndo ) PingNeighbours();
         if ( addToUndo ) PingObjectives();
