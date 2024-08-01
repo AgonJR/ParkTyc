@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 public class CameraController : MonoBehaviour
 {
     private Camera _mainCamRef;
+    private Camera _activeCam;
 
     [Header("Data")]
     public float wasdSpeed = 30.0f;
@@ -37,10 +38,11 @@ public class CameraController : MonoBehaviour
 
     private float currentY;
 
-    void Start()
+    void Awake()
     {
         // Assume Controller's On Main Camera
         _mainCamRef = GetComponent<Camera>();
+        _activeCam = _mainCamRef;
     }
 
     void Update()
@@ -52,8 +54,8 @@ public class CameraController : MonoBehaviour
         processScroll();
         processAltToggle();
 
-        currentY = transform.position.y;
-        FMODUnity.RuntimeManager.StudioSystem.setParameterByName("CameraHeight", currentY);
+        currentY = _activeCam.transform.position.y;
+        RuntimeManager.StudioSystem.setParameterByName("CameraHeight", currentY);
     }
 
     private void processWASD()
@@ -65,12 +67,12 @@ public class CameraController : MonoBehaviour
         {
             Vector3 moveDirection = new Vector3(hInput, 0.0f, vInput).normalized;
 
-            Vector3 newPosition = transform.position + moveDirection * wasdSpeed * Time.deltaTime;
+            Vector3 newPosition = _activeCam.transform.position + moveDirection * wasdSpeed * Time.deltaTime;
 
             newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX);
             newPosition.z = Mathf.Clamp(newPosition.z, minZ, maxZ);
 
-            transform.position = newPosition;
+            _activeCam.transform.position = newPosition;
         }
     }
 
@@ -80,8 +82,10 @@ public class CameraController : MonoBehaviour
         tiltDir += Input.GetKey(KeyCode.E) ?  1 : 0;
         tiltDir += Input.GetKey(KeyCode.Q) ? -1 : 0;
 
-        Quaternion targetRotation = Quaternion.Euler(50, tiltAngle * tiltDir, 0);
-        transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, Time.deltaTime * tiltSpeed);
+        int rX = _activeCam == OverheadCamera ? 90 : 50;
+
+        Quaternion targetRotation = Quaternion.Euler(rX, tiltAngle * tiltDir, 0);
+        _activeCam.transform.localRotation = Quaternion.Slerp(_activeCam.transform.localRotation, targetRotation, Time.deltaTime * tiltSpeed);
     }
 
     private void processScroll()
@@ -92,11 +96,11 @@ public class CameraController : MonoBehaviour
         {
             CalculateXZMinMax();
 
-            float newYPosition = transform.position.y + scrollInput * zoomSpeed;
+            float newYPosition = _activeCam.transform.position.y + scrollInput * zoomSpeed;
 
             newYPosition = Mathf.Clamp(newYPosition, minZoom, maxZoom);
 
-            transform.position = new Vector3(transform.position.x, newYPosition, transform.position.z);
+            _activeCam.transform.position = new Vector3(_activeCam.transform.position.x, newYPosition, _activeCam.transform.position.z);
 
         }
     }
@@ -122,7 +126,7 @@ public class CameraController : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             panStartPos = Input.mousePosition;
-            panStartHight = transform.position.y;
+            panStartHight = _activeCam.transform.position.y;
         }
         else if (Input.GetMouseButton(1))
         {
@@ -131,15 +135,15 @@ public class CameraController : MonoBehaviour
             Vector2 deltaMousePos = currentMousePos - panStartPos;
 
             Vector3 moveDirection = new Vector3(deltaMousePos.x, 0, deltaMousePos.y) * pannSpeed * Time.deltaTime;
-            moveDirection = transform.TransformDirection(moveDirection);
+            moveDirection = _activeCam.transform.TransformDirection(moveDirection);
 
-            Vector3 newPosition = transform.position + moveDirection;
+            Vector3 newPosition = _activeCam.transform.position + moveDirection;
 
             newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX);
             newPosition.y = panStartHight;
             newPosition.z = Mathf.Clamp(newPosition.z, minZ, maxZ);
 
-            transform.position = newPosition;
+            _activeCam.transform.position = newPosition;
         }
     }
 
@@ -150,6 +154,9 @@ public class CameraController : MonoBehaviour
             // Only make sense for two cams
             _mainCamRef.enabled = !_mainCamRef.enabled;
             OverheadCamera.enabled = !OverheadCamera.enabled;
+
+            _activeCam = _mainCamRef.enabled ? _mainCamRef : OverheadCamera;
+            CalculateXZMinMax();
         }
     }
 
@@ -161,8 +168,10 @@ public class CameraController : MonoBehaviour
         minX = 5.0f;
         maxX = (gridQ - 1) * 7.535f;
 
-        minZ = (gridR * -8.70f) - (transform.position.y / 10.0f) - 5.0f;
+        minZ = (gridR * -8.70f) - (_activeCam.transform.position.y / 10.0f) - 5.0f;
         maxZ = -20.0f;
+
+        if ( _activeCam == OverheadCamera ) minZ /= 2.0f;
     }
 
     public void FrameGrid(Transform topLeftTile, Transform botRightTile)
@@ -173,9 +182,9 @@ public class CameraController : MonoBehaviour
             bounds.Encapsulate(botRightTile.position);
 
             Vector3 camPos = bounds.center - Vector3.forward * 21.0f;
-            camPos = new Vector3(camPos.x, transform.position.y, camPos.z);
+            camPos = new Vector3(camPos.x, _activeCam.transform.position.y, camPos.z);
 
-            transform.position = camPos; // bounds.center - Vector3.forward * 21.0f;
+            _activeCam.transform.position = camPos;
         }
     }
 
