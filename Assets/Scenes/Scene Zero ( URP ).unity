@@ -2503,7 +2503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wasdSpeed: 42
-  pannSpeed: 0.5
+  pannSpeed: 3
   zoomSpeed: 5
   maxZoom: 100
   minZoom: 10

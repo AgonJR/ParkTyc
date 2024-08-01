@@ -134,16 +134,19 @@ public class CameraController : MonoBehaviour
 
             Vector2 deltaMousePos = currentMousePos - panStartPos;
 
-            Vector3 moveDirection = new Vector3(deltaMousePos.x, 0, deltaMousePos.y) * pannSpeed * Time.deltaTime;
+            float pSpeed = Mathf.Min(Vector2.Distance(currentMousePos, panStartPos), pannSpeed);
+
+            Vector3 moveDirection = new Vector3(deltaMousePos.x, 0, deltaMousePos.y) * pSpeed * Time.deltaTime;
             moveDirection = _activeCam.transform.TransformDirection(moveDirection);
 
-            Vector3 newPosition = _activeCam.transform.position + moveDirection;
+            Vector3 newPosition = _activeCam.transform.position - moveDirection;
 
             newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX);
             newPosition.y = panStartHight;
             newPosition.z = Mathf.Clamp(newPosition.z, minZ, maxZ);
 
             _activeCam.transform.position = newPosition;
+            panStartPos = currentMousePos;
         }
     }
 
