@@ -4312,11 +4312,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 1297339115
-      Data2: 1179093917
-      Data3: 1033059206
-      Data4: -80968607
-    Path: event:/UI/Menu/UI_Menu_Click
+      Data1: -10977828
+      Data2: 1135322266
+      Data3: -1545820781
+      Data4: 1382875390
+    Path: event:/UI/Menu/UI_Menu_Construction
   Event: 
   PlayEvent: 19
   StopEvent: 0
@@ -8727,11 +8727,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 1297339115
-      Data2: 1179093917
-      Data3: 1033059206
-      Data4: -80968607
-    Path: event:/UI/Menu/UI_Menu_Click
+      Data1: -1812509300
+      Data2: 1150256014
+      Data3: -1615732825
+      Data4: -431661944
+    Path: event:/UI/Menu/UI_Menu_Nature
   Event: 
   PlayEvent: 19
   StopEvent: 0
