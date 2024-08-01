@@ -52,19 +52,25 @@ public class PathTile : MonoBehaviour
         r = tile.GetRow();
         n = 0;
 
-        // Get Neighbour Tile References
-        foreach (GameObject nGo in GridManager.instance.GetNeighbouringTilesConst(q, r))
-        {
-            n += nGo == null ? 0 : 1;
-            neighbourTiles.Add(nGo != null ? nGo.GetComponent<GridTile>() : null );
-        }
-
+        GatherNeighbourRefs();
         RecalculateShape(true);
     }
 
     void OnEnable()
     {
+        GatherNeighbourRefs(true);
         RecalculateShape(true);
+    }
+
+    public void GatherNeighbourRefs(bool reset = false)
+    {
+        if ( reset ) neighbourTiles.Clear();
+
+        foreach (GameObject nGo in GridManager.instance.GetNeighbouringTilesConst(q, r))
+        {
+            n += nGo == null ? 0 : 1;
+            neighbourTiles.Add(nGo != null ? nGo.GetComponent<GridTile>() : null );
+        }
     }
 
     public void RecalculateShape(bool pingNeighbours = false)

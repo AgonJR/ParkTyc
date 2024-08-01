@@ -68,6 +68,45 @@ public class NPCBrain : MonoBehaviour
         _gridVisited[spawnQ, spawnR] = 1;
     }
 
+    public void GridSizeIncreased(int dQ, int dR)
+    {
+        int gridSizeQ = GridManager.instance.gridSizeQ;
+        int gridSizeR = GridManager.instance.gridSizeR;
+
+        int[,] visitCache = new int[gridSizeQ, gridSizeR];
+        float[,] exitCache = new float[gridSizeQ, gridSizeR];
+
+        for (int q = 0; q < gridSizeQ; q++) //column
+        {
+            for (int r = 0; r < gridSizeR; r++) //row
+            {
+                if ( q < _gridVisited.GetLength(0) && r < _gridVisited.GetLength(1) )
+                {
+                    visitCache[q, r] = _gridVisited[q, r];
+                    exitCache[q, r] = _exitHeurstx[q, r];
+                }
+                else
+                {
+                    visitCache[q, r] = 0;
+                    exitCache[q, r] = 0;
+                }
+            }
+        }
+
+        _gridVisited = visitCache;
+        _exitHeurstx = exitCache;
+        _exitTarget  = null;
+
+        if ( _entryCoordinates.x != 0 )
+        {
+            _entryCoordinates.y += dR;
+            _gridVisited[(int) _entryCoordinates.x, (int)_entryCoordinates.y] = 1;
+            if (_animatorRef == null ) GridEnterSequence();
+        }
+
+        SelectExitTarget(NPCManager.RequestExitTiles());
+    }
+
     private void FixedUpdate()
     {
         ProcessActivity();
@@ -125,39 +164,10 @@ public class NPCBrain : MonoBehaviour
         _stepCount++;
 
         // Entered Grid
-        if (_entryCoordinates == _coordinates)
-        {
-            spwnMesh.enabled = false;
-            entryVFX.SetActive(true);
-
-            modelMale.SetActive(Random.Range(0, 100) > 50);
-            modelFeml.SetActive(!modelMale.activeInHierarchy);
-
-            _animatorRef = modelMale.activeInHierarchy ? modelMale.GetComponent<Animator>() : modelFeml.GetComponent<Animator>();
-            _animatorRef.SetInteger("animState", 1); // Walk
-        }
+        if (_entryCoordinates == _coordinates) {  GridEnterSequence(); }
 
         // Exit Reached
-        if (_exitCoordinates == _coordinates)
-        {
-            int oQ = q;
-            int oR = r;
-
-            if (q == 0) { oQ -= 1; }
-            else if (r == 0) { oR -= 1; }
-            else if (q == GridManager.instance.GetGridSizeQ() - 1) { oQ += 1; }
-            else if (r == GridManager.instance.GetGridSizeR() - 1) { oR += 1; }
-
-            _outroStarted = true;
-            _outroCoordinates = new Vector2(oQ, oR);
-            nextTarget = GridManager.instance.GetBorderTileGO(oQ, oR);
-
-            modelMale.SetActive(false);
-            modelFeml.SetActive(false);
-
-            exitMesh.enabled = true;
-            exitVFX.SetActive(true);
-        }
+        if (_exitCoordinates == _coordinates) { GridExitSequence(q, r); }
 
         // Left Grid
         if (_outroStarted && _outroCoordinates == _coordinates)
@@ -175,6 +185,42 @@ public class NPCBrain : MonoBehaviour
         }
 
         return;
+    }
+
+    private void GridEnterSequence()
+    {
+        if (spwnMesh.enabled)
+        {
+            spwnMesh.enabled = false;
+            entryVFX.SetActive(true);
+
+            modelMale.SetActive(Random.Range(0, 100) > 50);
+            modelFeml.SetActive(!modelMale.activeInHierarchy);
+
+            _animatorRef = modelMale.activeInHierarchy ? modelMale.GetComponent<Animator>() : modelFeml.GetComponent<Animator>();
+            _animatorRef.SetInteger("animState", 1); // Walk
+        }
+    }
+
+    private void GridExitSequence(int q, int r)
+    {
+        int oQ = q;
+        int oR = r;
+
+        if (q == 0) { oQ -= 1; }
+        else if (r == 0) { oR -= 1; }
+        else if (q == GridManager.instance.GetGridSizeQ() - 1) { oQ += 1; }
+        else if (r == GridManager.instance.GetGridSizeR() - 1) { oR += 1; }
+
+        _outroStarted = true;
+        _outroCoordinates = new Vector2(oQ, oR);
+        nextTarget = GridManager.instance.GetBorderTileGO(oQ, oR);
+
+        modelMale.SetActive(false);
+        modelFeml.SetActive(false);
+
+        exitMesh.enabled = true;
+        exitVFX.SetActive(true);
     }
 
     private void SelectNextTargetTile()

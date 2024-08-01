@@ -160,12 +160,13 @@ public class GridTile : MonoBehaviour
 
         Dither(Input.GetKey(KeyCode.LeftShift));
         DitherNeighbours(Input.GetKey(KeyCode.LeftShift));
-        
     }
 
-    public void DitherNeighbours(bool toggle)
+    public void GatherNeighbourRefs(bool force = false)
     {
-        if ( _neighbourTiles == null )
+        if ( force ) _neighbourTiles = null;
+
+        if ( _neighbourTiles == null || _neighbourTiles.Length == 0 )
         {
             _neighbourTiles = new GridTile[6];
 
@@ -176,6 +177,11 @@ public class GridTile : MonoBehaviour
                 _neighbourTiles[i] = neighbourGOs[i] == null ? null : neighbourGOs[i].GetComponent<GridTile>();
             }
         }
+    }
+
+    public void DitherNeighbours(bool toggle)
+    {
+        GatherNeighbourRefs();
 
         for ( int i = 0; i < 6; i++ )
         {
@@ -306,17 +312,7 @@ public class GridTile : MonoBehaviour
 
     public void PingNeighbours()
     {
-        if ( _neighbourTiles == null )
-        {
-            _neighbourTiles = new GridTile[6];
-
-            List<GameObject> neighbourGOs = GridManager.instance.GetNeighbouringTilesConst(GetColumn(), GetRow());
-
-            for ( int i = 0; i < 6; i++ )
-            {
-                _neighbourTiles[i] = neighbourGOs[i] == null ? null : neighbourGOs[i].GetComponent<GridTile>();
-            }
-        }
+        GatherNeighbourRefs();
 
         for ( int i = 0; i < 6; i++ )
         {

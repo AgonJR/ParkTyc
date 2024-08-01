@@ -151,4 +151,12 @@ public class NPCManager : MonoBehaviour
     {
         return instance._spawnedNPCs.Count;
     }
+
+    public void PingNPCsGridSizeIncreased(int dQ, int dR)
+    {
+        foreach ( NPCBrain npc in _spndNPCBrains )
+        {
+            npc.GridSizeIncreased(dQ, dR);
+        }
+    }
 }

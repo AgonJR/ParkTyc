@@ -56,6 +56,13 @@ public class GridManager : MonoBehaviour
         }
 
         CheckInputForUndo();
+
+        if (Application.isEditor)
+        {
+            if ( Input.GetKeyDown(KeyCode.K) ) { IncreaseGridSize(1, 0); }
+            if ( Input.GetKeyDown(KeyCode.J) ) { IncreaseGridSize(0, 1); }
+            if ( Input.GetKeyDown(KeyCode.L) ) { IncreaseGridSize(1, 1); }
+        }
     }
 
     private void ClearGrid()
@@ -68,6 +75,14 @@ public class GridManager : MonoBehaviour
         _undoStack    = new Stack<TileStateHistory>();
         _gridTiles    = new GridTile[gridSizeQ, gridSizeR];
         _gridGOs      = new GameObject[gridSizeQ, gridSizeR];
+        _bordrGOs     = new GameObject[((gridSizeQ + outerSize*2) * (gridSizeR + outerSize*2)) - (gridSizeQ * gridSizeR)];
+        _borderGoDict = new Dictionary<KeyValuePair<int, int>, GameObject>();
+    }
+
+    private void ClearBorder()
+    {
+        if (_bordrGOs != null ) { foreach (GameObject tile in _bordrGOs) { Destroy(tile); } }
+
         _bordrGOs     = new GameObject[((gridSizeQ + outerSize*2) * (gridSizeR + outerSize*2)) - (gridSizeQ * gridSizeR)];
         _borderGoDict = new Dictionary<KeyValuePair<int, int>, GameObject>();
     }
@@ -92,8 +107,6 @@ public class GridManager : MonoBehaviour
                 tile.Initialize(q, r);
                 tileGO.transform.parent = gridParent.transform;
 
-                
-
                 tile.SwapTile(_loadedTiles == null ? ChooseRandomStarterTile() : _loadedTiles[q, r], addToUndo: false);
 
                 _gridGOs[q,r] = tileGO;
@@ -107,6 +120,89 @@ public class GridManager : MonoBehaviour
         mCam.FrameGrid(_gridGOs[0, 0].transform, _gridGOs[gridSizeQ - 1, gridSizeR - 1].transform);
 
         GameManager.instance.ResetScore();
+    }
+
+    public void IncreaseGridSize(int incQ, int incR)
+    {
+        if ( incQ < 0 || incR < 0 ) { Debug.LogError("[GridManager] IncreaseGridSize(" + incQ + " , " + incR + ") --- ! --- Can't be negative!"); }
+
+        GameObject[,] cacheGridGOs = new GameObject[gridSizeQ+incQ, gridSizeR+incR];
+        GridTile[,] cacheGridTiles = new GridTile[gridSizeQ+incQ, gridSizeR+incR];
+
+        for (int q = 0; q < gridSizeQ; q++) //column
+        {
+            for (int r = 0; r < gridSizeR; r++) //row
+            {
+                cacheGridGOs[q, r] = _gridGOs[q, r];
+                cacheGridTiles[q, r] = _gridTiles[q, r];
+            }
+        }
+        
+        List<GridTile> newDirtTiles = new List<GridTile>();
+
+        for (int q = 0; q < gridSizeQ+incQ; q++)
+        {
+            for (int r = 0; r < gridSizeR+incR; r++)
+            {
+                if (q < gridSizeQ && r < gridSizeR ) continue;
+
+                Vector3 position = CalculateTilePosition(q, r);
+
+                GameObject tileGO = Instantiate(tilePrefab, position, tilePrefab.transform.rotation);
+                GridTile   tile   = tileGO.GetComponent<GridTile>();
+
+                tile.Initialize(q, r);
+                tileGO.transform.parent = gridParent.transform;
+
+                      // Check for Path Connection
+                     if ( q >= gridSizeQ && cacheGridTiles[q-1, r].state == GridTile.TileState.Dirt) { newDirtTiles.Add(tile); } 
+                else if ( r >= gridSizeR && cacheGridTiles[q, r-1].state == GridTile.TileState.Dirt) { newDirtTiles.Add(tile); } 
+
+                tile.SwapTile(ChooseRandomStarterTile(), addToUndo: false);
+
+                cacheGridGOs[q,r] = tileGO;
+                cacheGridTiles[q,r] = tile;
+            }
+        }
+
+        _gridGOs = cacheGridGOs;
+        _gridTiles = cacheGridTiles;
+
+        // Previous Edge Tiles Now Have More Neighbours !s
+        for (int q = 0; q < gridSizeQ; q++) 
+        { 
+            _gridTiles[q, gridSizeR-1].GatherNeighbourRefs(true); 
+
+            if ( _gridTiles[q, gridSizeR-1].state ==  GridTile.TileState.Dirt)
+            {
+                _gridTiles[q, gridSizeR-1].GetComponentInChildren<PathTile>().GatherNeighbourRefs(true);
+            }
+        }
+        for (int r = 0; r < gridSizeR; r++) 
+        { 
+            _gridTiles[gridSizeQ-1, r].GatherNeighbourRefs(true); 
+            
+            if ( _gridTiles[gridSizeQ-1, r].state ==  GridTile.TileState.Dirt)
+            {
+                _gridTiles[gridSizeQ-1, r].GetComponentInChildren<PathTile>().GatherNeighbourRefs(true);
+            }
+        }
+        
+        foreach ( GridTile dirtTile in newDirtTiles )
+        {
+            dirtTile.SwapTile(GridTile.TileState.Dirt);
+        }
+
+        gridSizeQ += incQ;
+        gridSizeR += incR;
+
+        mCam.CalculateXZMinMax();
+
+        NPCManager.ForceScan();
+        NPCManager.instance.PingNPCsGridSizeIncreased(incQ, incR);
+
+        ClearBorder();
+        GenerateOuterGrid();
     }
 
     public GridTile.TileState ChooseRandomStarterTile()
