@@ -106,6 +106,9 @@ public class HUDManager : MonoBehaviour
         {
             selectedType = (GridTile.TileState)tile;
 
+            if (HighlighterGhosts.instance != null) 
+                HighlighterGhosts.instance.SetGhost(selectedType);
+
             for (int i = 0; i < tileButts.Length; i++)
             {
                 var colors = tileButts[i].colors;
