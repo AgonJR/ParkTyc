@@ -97,8 +97,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caabb63ef8422459396a15f08d84c459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverMaterial: {fileID: 2100000, guid: 2e0057cf205d84cf4912029b87a170f3, type: 2}
   highlightTile: {fileID: 3173166052741747074, guid: 4ebf831dc1e914ea4a247e9fbe81dfda, type: 3}
+  tileBase: {fileID: 0}
+  tileGrass: {fileID: 0}
+  tileDirt: {fileID: 0}
+  tileTree: {fileID: 0}
+  tileBush: {fileID: 0}
+  tileRock: {fileID: 0}
+  tileWater: {fileID: 0}
+  tileBench: {fileID: 0}
+  tileCamp: {fileID: 0}
+  SFXBase:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  SFXGrass:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  SFXDirt:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  SFXTree:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  SFXBush:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  SFXRock:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  SFXWater:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  SFXBench:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  state: 0
+  isActivity: 0
+  maxCapacity: 0
+  curOccupancy: 0
+  ditherFlags: 0
 --- !u!64 &2196934161054271966
 MeshCollider:
   m_ObjectHideFlags: 0
