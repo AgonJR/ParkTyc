@@ -66,6 +66,7 @@ public class NPCBrain : MonoBehaviour
 
         _stepCount = 0;
         _gridVisited[spawnQ, spawnR] = 1;
+        _sitCooldown = Mathf.Clamp((int) Random.Range(-3.0f, 6.0f), 0, 9); // So some NPCs won't sit immediately
     }
 
     public void GridSizeIncreased(int dQ, int dR)
@@ -361,6 +362,7 @@ public class NPCBrain : MonoBehaviour
                     _activitySpotted = false;
                     _animatorRef.Play("Bench_Sit");
                     _animatorRef.SetInteger("animState", 2); // Bench Idle
+                    _activityFrames += Random.Range(-30, 51); // slightly randomlize sit duration
                 }
 
                 if (_activityFrames > _sitFrames )
