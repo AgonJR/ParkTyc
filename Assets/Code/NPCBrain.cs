@@ -375,7 +375,7 @@ public class NPCBrain : MonoBehaviour
                     }
                     else if ( _animatorRef.GetCurrentAnimatorStateInfo(0).IsName("Walk01") )
                     {
-                        _activityTile.curOccupancy--;
+                        _activityTile.UnOccupy(this);
                         _activityStarted = false;
                         _activityTile = null;
                         _activityFrames = 0;

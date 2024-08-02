@@ -278,8 +278,6 @@ public class GridTile : MonoBehaviour
             {
                 GetComponentInChildren<BenchTile>().TurnSitRotation(times);
                 if ( curOccupancy > 0 ) { foreach(NPCBrain npc in _activeNPCs) { npc.RotateOnBench(); } }
-              
-
             }
 
             return;
@@ -382,6 +380,7 @@ public class GridTile : MonoBehaviour
         if (_activeNPCs != null && _activeNPCs.Count > 0)
         {
             foreach (NPCBrain npc in _activeNPCs) { npc.EndActivity(); }
+            _activeNPCs.Clear();
             curOccupancy = 0;
         }
     }
