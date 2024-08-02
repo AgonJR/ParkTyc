@@ -73,7 +73,9 @@ public class ObjectiveSystem : MonoBehaviour
                 {
                     GridTile exitTile = exit.GetComponent<GridTile>();
 
-                    if ( GridManager.instance.CheckTileConnection(entryTile, exitTile, GridTile.TileState.Dirt, null) )
+                    if ( exitTile == entryTile) continue;
+
+                    if ( GridManager.instance.CheckTileConnection(entryTile, exitTile, pathObjective.target1, null) )
                     {
                         pathObjective.Complete = true;
                         NPCManager.instance.exitScore += pathObjective.npcScoreInc;

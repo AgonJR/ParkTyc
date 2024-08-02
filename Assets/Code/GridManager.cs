@@ -466,7 +466,7 @@ public class GridManager : MonoBehaviour
         List<GridTile> neighbours = GetNeighbouringGridTilesData(start);
         foreach ( GridTile nTile in neighbours )
         {
-            if (nTile.GetCoordinates() == end.GetCoordinates()) { return true; }
+            if ( nTile.GetCoordinates() == end.GetCoordinates() ) { return true; }
             if ( nTile.state == connectionType ) { if ( CheckTileConnection(nTile, end, connectionType, visited) ) { return true; } }
         }
 
