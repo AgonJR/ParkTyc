@@ -211,9 +211,9 @@ public class GridManager : MonoBehaviour
 
         int roll = Random.Range(0, 100);
 
-             if ( roll > 90 ) chosenState = GridTile.TileState.Tree;
-        else if ( roll > 75 ) chosenState = GridTile.TileState.Rock;
-        else if ( roll > 50 ) chosenState = GridTile.TileState.Bush;
+             if ( roll > 95 ) chosenState = GridTile.TileState.Tree;
+        else if ( roll > 80 ) chosenState = GridTile.TileState.Rock;
+        else if ( roll > 55 ) chosenState = GridTile.TileState.Bush;
 
         return chosenState;
     }
