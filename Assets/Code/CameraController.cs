@@ -27,6 +27,7 @@ public class CameraController : MonoBehaviour
     public GameObject debugUIPanel;
     public GameObject screenBlockr;
     public GameObject gameplayHUD;
+    public GameObject controlsPop;
 
     private Vector2 panStartPos;
     private float panStartHight;
@@ -110,6 +111,21 @@ public class CameraController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             ToggleDebugPanel();
+        }
+
+        if ( controlsPop.activeInHierarchy )
+        {
+            if ( Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.Space) 
+                || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D) 
+                || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Return)  
+                || Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) ) 
+                {
+                    controlsPop.SetActive(false);
+                }
+        }
+        else if (Input.GetKeyDown(KeyCode.Tab) )
+        {
+            controlsPop.SetActive(true);
         }
     }
 
