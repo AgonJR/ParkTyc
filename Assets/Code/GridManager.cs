@@ -491,9 +491,8 @@ public class GridManager : MonoBehaviour
             {
                 DoUndo();
             }
-        }
-
-        if (Application.isEditor)
+        } 
+        else if (Application.isEditor)
         {
             if (Input.GetKeyDown(KeyCode.Z))
             {
