@@ -116,11 +116,11 @@ MonoBehaviour:
     Path: event:/UI/Tiles/UI_Tiles_Water
   SFXBench:
     Guid:
-      Data1: -1928179956
-      Data2: 1305019072
-      Data3: -51152981
-      Data4: 1370092705
-    Path: event:/UI/Tiles/UI_Tiles_Rock
+      Data1: 55767485
+      Data2: 1082845860
+      Data3: -385924939
+      Data4: 599930997
+    Path: event:/UI/Tiles/UI_Tiles_Bench
   state: 0
   isActivity: 0
   maxCapacity: 0
