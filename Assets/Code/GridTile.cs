@@ -28,6 +28,7 @@ public class GridTile : MonoBehaviour
     public EventReference SFXRock ;
     public EventReference SFXWater;
     public EventReference SFXBench;
+    public EventReference SFXRotate;
 
     public enum TileState
     {
@@ -262,6 +263,7 @@ public class GridTile : MonoBehaviour
 
     public void RotateTile(int times = 1)
     {
+        FMODUnity.RuntimeManager.PlayOneShot(SFXRotate);
         if ( _activeTileGO != null )
         {
             if ( state == TileState.Camp )
@@ -276,12 +278,15 @@ public class GridTile : MonoBehaviour
             {
                 GetComponentInChildren<BenchTile>().TurnSitRotation(times);
                 if ( curOccupancy > 0 ) { foreach(NPCBrain npc in _activeNPCs) { npc.RotateOnBench(); } }
+              
+
             }
 
             return;
         }
 
         transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z + (60 * times));
+        
     }
 
     public void InitializeActiveTile()

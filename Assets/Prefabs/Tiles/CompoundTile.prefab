@@ -121,6 +121,13 @@ MonoBehaviour:
       Data3: -385924939
       Data4: 599930997
     Path: event:/UI/Tiles/UI_Tiles_Bench
+  SFXRotate:
+    Guid:
+      Data1: -1200440417
+      Data2: 1246928397
+      Data3: 946263448
+      Data4: -363938012
+    Path: event:/UI/Tiles/UI_Tile_Rotate
   state: 0
   isActivity: 0
   maxCapacity: 0

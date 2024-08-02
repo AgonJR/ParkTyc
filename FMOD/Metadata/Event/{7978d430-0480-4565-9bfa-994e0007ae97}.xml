@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{7978d430-0480-4565-9bfa-994e0007ae97}">
 		<property name="name">
-			<value>UI_Menu_Undo</value>
+			<value>UI_Tile_Undo</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{ef464ecb-8d69-4d61-8a08-449691535611}</destination>
+			<destination>{7d9f8213-d04f-4033-9103-4499b0f5ac12}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{a73d32f7-d611-4dbe-bfff-bc0a9ac86d98}</destination>
@@ -53,7 +53,7 @@
 			<destination>{e5e24cc2-3bcc-4a79-bd17-0b2aaed34994}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{2100c7ce-8101-4747-91c0-a44370007898}</destination>
+			<destination>{a18cc46f-43ab-4f77-97d6-6be85da6a81c}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{c3335a3b-6fa4-40ce-b49a-29e39ba36991}" />
@@ -72,6 +72,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{c98d8a3b-e4aa-4cc4-a733-4d78dd8db1d0}">
+		<property name="volume">
+			<value>-10</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{649ca2af-538e-4fcc-bbf7-3b3a24f1c7bb}</destination>
 		</relationship>
