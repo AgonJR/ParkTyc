@@ -63,12 +63,12 @@ public class GridTile : MonoBehaviour
         { TileState.Base,   0 },
         { TileState.Grass,  0 },
         { TileState.Dirt,   0 },
-        { TileState.Tree,  15 },
-        { TileState.Bush,   5 },
-        { TileState.Rock,  10 },
-        { TileState.Water,  5 },
+        { TileState.Tree, 15 },
+        { TileState.Bush, 10 },
+        { TileState.Rock, 5 },
+        { TileState.Water, 20 },
         { TileState.Bench, 25 },
-        { TileState.Camp,  50 }
+        { TileState.Camp, 50 }
     };
 
     [Header("Tile Status")]
