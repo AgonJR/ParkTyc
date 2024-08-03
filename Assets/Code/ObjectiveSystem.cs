@@ -1,6 +1,8 @@
 using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
+#if UNITY_EDITOR
+using UnityEditor; 
+#endif
 
 public class ObjectiveSystem : MonoBehaviour
 {
@@ -131,6 +133,7 @@ public class ObjectiveData
     }
 }
 
+#if UNITY_EDITOR 
 [CustomEditor(typeof(ObjectiveSystem))]
 public class ObjectiveSystemEditorOverride : Editor
 {
@@ -187,3 +190,4 @@ public class ObjectiveSystemEditorOverride : Editor
         EditorUtility.SetDirty(OS);
     }
 }
+#endif

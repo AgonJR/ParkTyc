@@ -1,8 +1,10 @@
 using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
 using FMODUnity;
 using System;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class GridTile : MonoBehaviour
 {
@@ -403,6 +405,7 @@ public struct TileStateHistory
     }
 }
 
+#if UNITY_EDITOR 
 [CustomEditor(typeof(GridTile))]
 public class GridTileInspector : Editor
 {
@@ -431,3 +434,4 @@ public class GridTileInspector : Editor
         EditorUtility.SetDirty(GT);
     }
 }
+#endif

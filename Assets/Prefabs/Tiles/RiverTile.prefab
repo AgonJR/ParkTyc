@@ -219,10 +219,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1e7c95e60a51a5478ae04e0f23e982b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathType: 2
   tileGrass: {fileID: 6211940891409464865}
   tileSolid: {fileID: 4419158642908629310}
+  tileSingle: {fileID: 0}
   tilePathCurveSharp: {fileID: 8321343799673225002}
   tilePathCurveSmooth: {fileID: 5743534295344672754}
+  tileDoubleA: {fileID: 0}
   tilePathStraight: {fileID: 7812029200904398819}
   tilePathEnd: {fileID: 1641035299689557860}
   tileChunkCenter: {fileID: 2879810655188111891}
