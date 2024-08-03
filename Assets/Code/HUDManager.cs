@@ -17,6 +17,7 @@ public class HUDManager : MonoBehaviour
     public Color selectdColour;
     [Space]
     public Button[] tileButts;
+    public Button[] tileButts2;
 
     [Header("Labels")]
     public TMP_Text ScoreText;
@@ -116,6 +117,9 @@ public class HUDManager : MonoBehaviour
                 tileButts[i].colors = colors;
             }
         }
+
+        // selectedType = (GridTile.TileState)1;
+        // Debug.Log(selectedType);
     }
 
     public void SelectBuildMode(int mode)
