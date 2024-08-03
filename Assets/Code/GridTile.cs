@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEditor;
+// using UnityEditor;
 using System.Collections.Generic;
 using FMODUnity;
 using System;
@@ -403,31 +403,31 @@ public struct TileStateHistory
     }
 }
 
-[CustomEditor(typeof(GridTile))]
-public class GridTileInspector : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
+// [CustomEditor(typeof(GridTile))]
+// public class GridTileInspector : Editor
+// {
+//     public override void OnInspectorGUI()
+//     {
+//         base.OnInspectorGUI();
 
-        GridTile GT = (GridTile) target;
+//         GridTile GT = (GridTile) target;
 
-        GUILayout.Space(10);
-        GT.ditherFlags = EditorGUILayout.MaskField("Dither Tiles", GT.ditherFlags, Enum.GetNames(typeof(GridTile.TileState)));
+//         GUILayout.Space(10);
+//         GT.ditherFlags = EditorGUILayout.MaskField("Dither Tiles", GT.ditherFlags, Enum.GetNames(typeof(GridTile.TileState)));
 
-        GUILayout.Space(10);
-        GUILayout.Label("Unlock Costs", EditorStyles.boldLabel);
+//         GUILayout.Space(10);
+//         GUILayout.Label("Unlock Costs", EditorStyles.boldLabel);
 
-        for ( int i = 1; i < GridTile.stateUnlockCost.Count; i++)
-        {
-            GridTile.TileState tileState = (GridTile.TileState) i;
+//         for ( int i = 1; i < GridTile.stateUnlockCost.Count; i++)
+//         {
+//             GridTile.TileState tileState = (GridTile.TileState) i;
 
-            GUILayout.BeginHorizontal();
-                GUILayout.Label(tileState.ToString(), GUILayout.MinWidth(100));
-                GridTile.stateUnlockCost[tileState] = EditorGUILayout.IntField(GridTile.stateUnlockCost[tileState]);
-            GUILayout.EndHorizontal();
-        }
+//             GUILayout.BeginHorizontal();
+//                 GUILayout.Label(tileState.ToString(), GUILayout.MinWidth(100));
+//                 GridTile.stateUnlockCost[tileState] = EditorGUILayout.IntField(GridTile.stateUnlockCost[tileState]);
+//             GUILayout.EndHorizontal();
+//         }
 
-        EditorUtility.SetDirty(GT);
-    }
-}
+//         EditorUtility.SetDirty(GT);
+//     }
+// }

@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEditor;
+// using UnityEditor;
 using System.Collections.Generic;
 
 public class ObjectiveSystem : MonoBehaviour
@@ -131,59 +131,59 @@ public class ObjectiveData
     }
 }
 
-[CustomEditor(typeof(ObjectiveSystem))]
-public class ObjectiveSystemEditorOverride : Editor
-{
-    private ObjectiveSystem OS = null;
+// [CustomEditor(typeof(ObjectiveSystem))]
+// public class ObjectiveSystemEditorOverride : Editor
+// {
+//     private ObjectiveSystem OS = null;
 
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
+//     public override void OnInspectorGUI()
+//     {
+//         base.OnInspectorGUI();
 
-        OS = (ObjectiveSystem) target;
+//         OS = (ObjectiveSystem) target;
 
-        GUILayout.Space(10.0f);
-        for ( int i = 0; i < OS.Objectives.Count; i++ )
-        {
-            GUILayout.BeginHorizontal();
-            GUI.enabled = false;
-            GUILayout.Toggle(OS.Objectives[i].Complete, "✓");
-            GUI.enabled = true;
-            OS.Objectives[i].objectiveType = (ObjectiveData.Type) EditorGUILayout.EnumPopup(OS.Objectives[i].objectiveType);
-            if ( OS.Objectives[i].objectiveType == ObjectiveData.Type.Build ) 
-            {
-                GUILayout.Label("#", GUILayout.Width(10.0f)); 
-                OS.Objectives[i].buildCount = EditorGUILayout.IntField(OS.Objectives[i].buildCount, GUILayout.Width(50.0f));
-                OS.Objectives[i].target1 = (GridTile.TileState) EditorGUILayout.EnumPopup(OS.Objectives[i].target1, GUILayout.Width(70.0f));
-            }
-            else if ( OS.Objectives[i].objectiveType == ObjectiveData.Type.Connect ) 
-            {
-                GUI.enabled = false;
-                OS.Objectives[i].target1 = GridTile.TileState.Dirt;
-                OS.Objectives[i].target1 = (GridTile.TileState) EditorGUILayout.EnumPopup(OS.Objectives[i].target1, GUILayout.Width(70.0f));
-                GUI.enabled = true;
-            }
-            GUILayout.EndHorizontal();
+//         GUILayout.Space(10.0f);
+//         for ( int i = 0; i < OS.Objectives.Count; i++ )
+//         {
+//             GUILayout.BeginHorizontal();
+//             GUI.enabled = false;
+//             GUILayout.Toggle(OS.Objectives[i].Complete, "✓");
+//             GUI.enabled = true;
+//             OS.Objectives[i].objectiveType = (ObjectiveData.Type) EditorGUILayout.EnumPopup(OS.Objectives[i].objectiveType);
+//             if ( OS.Objectives[i].objectiveType == ObjectiveData.Type.Build ) 
+//             {
+//                 GUILayout.Label("#", GUILayout.Width(10.0f)); 
+//                 OS.Objectives[i].buildCount = EditorGUILayout.IntField(OS.Objectives[i].buildCount, GUILayout.Width(50.0f));
+//                 OS.Objectives[i].target1 = (GridTile.TileState) EditorGUILayout.EnumPopup(OS.Objectives[i].target1, GUILayout.Width(70.0f));
+//             }
+//             else if ( OS.Objectives[i].objectiveType == ObjectiveData.Type.Connect ) 
+//             {
+//                 GUI.enabled = false;
+//                 OS.Objectives[i].target1 = GridTile.TileState.Dirt;
+//                 OS.Objectives[i].target1 = (GridTile.TileState) EditorGUILayout.EnumPopup(OS.Objectives[i].target1, GUILayout.Width(70.0f));
+//                 GUI.enabled = true;
+//             }
+//             GUILayout.EndHorizontal();
 
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Description: ", GUILayout.Width(70.0f)); 
-            OS.Objectives[i].Description = GUILayout.TextField(OS.Objectives[i].Description);
-            GUILayout.Space(3.0f); if (GUILayout.Button("- Delete", GUILayout.Width(60))) { OS.Objectives.RemoveAt(i--); continue; }
-            GUILayout.EndHorizontal();
+//             GUILayout.BeginHorizontal();
+//             GUILayout.Label("Description: ", GUILayout.Width(70.0f)); 
+//             OS.Objectives[i].Description = GUILayout.TextField(OS.Objectives[i].Description);
+//             GUILayout.Space(3.0f); if (GUILayout.Button("- Delete", GUILayout.Width(60))) { OS.Objectives.RemoveAt(i--); continue; }
+//             GUILayout.EndHorizontal();
 
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("npcScore+ ", GUILayout.Width(70.0f)); 
-            OS.Objectives[i].npcScoreInc = EditorGUILayout.IntField(OS.Objectives[i].npcScoreInc, GUILayout.Width(50.0f));
-            GUILayout.EndHorizontal();
+//             GUILayout.BeginHorizontal();
+//             GUILayout.Label("npcScore+ ", GUILayout.Width(70.0f)); 
+//             OS.Objectives[i].npcScoreInc = EditorGUILayout.IntField(OS.Objectives[i].npcScoreInc, GUILayout.Width(50.0f));
+//             GUILayout.EndHorizontal();
 
-            GUILayout.Space(10.0f);
-        }
-        GUILayout.Space(11.0f);
+//             GUILayout.Space(10.0f);
+//         }
+//         GUILayout.Space(11.0f);
 
-        GUILayout.BeginHorizontal();
-        if ( GUILayout.Button(" + Add Objective ")  ) { OS.Objectives.Add(new ObjectiveData()); }
-        GUILayout.EndHorizontal();
+//         GUILayout.BeginHorizontal();
+//         if ( GUILayout.Button(" + Add Objective ")  ) { OS.Objectives.Add(new ObjectiveData()); }
+//         GUILayout.EndHorizontal();
 
-        EditorUtility.SetDirty(OS);
-    }
-}
+//         EditorUtility.SetDirty(OS);
+//     }
+// }
