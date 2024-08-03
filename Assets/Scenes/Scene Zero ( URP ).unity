@@ -1402,7 +1402,7 @@ MonoBehaviour:
     buildCount: 2
     repeatCount: 0
     npcScoreInc: 5
-    Description: Place 2 bushes
+    Description: Place 2 Bushes
     objectiveType: 0
     target1: 4
     target2: 0
@@ -1410,7 +1410,7 @@ MonoBehaviour:
     buildCount: 3
     repeatCount: 0
     npcScoreInc: 0
-    Description: Place 3 trees
+    Description: Plant 3 Trees
     objectiveType: 0
     target1: 3
     target2: 0
