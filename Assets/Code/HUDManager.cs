@@ -26,6 +26,7 @@ public class HUDManager : MonoBehaviour
     public Animator negDtAnimator;
     [Space]
     public TMP_Text ObjectiveText;
+    public GameObject ObjectiveBG;
     [Space]
     public TMP_Text VisitorText;
     [Header("Custom Cursor")]
@@ -154,7 +155,20 @@ public class HUDManager : MonoBehaviour
     
     public void UpdateObjectiveText()
     {
-        ObjectiveText.text = ObjectiveSystem.FullStatusText();
+        ObjectiveText.text = ObjectiveSystem.FullStatusText(out bool objectivesDone);
+        if ( objectivesDone ) {  Invoke("HideObjectiveUI", 3.0f); }
+    }
+
+    private void HideObjectiveUI()
+    {
+        ObjectiveBG.SetActive(false);
+        ObjectiveText.gameObject.SetActive(false);
+    }
+
+    private void ShowObjectiveUI()
+    {
+        ObjectiveBG.SetActive(true);
+        ObjectiveText.gameObject.SetActive(true);
     }
 
 
@@ -204,5 +218,6 @@ public class HUDManager : MonoBehaviour
         int newR = int.Parse(regenSizeRField.text);
         GridManager.instance.ExternalRegenerate(newQ, newR);
         ObjectiveSystem.instance.ResetObjectives();
+        ShowObjectiveUI();
     }
 }

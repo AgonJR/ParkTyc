@@ -86,7 +86,7 @@ public class ObjectiveSystem : MonoBehaviour
         }
     }
 
-    public static string FullStatusText()
+    public static string FullStatusText(out bool objectivesDone)
     {
         string statusText = string.Empty;
 
@@ -104,6 +104,8 @@ public class ObjectiveSystem : MonoBehaviour
             statusText  = "All Prototype Objectives Complete!\n\n";
             statusText += "Thank you for playing!\n\n Enjoy Building Your Trail!";
         }
+
+        objectivesDone = allDone == instance.Objectives.Count;
 
         return statusText;
     }
