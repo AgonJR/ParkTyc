@@ -96,7 +96,7 @@
 	</object>
 	<object class="EventMixerMaster" id="{b2cf3af0-6cea-4c5b-9b86-b02fea0db0b7}">
 		<property name="volume">
-			<value>3.5</value>
+			<value>6</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{1eae2f05-fd70-4835-bf7f-e6204821ff09}</destination>
@@ -191,9 +191,6 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{e7567800-a07c-4757-b1d6-7e99f7250513}">
-		<property name="volume">
-			<value>-2.5</value>
-		</property>
 		<property name="name">
 			<value>Birds</value>
 		</property>
@@ -237,7 +234,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{c18d02fa-dd02-453b-ac68-a772862c50bb}">
 		<property name="volume">
-			<value>-14</value>
+			<value>-11.5</value>
 		</property>
 		<property name="name">
 			<value>Wind</value>
@@ -269,6 +266,7 @@
 	<object class="MixerBusEffectChain" id="{1eae2f05-fd70-4835-bf7f-e6204821ff09}">
 		<relationship name="effects">
 			<destination>{f149b791-5507-4a01-8faa-a2e3d2533728}</destination>
+			<destination>{2917ecdd-932b-4cd7-abaf-9c0f03bb02c0}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{a2b14b99-ad62-4ff4-91f8-be3fff400f4a}" />
@@ -360,6 +358,17 @@
 	</object>
 	<object class="MixerBusPanner" id="{aeb24fab-c461-4b53-850f-794f78aab30e}" />
 	<object class="MixerBusFader" id="{f149b791-5507-4a01-8faa-a2e3d2533728}" />
+	<object class="MultibandEqEffect" id="{2917ecdd-932b-4cd7-abaf-9c0f03bb02c0}">
+		<property name="filterTypeA">
+			<value>4</value>
+		</property>
+		<property name="frequencyA">
+			<value>199.44838</value>
+		</property>
+		<property name="qualityA">
+			<value>0.183724135</value>
+		</property>
+	</object>
 	<object class="AutomationPoint" id="{b059ae1a-b63a-4711-a2e4-af8515a52109}">
 		<property name="position">
 			<value>37.649999999999999</value>
