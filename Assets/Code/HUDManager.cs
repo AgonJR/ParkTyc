@@ -15,6 +15,7 @@ public class HUDManager : MonoBehaviour
     [Header("Tile Buttons")]
     public Color defaultColour;
     public Color selectdColour;
+    public GameObject[] TypeSelect;
     [Space]
     public Button[] tileButts;
     public Button[] tileButts2;
@@ -104,28 +105,35 @@ public class HUDManager : MonoBehaviour
     {
         int index = (int)tile - 1;
 
-        if (tileButts[index].interactable)
+        if (tileButts2[index].interactable)
         {
             selectedType = (GridTile.TileState)tile;
 
             if (HighlighterGhosts.instance != null) 
                 HighlighterGhosts.instance.SetGhost(selectedType);
-
-            for (int i = 0; i < tileButts.Length; i++)
+            
+            for (int i = 0; i < tileButts2.Length; i++)
             {
                 var colors = tileButts[i].colors;
                 colors.normalColor = i + 1 == (int)selectedType ? selectdColour : defaultColour;
-                tileButts[i].colors = colors;
+                tileButts2[i].colors = colors;
             }
         }
-
-        // selectedType = (GridTile.TileState)1;
-        // Debug.Log(selectedType);
     }
 
     public void SelectBuildMode(int mode)
     {
         currentMode = (BuildMode)mode;
+        var index = mode - 1;
+        // Debug.Log(TypeSelect[index]);
+        TypeSelect[index].SetActive(true);
+        if (index == 0) {
+            TypeSelect[index].SetActive(true);
+            TypeSelect[1].SetActive(false);
+        } else {
+            TypeSelect[index].SetActive(true);
+            TypeSelect[0].SetActive(false);
+        }
     }
 
     private void ReviewUnlockedButtons()
