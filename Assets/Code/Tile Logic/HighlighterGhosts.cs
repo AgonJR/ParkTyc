@@ -7,6 +7,9 @@ public class HighlighterGhosts : MonoBehaviour
     public bool UseGhosts = true;
 
     [Header("Ghost Refs")]
+    public Material Unlocked;
+    public Material Locked;
+    [Space]
     public GameObject ghostDirt;
     public GameObject ghostTree;
     public GameObject ghostBush;
@@ -14,11 +17,28 @@ public class HighlighterGhosts : MonoBehaviour
     public GameObject ghostWatr;
     public GameObject ghostBnch;
     public GameObject ghostCamp;
+    
+    private MeshRenderer[] renderRefs;
+    private MeshRenderer[] rockGhostMeshRenderRefs;
 
     void Awake()
     {
         instance = this;
+        GatherRenderRefs();
         ToggleAllGhosts(false);
+    }
+
+    private void GatherRenderRefs()
+    {
+        renderRefs = new MeshRenderer[7];
+        renderRefs[0] = ghostDirt.GetComponent<MeshRenderer>();
+        renderRefs[1] = ghostTree.GetComponent<MeshRenderer>();
+        renderRefs[2] = ghostBush.GetComponent<MeshRenderer>();
+        renderRefs[3] = null;
+        rockGhostMeshRenderRefs = ghostRock.GetComponentsInChildren<MeshRenderer>();
+        renderRefs[4] = ghostWatr.GetComponent<MeshRenderer>();
+        renderRefs[5] = ghostBnch.GetComponent<MeshRenderer>();
+        renderRefs[6] = ghostCamp.GetComponent<MeshRenderer>();
     }
 
     public void SetGhost(GridTile.TileState tileState)
@@ -26,6 +46,11 @@ public class HighlighterGhosts : MonoBehaviour
         if ( UseGhosts == false )
         {
             return;
+        }
+
+        if (renderRefs == null || renderRefs.Length <= 1)
+        {
+            GatherRenderRefs();
         }
 
         ToggleAllGhosts(false);
@@ -39,6 +64,28 @@ public class HighlighterGhosts : MonoBehaviour
             case GridTile.TileState.Water: ghostWatr.SetActive(true); break;
             case GridTile.TileState.Bench: ghostBnch.SetActive(true); break;
             case GridTile.TileState.Camp:  ghostCamp.SetActive(true); break;
+        }
+
+        UpdateGhostColour(tileState);
+    }
+
+    public void UpdateGhostColour(GridTile.TileState tileState)
+    {
+        if(tileState == GridTile.TileState.Grass ) 
+        {
+
+        }
+        else if(tileState == GridTile.TileState.Rock ) 
+        {
+            foreach (MeshRenderer renderRef in rockGhostMeshRenderRefs)
+            {
+                renderRef.material = GameManager.Score >= GridTile.stateUnlockCost[tileState] ? Unlocked : Locked;
+            }
+        }
+        else
+        {
+            if ( renderRefs != null && renderRefs.Length > 5 )
+            renderRefs[((int) tileState) - 2].material = GameManager.Score >= GridTile.stateUnlockCost[tileState] ? Unlocked : Locked;
         }
     }
 

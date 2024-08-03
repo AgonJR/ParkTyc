@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
         if (Score < 0) Score = 0;
 
         hudManagerRef.DisplayScoreChange(amount);
+        HighlighterGhosts.instance.UpdateGhostColour(HUDManager.selectedType);
     }
 
     public void ResetScore()

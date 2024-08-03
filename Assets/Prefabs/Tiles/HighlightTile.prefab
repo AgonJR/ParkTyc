@@ -624,6 +624,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f47a9405ef1534e5c94ba49376b1612f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UseGhosts: 1
+  Unlocked: {fileID: 2100000, guid: c38ed67c0ecc4bb4a89344eeeca13c2b, type: 2}
+  Locked: {fileID: 2100000, guid: 22c1c5ccf14cd4d3cb1f8469de065c14, type: 2}
   ghostDirt: {fileID: 1244947396117051182}
   ghostTree: {fileID: 6217440375170938464}
   ghostBush: {fileID: 2117813054852246121}
