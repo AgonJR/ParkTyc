@@ -119,6 +119,7 @@ public class GridManager : MonoBehaviour
         mCam.CalculateXZMinMax();
         mCam.FrameGrid(_gridGOs[0, 0].transform, _gridGOs[gridSizeQ - 1, gridSizeR - 1].transform);
 
+        NPCManager.ForceScan();
         GameManager.instance.ResetScore();
     }
 
@@ -449,6 +450,14 @@ public class GridManager : MonoBehaviour
     
 
         return edgeTiles;
+    }
+
+    public bool CheckTileConnection(GameObject start, GameObject end, GridTile.TileState connectionType, int[,] visited = null)
+    {
+        GridTile startTile = start.GetComponent<GridTile>();
+        GridTile finalTile =   end.GetComponent<GridTile>();
+
+        return CheckTileConnection(startTile, finalTile, connectionType, visited);
     }
 
     // Returns true if 'start' and 'end' have a direct connection of a specific type (eg. Dirt Path)

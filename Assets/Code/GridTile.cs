@@ -244,6 +244,7 @@ public class GridTile : MonoBehaviour
         
         if ( addToUndo ) PingNeighbours();
         if ( addToUndo ) PingObjectives();
+        if ( addToUndo ) NPCManager.ForceScan();
     }
 
     public int GetColumn()

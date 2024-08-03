@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 
 public class NPCManager : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class NPCManager : MonoBehaviour
     [SerializeField] private List<GameObject> _exitTiles;
     [SerializeField] private List<GameObject> _spawnedNPCs;
                      private List<NPCBrain> _spndNPCBrains;
+                     private List<KeyValuePair<GameObject, List<GameObject>>> _connectedPathPairs; // <entry, exit> pairs that have a full connection
 
     private float spawnDelay = 0;
     private int maxSpawnTileChecks = 30;
@@ -29,9 +31,7 @@ public class NPCManager : MonoBehaviour
     void Start()
     {
         instance = this;
-
         ClearNPCs();
-        InvokeRepeating("ScanTiles", 0.0f, 1.0f);
     }
 
     void ScanTiles()
@@ -52,6 +52,24 @@ public class NPCManager : MonoBehaviour
         else
         {
             spawnCheckCount = 0;
+        }
+
+        if ( _spwnTiles.Count > 0 && _exitTiles.Count > 0 )
+        {
+            _connectedPathPairs = new List<KeyValuePair<GameObject, List<GameObject>>>();
+
+            for ( int i = 0; i < _spwnTiles.Count; i++ )
+            {
+                for ( int j = 0; j < _exitTiles.Count; j++ )
+                {
+                    if ( _spwnTiles[i] == _exitTiles[j] ) continue;
+
+                    if ( GridManager.instance.CheckTileConnection(_spwnTiles[i], _exitTiles[j], GridTile.TileState.Dirt, null) )
+                    {
+                        _connectedPathPairs.Add(new(_spwnTiles[i], new List<GameObject>(){_exitTiles[j]}));
+                    }
+                }
+            }
         }
     }
 
@@ -96,8 +114,19 @@ public class NPCManager : MonoBehaviour
         }
     }
 
-    public static List<GameObject> RequestExitTiles()
+    public static List<GameObject> RequestExitTiles(GameObject entryTileGO = null)
     {
+        if ( entryTileGO != null && instance._connectedPathPairs != null && instance._connectedPathPairs.Count > 0)
+        {
+            foreach ( var kvp in instance._connectedPathPairs )
+            {
+                if (kvp.Key == entryTileGO)
+                {
+                    return kvp.Value;
+                }
+            }
+        }
+
         return instance._exitTiles;
     }
 
@@ -133,7 +162,7 @@ public class NPCManager : MonoBehaviour
 
             // Initialize Brain
             newBrain.Init(spawnTile.GetColumn(), spawnTile.GetRow());
-            newBrain.SelectExitTarget(_exitTiles);
+            newBrain.SelectExitTarget(RequestExitTiles(entryTileGO));
             newBrain.nextTarget = entryTileGO;
 
             // Store References

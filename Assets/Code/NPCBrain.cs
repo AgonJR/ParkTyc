@@ -23,6 +23,7 @@ public class NPCBrain : MonoBehaviour
 
     private int[,] _gridVisited;
     private float[,] _exitHeurstx;
+    private GameObject _currTileGO;
     private GameObject _exitTarget;
     private GridTile _exitTile;
     private int _stepCount = 0;
@@ -105,7 +106,7 @@ public class NPCBrain : MonoBehaviour
             if (_animatorRef == null ) GridEnterSequence();
         }
 
-        SelectExitTarget(NPCManager.RequestExitTiles());
+        SelectExitTarget(NPCManager.RequestExitTiles(_currTileGO));
     }
 
     private void FixedUpdate()
@@ -118,7 +119,7 @@ public class NPCBrain : MonoBehaviour
     {
         if (_exitTarget == null || GridTile.stateWalkScores[_exitTile.state] < 0)
         {
-            SelectExitTarget(NPCManager.RequestExitTiles());
+            SelectExitTarget(NPCManager.RequestExitTiles(_currTileGO));
         }
 
         if (nextTarget == null && _activitySpotted == false && _activityStarted == false)
@@ -158,6 +159,7 @@ public class NPCBrain : MonoBehaviour
 
         gameObject.name = "N P C  (" + q + " , " + r + ")";
 
+        _currTileGO = nextTarget;
         _coordinates = new Vector2(q, r);
 
         nextTarget = null;
