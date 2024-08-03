@@ -194,6 +194,9 @@
 		<property name="name">
 			<value>Birds</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{58c7cd0c-ecc4-4081-ab7a-da20ea1e93e8}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{31de4ac0-d281-4f70-9cf8-e38200cb741d}</destination>
 		</relationship>
@@ -234,11 +237,14 @@
 	</object>
 	<object class="EventMixerGroup" id="{c18d02fa-dd02-453b-ac68-a772862c50bb}">
 		<property name="volume">
-			<value>-11.5</value>
+			<value>-10.5</value>
 		</property>
 		<property name="name">
 			<value>Wind</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{88758e09-06f3-4faf-8241-436142ac658e}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{31f6ef53-0564-465d-9f8e-40b695256334}</destination>
 		</relationship>
@@ -322,6 +328,23 @@
 			<destination>{264e1adc-aa4a-4e0a-bd9a-660feb98627a}</destination>
 		</relationship>
 	</object>
+	<object class="LFOModulator" id="{58c7cd0c-ecc4-4081-ab7a-da20ea1e93e8}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="shape">
+			<value>6</value>
+		</property>
+		<property name="rate">
+			<value>0.620000005</value>
+		</property>
+		<property name="depth">
+			<value>10.5</value>
+		</property>
+		<property name="direction">
+			<value>-100</value>
+		</property>
+	</object>
 	<object class="MixerBusEffectChain" id="{31de4ac0-d281-4f70-9cf8-e38200cb741d}">
 		<relationship name="effects">
 			<destination>{c5648123-f559-479e-8d0e-463df8c5b1f2}</destination>
@@ -350,6 +373,23 @@
 			<destination>{154154ec-4f4e-41cd-8b99-e1e6b752ec41}</destination>
 		</relationship>
 	</object>
+	<object class="LFOModulator" id="{88758e09-06f3-4faf-8241-436142ac658e}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="shape">
+			<value>6</value>
+		</property>
+		<property name="rate">
+			<value>0.0549999997</value>
+		</property>
+		<property name="depth">
+			<value>20</value>
+		</property>
+		<property name="direction">
+			<value>-100</value>
+		</property>
+	</object>
 	<object class="MixerBusEffectChain" id="{31f6ef53-0564-465d-9f8e-40b695256334}">
 		<relationship name="effects">
 			<destination>{19516542-8c37-4c24-bd4b-ceab1074a590}</destination>
@@ -362,11 +402,23 @@
 		<property name="filterTypeA">
 			<value>4</value>
 		</property>
+		<property name="filterTypeB">
+			<value>9</value>
+		</property>
 		<property name="frequencyA">
-			<value>199.44838</value>
+			<value>235.405243</value>
+		</property>
+		<property name="frequencyB">
+			<value>2252.2688</value>
 		</property>
 		<property name="qualityA">
-			<value>0.183724135</value>
+			<value>0.330241382</value>
+		</property>
+		<property name="qualityB">
+			<value>0.1627931</value>
+		</property>
+		<property name="gainB">
+			<value>0.517240763</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{b059ae1a-b63a-4711-a2e4-af8515a52109}">
@@ -501,18 +553,30 @@
 		<property name="filterTypeB">
 			<value>4</value>
 		</property>
+		<property name="filterTypeC">
+			<value>9</value>
+		</property>
 		<property name="frequencyA">
-			<value>1583.61926</value>
+			<value>1341.7301</value>
 		</property>
 		<property name="frequencyB">
-			<value>172.521454</value>
+			<value>199.44838</value>
+		</property>
+		<property name="frequencyC">
+			<value>517.306396</value>
 		</property>
 		<property name="qualityA">
-			<value>0.413965493</value>
+			<value>0.602344871</value>
 		</property>
 		<property name="qualityB">
-			<value>0.434896529</value>
+			<value>0.539551735</value>
 		</property>
+		<property name="gainC">
+			<value>-1.03448296</value>
+		</property>
+		<relationship name="modulators">
+			<destination>{ab0dca38-2dfd-4f8e-8852-d2d05dbe3717}</destination>
+		</relationship>
 	</object>
 	<object class="Automator" id="{68239b42-c6a7-4dd8-a3d3-abe7ece63355}">
 		<property name="nameOfPropertyBeingAutomated">
@@ -521,6 +585,23 @@
 		<relationship name="automationCurves">
 			<destination>{91265d50-d531-4d31-a583-d1aba70bf7ce}</destination>
 		</relationship>
+	</object>
+	<object class="LFOModulator" id="{ab0dca38-2dfd-4f8e-8852-d2d05dbe3717}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>gainC</value>
+		</property>
+		<property name="shape">
+			<value>6</value>
+		</property>
+		<property name="rate">
+			<value>0.109999999</value>
+		</property>
+		<property name="depth">
+			<value>37.5</value>
+		</property>
+		<property name="direction">
+			<value>-100</value>
+		</property>
 	</object>
 	<object class="AutomationCurve" id="{91265d50-d531-4d31-a583-d1aba70bf7ce}">
 		<relationship name="parameter">
