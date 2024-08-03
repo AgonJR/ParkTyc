@@ -342,10 +342,10 @@ RectTransform:
   - {fileID: 4247564145532185381}
   m_Father: {fileID: 8762736475487844281}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 480, y: -75}
-  m_SizeDelta: {x: 120, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 120, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6153734270492074599
 CanvasRenderer:
@@ -5706,10 +5706,10 @@ RectTransform:
   - {fileID: 7827588537027642996}
   m_Father: {fileID: 8762736475487844281}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 620, y: -75}
-  m_SizeDelta: {x: 120, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 120, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &150948757409854698
 CanvasRenderer:
@@ -8553,10 +8553,10 @@ RectTransform:
   - {fileID: 252568131398252267}
   m_Father: {fileID: 8762736475487844281}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 760, y: -75}
-  m_SizeDelta: {x: 120, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 120, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4459477655805643235
 CanvasRenderer:
@@ -8759,7 +8759,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4779003777714620823
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8968,7 +8968,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8762736475487844281
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9059,10 +9059,10 @@ RectTransform:
   - {fileID: 3313965115936690351}
   m_Father: {fileID: 8762736475487844281}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 340, y: -75}
-  m_SizeDelta: {x: 120, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 120, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7836381739419368137
 CanvasRenderer:
@@ -10330,10 +10330,10 @@ RectTransform:
   - {fileID: 4522154988624020018}
   m_Father: {fileID: 8762736475487844281}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 200, y: -75}
-  m_SizeDelta: {x: 120, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 120, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3552155428707160644
 CanvasRenderer:
@@ -11157,10 +11157,10 @@ RectTransform:
   - {fileID: 5717887672042313546}
   m_Father: {fileID: 8762736475487844281}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 60, y: -75}
-  m_SizeDelta: {x: 120, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 120, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1955674569927944372
 CanvasRenderer:
@@ -11896,7 +11896,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Camp
 
-    (+Tree +Rock)'
+    "Sticks and stones may build a home..."'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -11923,10 +11923,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 29.25
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0

@@ -1353,7 +1353,7 @@ MonoBehaviour:
   npcManagerRef: {fileID: 1641841349}
   gridManagerRef: {fileID: 2059049827}
   hudManagerRef: {fileID: 4140298628990733143}
-  startingScore: 500
+  startingScore: 0
 --- !u!4 &421558203
 Transform:
   m_ObjectHideFlags: 0
@@ -1394,17 +1394,25 @@ MonoBehaviour:
     buildCount: 1
     repeatCount: 0
     npcScoreInc: 0
-    Description: Build a Bench
+    Description: Place 1 Rock
     objectiveType: 0
-    target1: 7
+    target1: 5
     target2: 0
   - Complete: 0
     buildCount: 3
     repeatCount: 0
     npcScoreInc: 5
-    Description: Place 3 Rocks
+    Description: Place 2 bushes
     objectiveType: 0
     target1: 5
+    target2: 0
+  - Complete: 0
+    buildCount: 3
+    repeatCount: 0
+    npcScoreInc: 0
+    Description: Place 3 trees
+    objectiveType: 0
+    target1: 3
     target2: 0
 --- !u!1 &423991871
 GameObject:
@@ -4480,7 +4488,7 @@ MonoBehaviour:
   spawnWait: 3
   wVariance: 1
   maxSpawns: 6
-  exitScore: 5
+  exitScore: 2
   _spwnTiles: []
   _exitTiles: []
   _spawnedNPCs: []
@@ -4885,7 +4893,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25.55
+  m_fontSize: 42.25
   m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 1
