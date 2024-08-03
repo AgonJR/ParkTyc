@@ -1399,12 +1399,12 @@ MonoBehaviour:
     target1: 5
     target2: 0
   - Complete: 0
-    buildCount: 3
+    buildCount: 2
     repeatCount: 0
     npcScoreInc: 5
     Description: Place 2 bushes
     objectiveType: 0
-    target1: 5
+    target1: 4
     target2: 0
   - Complete: 0
     buildCount: 3
