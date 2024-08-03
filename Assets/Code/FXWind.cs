@@ -5,6 +5,13 @@ using UnityEngine;
 public class FXWind : MonoBehaviour
 {
     public ParticleSystem windParticleSystem;
+    public Transform followTarget;
+
+    void FixedUpdate()
+    {
+        Vector2 position = new Vector2(followTarget.transform.position.x, followTarget.transform.position.z);
+        SetDimensions(position);
+    }
 
     // Set all relevant dimensions for the particle system.
     public void SetDimensions(Vector3 position, Vector3 scale)
