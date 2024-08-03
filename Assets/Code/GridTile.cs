@@ -235,6 +235,7 @@ public class GridTile : MonoBehaviour
         switch ( state )
         {
             case TileState.Bench: isActivity = true; maxCapacity = 1; curOccupancy = 0; break;
+            case TileState.Rock : isActivity = true; maxCapacity = 1; curOccupancy = 0; break;
             default: isActivity = false; break;
         }
 

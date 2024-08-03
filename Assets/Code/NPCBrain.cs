@@ -241,9 +241,14 @@ public class NPCBrain : MonoBehaviour
             
             if ( nextNTile.isActivity && nextNTile.curOccupancy < nextNTile.maxCapacity && _gridVisited[nextNTile.GetColumn(), nextNTile.GetRow()] == 0)
             {
-                if( nextNTile.state == GridTile.TileState.Bench && _sitCooldown > 0 )
+                if (nextNTile.state == GridTile.TileState.Bench && _sitCooldown > 0)
                 {
                     continue;
+                }
+
+                if (nextNTile.state == GridTile.TileState.Rock)
+                {
+                    if ( Random.Range(0, 100) > 6 || _sitCooldown > 0 ) { continue; }
                 }
 
                 _activitySpotted = true;
@@ -253,6 +258,7 @@ public class NPCBrain : MonoBehaviour
                 nextTarget = _activityTile.gameObject;
 
                 _activityCoordinates = _activityTile.GetCoordinates();
+
                 _gridVisited[nextNTile.GetColumn(), nextNTile.GetRow()]++;
 
                 return;
@@ -348,6 +354,7 @@ public class NPCBrain : MonoBehaviour
 
     private int _activityFrames =  0; // Temporary, keep track of how many frames since started activity interaction
     private int _sitFrames = 300;
+    private int _ywnFrames = 100;
     private int _sitCooldown = 0;
     private void ProcessActivity()
     {
@@ -382,6 +389,32 @@ public class NPCBrain : MonoBehaviour
                         _activityTile = null;
                         _activityFrames = 0;
                         _exitScore += 5;
+                    }
+                }
+            }
+
+            if ( _activityTile.state == GridTile.TileState.Rock )
+            {
+                if ( _activitySpotted )
+                {
+                    _activitySpotted = false;
+                    _animatorRef.Play("Idle_Yawn");
+                    _animatorRef.SetInteger("animState", 0); // Idle
+                }
+
+                if (_activityFrames > _ywnFrames )
+                {
+                    if ( _animatorRef.GetCurrentAnimatorStateInfo(0).IsName("Idle01") )
+                    {
+                        _animatorRef.SetInteger("animState", 1); // Walk
+                        _sitCooldown = 3;
+                    }
+                    else if ( _animatorRef.GetCurrentAnimatorStateInfo(0).IsName("Walk01") )
+                    {
+                        _activityTile.UnOccupy(this);
+                        _activityStarted = false;
+                        _activityTile = null;
+                        _activityFrames = 0;
                     }
                 }
             }
