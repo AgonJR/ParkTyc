@@ -8,6 +8,7 @@ public class NPCBrain : MonoBehaviour
     public GameObject nextTarget;
     public float minTrgtDistance;
     public int  maxStepsWhenLost;
+    public int   minStepsPreExit;
     [Header("Transition Data")]
     public MeshRenderer spwnMesh;
     public MeshRenderer exitMesh;
@@ -279,7 +280,7 @@ public class NPCBrain : MonoBehaviour
             nWeights[i] = 1 + _gridVisited[nextNTile.GetColumn(), nextNTile.GetRow()];
             nWeights[i] *= GridTile.stateWalkScores[nextNTile.state];
 
-            if (_exitTarget != null)
+            if (_exitTarget != null && _stepCount > minStepsPreExit)
             nWeights[i] *= _exitHeurstx[nextNTile.GetColumn(), nextNTile.GetRow()];
         }
 
@@ -292,6 +293,10 @@ public class NPCBrain : MonoBehaviour
             {
                 minWeight = nWeights[i];
                 nextTarget = neighbourGOs[i];
+            }
+            else if ( nWeights[i] == minWeight)
+            {
+                if ( Random.Range(0, 100) > 50 ) nextTarget = neighbourGOs[i];
             }
         }
         
