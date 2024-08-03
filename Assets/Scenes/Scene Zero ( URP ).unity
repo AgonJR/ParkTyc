@@ -5601,6 +5601,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1923896451225215771, guid: 34a70d947f3eb854badfd01b41b6d0b1, type: 3}
+      propertyPath: ObjectiveBG
+      value: 
+      objectReference: {fileID: 805660554}
+    - target: {fileID: 1923896451225215771, guid: 34a70d947f3eb854badfd01b41b6d0b1, type: 3}
       propertyPath: ObjectiveText
       value: 
       objectReference: {fileID: 1848490185}
