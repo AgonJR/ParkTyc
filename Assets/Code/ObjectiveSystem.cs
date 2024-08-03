@@ -90,10 +90,19 @@ public class ObjectiveSystem : MonoBehaviour
     {
         string statusText = string.Empty;
 
+        int allDone = 0;
+
         foreach ( ObjectiveData O in instance.Objectives)
         {
             statusText += "[" + (O.Complete ? "X" : "  ") + "] ";
             statusText += O.Description + "\n";
+            allDone += O.Complete ? 1 : 0;
+        }
+
+        if (allDone == instance.Objectives.Count)
+        {
+            statusText  = "All Prototype Objectives Complete!\n\n";
+            statusText += "Thank you for playing!\n\n Enjoy Building Your Trail!";
         }
 
         return statusText;
